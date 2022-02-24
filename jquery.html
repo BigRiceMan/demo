@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jqueryDemo</title>
+    <style>
+        #info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e8e8e8;
+            width: 150px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div><span>Corey,</span><span>Yehuda,</span><span>Adam,</span><span>Todd,</span></div>
+    <div><b>Nobody,</b><span>John,</span><span>Scott,</span><span>Timo</span></div>
+    <form class="form">
+        <div>
+            <div id="checkBox">
+                <input type="checkbox" name="mut" id="" checked>你好
+                <input type="checkbox" name="mut" id="">你不好
+                <input type="checkbox" name="mut" id="">你真的好
+                <input type="checkbox" name="mut" id="">你真的不好
+            </div>
+            <div id="radioBox">
+                <input type="radio" name="sex" id="">男<input type="radio" name="sex" id="">女<input type="radio"
+                    name="sex" id="">不详
+            </div>
+            <select name="go" id="se">
+                <option value="all">全部</option>
+                <option value="banana">香蕉</option>
+                <option value="apple">苹果</option>
+                <option value="peach">桃子</option>
+                <option value="lemem">西瓜</option>
+            </select>
+        </div>
+        <br /><br />
+        <input type="button" onclick="getOptions()" value="输出所有选项">
+        <div id="info"></div>
+        li>lorem
+    </form>
+    <script type="text/javascript">
+
+        var x = document.getElementById("se");
+        let info = document.getElementById('info')
+        console.log('的值为x.value：' + x.value);
+        function getOptions() {
+            var x = document.getElementById("se");
+            var y = "";
+            for (i = 0; i < x.length; i++) {
+                y += x.options[i].text;
+                y += "<br />";
+            }
+            info.innerHTML = y
+            console.log('x.form.name的值为：' + x.form.name);
+            console.log('x.id的值为：' + x.id);
+            console.log('x.length的值为：' + x.length);
+            console.log('x.multiple的值为：' + x.multiple);
+            console.log('x.size的值为：' + x.size);
+            console.log('x.selectedIndex的值为：' + x.selectedIndex);
+            console.log('x.tabIndex的值为：' + x.tabIndex);
+            console.log('x.type的值为：' + x.type);
+
+        }
+        x.onchange = function () {
+            console.log('下拉框正在被改变')
+        }
+        document.body.ondrop = function (e) {
+            console.log('e的值为：' + e);
+
+
+        }
+    </script>
+
+    <script>
+        function ajaxPage(sId, url) {
+            let xhr = new XMLHttpRequest()
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        IncludeJS(sId, url, xhr.responseText);
+                    } else {
+                        console.log(1)
+                    }
+                }
+            }
+            //  true表示同步
+            xhr.open('GET', url, true)
+            xhr.send(null)
+        }
+        function IncludeJS(sId, fileUrl, source) {
+            if ((source != null) && (!document.getElementById(sId))) {
+                var body = document.body;
+                var oScript = document.createElement("script");
+                oScript.language = "javascript";
+                oScript.type = "text/javascript";
+                oScript.id = sId;
+                oScript.defer = true;
+                oScript.text = source;
+                body.appendChild(oScript);
+            } else {
+                console.log(2)
+            }
+        }
+        ajaxPage('srcA', 'https://code.jquery.com/jquery-3.6.0.js')
+    </script>
+</body>
+
+</html>
