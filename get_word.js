@@ -230,6 +230,8 @@ if (typeof jQuery !== "undefined" && typeof saveAs !== "undefined") {
                 canvas.height = h;
                 // Draw image to canvas
                 var context = canvas.getContext('2d');
+
+                img[i].setAttribute("crossOrigin",'anonymous')
                 context.drawImage(img[i], 0, 0, w, h);
                 // Get data URL encoding of image
                 var uri = canvas.toDataURL("image/png/jpg");
