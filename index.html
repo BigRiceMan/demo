@@ -5,11 +5,435 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>this is my page</title>
+  <title>表单模板</title>
+  <style>
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 100%;
+      background-color: #fff;
+    }
+
+    button,
+    [type="button"],
+    [type="reset"],
+    [type="submit"],
+    select,
+    option {
+      text-align: center;
+      cursor: pointer;
+    }
+
+    textarea {
+      display: block;
+      width: 100%;
+      height: 100%;
+      resize: none;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      height: 100%;
+      display: inline-block;
+      vertical-align: top;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    #box {
+      width: 560px;
+      margin: 0 auto;
+      background-color: #e8e8e8;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: inset 0 0 5px 5px;
+    }
+
+    #box_tit {
+      height: 40px;
+      line-height: 40px;
+      font-size: 22px;
+      text-align: center;
+    }
+
+    .box_form_item {
+      padding: 0 20px;
+      font-size: 16px;
+      position: relative;
+      margin: 15px 0;
+    }
+
+
+    .box_form_item .box_input_control {
+      float: none;
+      display: table-cell;
+      *display: block;
+      *zoom: 1;
+      word-break: break-all;
+    }
+
+    .box_form_item .box_input_label {
+      float: left;
+      width: 6em;
+      margin-right: 1em;
+      margin-top: 0.2em;
+
+    }
+
+    .box_form_item .box_input_wrap {
+      width: 320px;
+      display: inline-block;
+      padding: 0 10px;
+      border: 1px solid #333;
+      background-color: #fff;
+      border-radius: 4px;
+      height: 30px;
+      line-height: 30px;
+    }
+
+    .box_form_item .box_form_input {
+      width: 100%;
+      margin: 4px 0;
+    }
+
+    .box_input_fail,
+    .box_input_tips {
+      width: 300px;
+      padding-top: 4px;
+      font-size: 14px;
+    }
+
+    .box_input_fail {
+      color: red;
+      display: none;
+    }
+
+    .box_input_tips {
+      color: #999;
+    }
+
+
+
+
+
+
+
+    .box_inline_control .box_checkbox_label,
+    .box_inline_control .box_radio_label {
+      float: left;
+    }
+
+    .box_form_item.box_mini_item {
+      height: auto;
+    }
+
+    .box_checkbox_label {
+      margin-top: 0.3em;
+      cursor: pointer;
+      margin-right: 0.5em;
+      display: block;
+    }
+
+    .box_checkbox_wrap {
+      width: 16px;
+      height: 16px;
+      float: left;
+      margin-right: .7em;
+    }
+
+    .box_radio_label {
+      margin-top: 0.3em;
+      cursor: pointer;
+      margin-right: 0.5em;
+      display: block;
+      min-width: 5em;
+    }
+
+    .box_radio_wrap {
+      width: 16px;
+      height: 16px;
+      float: left;
+      margin-right: .7em;
+    }
+
+    .box_form_radio,
+    .box_form_checkbox {
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+
+
+    .box_textarea_wrap {
+      display: inline-block;
+      width: 320px;
+      line-height: 22px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      margin-top: 5px;
+      border-radius: 5px;
+    }
+
+    .box_textarea_wrap textarea {
+      padding: .5em 1em;
+    }
+
+    .box_select_wrap {
+      display: inline-block;
+      min-width: 56px;
+      height: 22px;
+      line-height: 22px;
+      border-radius: 3px;
+      background-color: #fff;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      box-shadow: 0 0 4px #000;
+      margin-right: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .box_button_wrap {
+      display: inline-block;
+      min-width: 56px;
+      background-color: #fff;
+      border-radius: 3px;
+      height: 30px;
+      line-height: 30px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      box-shadow: 0 0 4px #000;
+      margin-right: 20px;
+      cursor: pointer;
+    }
+
+    .box_select_wrap:hover {
+      background-color: rgba(255, 255, 255, .5);
+
+    }
+
+    .box_select_wrap select {
+      display: block;
+      padding: 0 3px;
+      height: 100%;
+      background-color: transparent;
+      cursor: pointer;
+    }
+
+    .box_button_wrap button {
+      display: block;
+      padding: 0 18px;
+      height: 100%;
+      background-color: transparent;
+
+      margin: 0 auto;
+    }
+
+    .box_button_wrap:hover {
+      background-color: rgba(255, 255, 255, .5);
+    }
+
+
+    .box_file_wrap {
+      background-color: transparent;
+      opacity: 0;
+    }
+
+    .middle_button {
+      width: 120px;
+    }
+
+    .large_button {
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>hello everybody</h1>
+
+  <div id="box">
+    <h1 id="box_tit">我的表单</h1>
+    <form action="" id="box_form">
+      <div class="box_form_item"><label class="box_input_label">用户名：</label>
+        <div class="box_input_control">
+          <span class="box_input_wrap">
+            <input type="text" class="box_form_input">
+          </span>
+          <p class="box_input_fail">错误提示</p>
+          <p class="box_input_tips">输入提示</p>
+        </div>
+      </div>
+      <div class="box_form_item"><label class="box_input_label">密码：</label>
+        <div class="box_input_control">
+          <span class="box_input_wrap">
+            <input type="password" class="box_form_input">
+          </span>
+          <p class="box_input_fail">错误提示</p>
+          <p class="box_input_tips">输入提示</p>
+        </div>
+      </div>
+      <div class="box_form_item"><label class="box_input_label ">手机验证码：</label>
+        <div class="box_input_control">
+          <span class="box_input_wrap" style="width: 200px;">
+            <input type="text" class="box_form_input">
+          </span>
+          <span class="box_button_wrap middle_button">
+            <button type="button">获取验证码</button>
+          </span>
+          <p class="box_input_fail">错误提示</p>
+          <p class="box_input_tips">输入提示</p>
+        </div>
+      </div>
+      <div class="box_form_item"><label class="box_input_label">上传文件：</label>
+        <div class="box_input_control">
+          <span class="box_input_wrap" style="width: 200px;">
+            <input type="text" class="box_form_input" value="未选择任何文件" disabled>
+          </span>
+
+          <span class="box_file_wrap box_button_wrap middle_button" style="position: absolute;top:0;">
+            <input name="file" type="file" accept="image/*" autocomplete="off">
+          </span>
+          <span class="box_button_wrap middle_button">
+            <button>上传文件</button>
+          </span>
+          <p class="box_input_fail">错误提示</p>
+          <p class="box_input_tips">输入提示</p>
+        </div>
+      </div>
+      <div class="box_form_item  box_mini_item">
+
+        <label class="box_input_label">您的爱好：</label>
+        <div class="box_input_control box_inline_control">
+          <label for="" class="box_checkbox_label">
+            <span class="box_checkbox_wrap">
+              <input type="checkbox" name="box_cb" id="box_checkbox_1" class="box_form_checkbox"></span>
+            选项一
+          </label>
+          <label for="" class="box_checkbox_label">
+            <span class="box_checkbox_wrap">
+              <input type="checkbox" name="box_cb" id="box_checkbox_agree" class="box_form_checkbox"></span>
+            选项二
+          </label>
+          <label for="" class="box_checkbox_label">
+            <span class="box_checkbox_wrap">
+              <input type="checkbox" name="box_cb" id="box_checkbox_agree" class="box_form_checkbox"></span>
+            选项三
+          </label>
+          <label for="" class="box_checkbox_label">
+            <span class="box_checkbox_wrap">
+              <input type="checkbox" name="box_cb" id="box_checkbox_agree" class="box_form_checkbox"></span>
+            选项四
+          </label>
+        </div>
+      </div>
+
+      <div class="box_form_item  box_mini_item">
+        <label class="box_input_label">您的性别：</label>
+        <div class="box_input_control">
+          <label for="" class="box_radio_label">
+            <span class="box_radio_wrap">
+              <input type="radio" name="box_cb" id="box_radio_1" class="box_form_radio"></span>
+            选项一
+          </label>
+          <label for="" class="box_radio_label">
+            <span class="box_radio_wrap">
+              <input type="radio" name="box_cb" id="box_radio_agree" class="box_form_radio"></span>
+            选项二
+          </label>
+          <label for="" class="box_radio_label">
+            <span class="box_radio_wrap">
+              <input type="radio" name="box_cb" id="box_radio_agree" class="box_form_radio"></span>
+            选项三
+          </label>
+          <label for="" class="box_radio_label">
+            <span class="box_radio_wrap">
+              <input type="radio" name="box_cb" id="box_radio_agree" class="box_form_radio"></span>
+            选项四
+          </label>
+        </div>
+      </div>
+      <div class="box_form_item">
+        <label class="box_input_label">喜欢的水果：</label>
+        <div class="box_input_control">
+          <span class="box_select_wrap">
+            <select name="box_form_select" id="box_form_select">
+              <option value="all">上海</option>
+              <option value="1">北京</option>
+              <option value="2">天津</option>
+              <option value="3">湖南</option>
+            </select>
+          </span> <span class="box_select_wrap">
+            <select name="box_form_select" id="box_form_select">
+              <option value="all">上海</option>
+              <option value="1">北京</option>
+              <option value="2">天津</option>
+              <option value="3">湖南</option>
+            </select>
+          </span> <span class="box_select_wrap">
+            <select name="box_form_select" id="box_form_select">
+              <option value="all">上海</option>
+              <option value="1">北京</option>
+              <option value="2">天津</option>
+              <option value="3">湖南</option>
+            </select>
+          </span>
+        </div>
+      </div>
+      <div class="box_form_item">
+        <label class="box_input_label">您的建议：</label>
+        <div class="box_input_control">
+          <span class="box_textarea_wrap">
+            <textarea name="" id="" rows="5"></textarea>
+          </span>
+        </div>
+      </div>
+      <div class="box_form_item">
+        <label class="box_input_label"></label>
+        <div class="box_input_control">
+          <label for="box_agree_checkbox" class="box_checkbox_label">
+            <span class="box_checkbox_wrap">
+              <input type="checkbox" name="box_cb" id="box_agree_checkbox" class="box_form_checkbox"></span>
+            我同意遵守<a>《我的表单平台服务协议》</a>
+          </label>
+        </div>
+      </div>
+      <div class="box_form_item">
+        <div class="text-center">
+          <span class="box_button_wrap">
+            <button type="button">注册</button>
+          </span>
+          <span class="box_button_wrap">
+            <button type="button">登录</button>
+          </span>
+        </div>
+      </div>
+      <div class="box_form_item">
+        <div class="text-center ">
+          <span class="box_button_wrap large_button">
+            <button type="button">提交</button>
+          </span>
+
+        </div>
+      </div>
+    </form>
+
+  </div>
+
 </body>
 
 </html>
