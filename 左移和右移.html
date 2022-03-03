@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>左移和右移</title>
+
+</head>
+
+<body>
+  <div id="box">
+    <div id="left">
+      <p>可选项</p>
+      <select name="" id="" multiple="multiple">
+        <option>添加</option>
+        <option>移动</option>
+        <option>修改</option>
+        <option>查询</option>
+        <option>打印</option>
+        <option>删除</option>
+      </select>
+    </div>
+    <div id="opt">
+      <input type="button" id="toRight" value=">"><br><input type="button" id="toLeft" value="<"><br><input
+        type="button" id="toAllRight" value=">>"><br>
+      <input type="button" id="toAllLeft" value="<<"><br>
+    </div>
+    <div id="right">
+      <p>已选项</p><select multiple="multiple"></select>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous"></script>
+  <script>
+    $('#toRight').click(function () {
+      $('#right>select').append($('#left>select>option:selected'))
+    })
+    $('#toLeft').click(function () {
+      $('#left>select').append($('#right>select>option:selected'))
+    })
+    $('#toAllRight').click(function () {
+      $('#right>select').append($('#left>select>option'))
+    })
+    $('#toAllLeft').click(function () {
+      $('#left>select').append($('#right>select>option'))
+    })
+  </script>
+  <style>
+    #box {
+      margin: 0 auto;
+      display: flex;
+      font-size: 16px;
+    }
+
+    #left {
+      width: 200px;
+    }
+
+    #opt {
+      width: 150px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    #right {
+      width: 200px;
+    }
+
+    select {
+      width: 100%;
+      font-size: inherit;
+      height: 150px;
+    }
+
+    input {
+      padding: 3px 5px;
+      margin-top: 10px;
+      font-size: inherit;
+      min-width: 60px;
+      cursor: pointer;
+    }
+  </style>
+</body>
+
+</html>
