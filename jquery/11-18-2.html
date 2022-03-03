@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>11-18-2</title>
+</head>
+
+<body>
+  <div class="hit">jQuery介绍</div>
+  <script src='https://code.jquery.com/jquery-2.2.4.js' integrity='sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI='
+    crossorigin='anonymous'></script>
+  <script>
+    // $('.hit').mouseover(function () {
+    //   $(this).css('background-color', 'orange').css('color', 'white').css('cursor', 'pointer')
+    // })
+    // $('.hit').mouseout(function () {
+    //   $(this).css('background-color', '').css('color', 'black').css('cursor', 'pointer')
+    // })
+    // $('.hit').trigger('mouse')
+    // $('.hit').hover(function () {
+    //   $(this).css('background-color', 'orange').css('color', 'white').css('cursor', 'pointer')
+    // }, function () {
+    //   $(this).css('background-color', '').css('color', 'black').css('cursor', 'pointer')
+    // })
+    // $('div').on('mouseover mouseout', function () {
+    //   console.log('鼠标移入和移除')
+    // })
+    $('div').on({
+      mouseover: function () {
+        console.log('鼠标移入')
+      },
+      mouseout: function () {
+        console.log('鼠标移除')
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>11-4-1</title>
+</head>
+
+<body>
+  <p>用户名称：<input type="text" name="uname"></p>
+  <p>电子邮箱：<input type="text" name="email"></p>
+  <p>手机号码：<input type="text" name="tel"></p>
+  <script src='https://code.jquery.com/jquery-2.2.4.js' integrity='sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI='
+    crossorigin='anonymous'></script>
+  <script>
+    $('input[type=text]').focus(function () {
+      let tips = $('<span></span>')
+      $(this).after(tips.text('请按要求输入'))
+    })
+    $('input[type=text]').blur(function () {
+      let tips = $(this).next().remove()
+    })
+  </script>
+</body>
+
+</html>

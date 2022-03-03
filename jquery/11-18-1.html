@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>11-18-1</title>
+</head>
+<style>
+  .boxes {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+  }
+</style>
+<div class="boxes"></div>
+<script src='https://code.jquery.com/jquery-2.2.4.js' integrity='sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI='
+  crossorigin='anonymous'></script>
+<script>
+  $(document).keydown(function (event) {
+    let opt = event.which
+    let item = $('.boxes')
+    let left = item.offset().left
+    let top = item.offset().top
+    switch (opt) {
+      case 37:
+        item.offset({ left: left - 1, top: top }); break;
+      case 38:
+        item.offset({ left: left, top: top - 1 }); break;
+      case 39:
+        item.offset({ left: left + 1, top: top }); break;
+      case 40:
+        item.offset({ left: left, top: top + 1 }); break;
+    }
+  })
+</script>
+
+<body>
+
+</body>
+
+</html>

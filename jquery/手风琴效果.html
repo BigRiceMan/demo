@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手风琴</title>
+  <style>
+    #box {
+      display: flex;
+      float: left;
+    }
+
+    .slider-item {
+      border-right: 1px solid #e8e8e8;
+      position: relative;
+      width: 80px;
+      height: 320px;
+      overflow: hidden;
+    }
+
+    .slider-item:hover {
+      width: auto;
+    }
+
+    .slider-content {
+      transition: all ease .5s;
+      width: 300px;
+      padding: 10px;
+      padding-left: 90px;
+      color: #e8e8e8;
+    }
+
+    .slider-item:hover .slider-content {
+      position: relative;
+    }
+
+
+
+    .slider-content h1 {
+      text-align: center;
+    }
+
+    .slider-content .bd {
+      text-align: center;
+    }
+
+    .mark {
+      position: absolute;
+      width: 80px;
+      height: 300px;
+      background-color: orange;
+      top: 0;
+      left: 0;
+      text-align: center;
+      line-height: 300px;
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+
+    .slider-item1 {
+      width: auto;
+    }
+
+    #box:hover .slider-item1 {
+      width: 80px;
+      overflow: hidden;
+    }
+
+    #box .slider-item1:hover {
+
+      width: auto;
+      overflow: visible;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="box">
+    <div class="slider-item1  slider-item">
+      <div class="slider-content slider-content1">
+        <div class="hd">
+          <h1>你好啊</h1>
+        </div>
+        <div class="bd">
+          <img src="1.jpg" alt="">
+          <p>这是图文介绍</p>
+        </div>
+      </div>
+      <div class="mark">1</div>
+    </div>
+    <div class="slider-item2 slider-item">
+      <div class="slider-content slider-content2">
+        <div class="hd">
+          <h1>你好啊2</h1>
+        </div>
+        <div class="bd">
+          <img src="1.jpg" alt="">
+          <p>这是图文介绍2</p>
+        </div>
+      </div>
+      <div class="mark">2</div>
+    </div>
+    <div class="slider-item3 slider-item">
+      <div class="slider-content slider-content3">
+        <div class="hd">
+          <h1>你好啊3</h1>
+        </div>
+        <div class="bd">
+          <img src="1.jpg" alt="">
+          <p>这是图文介绍3</p>
+        </div>
+      </div>
+      <div class="mark">3</div>
+    </div>
+    <div class="slider-item4 slider-item">
+      <div class="slider-content slider-content4">
+        <div class="hd">
+          <h1>你好啊4</h1>
+        </div>
+        <div class="bd">
+          <img src="1.jpg" alt="">
+          <p>这是图文介绍4</p>
+        </div>
+      </div>
+      <div class="mark">5</div>
+    </div>
+    <div class="slider-item5 slider-item">
+      <div class="slider-content slider-content5">
+        <div class="hd">
+          <h1>你好啊2</h1>
+        </div>
+        <div class="bd">
+          <img src="1.jpg" alt="">
+          <p>这是图文介绍5</p>
+        </div>
+      </div>
+      <div class="mark">5</div>
+    </div>
+    <div class="slider-item6 slider-item">
+      <div class="slider-content slider-content6">
+        <div class="hd">
+          <h1>你好啊6</h1>
+        </div>
+        <div class="bd">
+          <img src="1.jpg" alt="">
+          <p>这是图文介绍6</p>
+        </div>
+      </div>
+      <div class="mark">6</div>
+    </div>
+  </div>
+  <script src='https://code.jquery.com/jquery-2.2.4.js' integrity='sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI='
+    crossorigin='anonymous'></script>
+
+  <script>
+    $('.slider-item').each((idx, el) => {
+      let rdmColor = Math.random().toString().replace('.', '').slice(1, 7)
+      $(el).css('background-color', "#" + rdmColor)
+    })
+  </script>
+</body>
+
+</html>
