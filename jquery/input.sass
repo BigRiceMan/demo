@@ -1,0 +1,8 @@
+$red: red
+@function RandomColor()
+  @return  '#'+random(9)+random(9)+random(9)+random(9)+random(9)+random(9)
+
+body
+  background-color: #{RandomColor()}
+  width: 100px
+  height: 300px

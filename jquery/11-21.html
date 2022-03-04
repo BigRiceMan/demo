@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>11-21</title>
+  <style>
+    .box div {
+      width: 100px;
+      height: 100px;
+      float: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="red"></div>
+    <div class="green"></div>
+    <div class="yellow"></div>
+    <div class="orange"></div>
+  </div>
+  <script src='https://code.jquery.com/jquery-2.2.4.js' integrity='sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI='
+    crossorigin='anonymous'></script>
+  <script>
+    $('.box div').each((idx, el) => {
+      $(el).css('background-color', '#' + Math.random().toString().replace('.', '').slice(1, 7))
+    })
+    // $('.box div').fadeTo(2000, 0.2);
+    // $('.box div').fadeOut(2000)
+    // $('.box div').fadeIn(2000)
+    // $('.box div').hover(function () {
+    //   $(this).fadeTo(1, 1)
+    // }, function () {
+    //   $(this).fadeTo(1, 0.2)
+    // })
+    $('.box div').slideUp(2000)
+    $('.box div').slideDown(2000)
+
+  </script>
+
+</body>
+
+</html>

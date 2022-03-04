@@ -1,0 +1,102 @@
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+html
+  height: 100%
+body
+  min-height: 100%
+  background: #252525
+  position: relative
+  overflow: hidden
+
+// starting to really <3 Sass
+@mixin triangle($direction, $size, $color)
+  $side: ($size / (random(4)))
+  @if $direction == top
+    border-top: 0 solid transparent
+    border-right: $side solid transparent
+    border-bottom: $size solid $color
+    border-left: $side solid transparent
+
+  @else if $direction == right
+    border-top: $side solid transparent
+    border-right: 0 solid transparent
+    border-bottom: $side solid transparent
+    border-left: $size solid $color
+
+  @else if $direction == down or $direction == bottom
+    border-top: $size solid $color
+    border-right: $side solid transparent
+    border-bottom: 0 solid transparent
+    border-left: $side solid transparent
+
+  @else if $direction == left
+    border-top: $side solid transparent
+    border-right: $size solid $color
+    border-bottom: $side solid transparent
+    border-left: 0 solid transparent
+
+@keyframes randomized
+
+  0%
+    opacity: .0
+
+  100%
+    transform: rotateX( (random(1000) * 1deg) ) rotateY( (random(500) * 1deg) ) rotateZ( (random(100) * 1deg) ) translate3d((random(1000) * 1px), (random(500) * 1px), (random(100) * 1px)) scale(random(2))
+    opacity: .6
+
+$directions: (top, right, bottom, left)
+@for $i from 1 through 100
+  $randomDir: random(4)
+  @if $randomDir == 0
+    $randomDir: 4
+
+  $dir: nth($directions, $randomDir)
+  $size: random(300) * 1px
+  $color: hsla(random(360), 100%, 50%, .7)
+  .tri-span:nth-child(#{$i})
+    @include triangle($dir, $size, $color)
+    top: (random(100) * 1px)
+    left: (random(100) * 1%)
+    animation-delay: -(random(100) * .1s)
+    z-index: $i
+
+.triangleWrapper
+  min-height: 100%
+  perspective: 200px
+
+.tri-span
+  opacity: .1
+  display: block
+  width: 0
+  height: 0
+  transform-style: preserve-3d
+  position: absolute
+  animation: randomized 8s infinite alternate
+  box-shadow: 2px 2px 2px transparent
+
+@keyframes colorChange
+  0%
+    color: hsla(random(360), 100%, 50%, .2)
+  20%
+    color: hsla(random(360), 100%, 50%, .2)
+  40%
+    color: hsla(random(360), 100%, 50%, .2)
+  60%
+    color: hsla(random(360), 100%, 50%, .2)
+  80%
+    color: hsla(random(360), 100%, 50%, .2)
+  100%
+    color: hsla(random(360), 100%, 50%, .6)
+
+h1.title
+  text-align: center
+  display: block
+  position: relative
+  z-index: 0
+  top: 50px
+  font-size: 80px
+  animation: colorChange 16s infinite alternate
+  font-family: consolas, monospace
