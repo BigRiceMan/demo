@@ -1,0 +1,703 @@
+<!DOCTYPE html><html><head>	<title>{dede:global.cfg_webname/}</title>
+<meta name="keywords" content="{dede:global.cfg_keywords/}">
+<meta name="description" content="{dede:global.cfg_description/}"><link rel="stylesheet" href="style/css/style.css" type="text/css"><link rel="stylesheet" href="style/css/style.css" type="text/css"></head>
+
+<body>
+  <div class="top">
+    <div class="warp">
+      <div class="fl site-inf">77范文网 - 专业文章范例文档资料分享平台</div>
+      <div class="fr user-login"></div>
+    </div>
+  </div>
+  <div class="head">
+    <div class="logo"><a href="/"><img src="style/images/logo.png" alt=""></a></div>
+    <div class="search">
+      <form action="/plus/search.php" name="formsearch" role="search" onsubmit="return false" target="_blank">
+        <input type="hidden" name="kwtype" value="0">
+        <input name="q" id="q" size="20" type="text" class="search-keyword fl" value="请输入关键词" onfocus="if(this.value=='请输入关键词'){this.value='';}" onblur="if(this.value==''){this.value='请输入关键词';}">
+        <button type="submit" class="search-submit fl" onclick="search()">搜 索</button>
+      </form>
+    </div>
+    <div class="share"> </div>
+  </div>
+  <div class="nav_w">
+    <div class="head_b">
+      <div class="nav down">
+        <p><a href="javascript:;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i>分类导航</a></p>
+        <ul class="nav_list" style="display: none;">{dede:channelartlist typeid='3' row='5'}
+          <li><a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+            <div class="nav_extend" style="display: none;">
+              <div class="nav_second">
+                <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+                <span>
+
+                </span>
+              </div>
+              <div class="nav_second">
+                <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+                <span>{dede:arclist  typeid='' row=111 }
+                  <a href="[field:arcurl/]">[field:title/]</a>
+                {/dede:arclist}</span>
+              </div>
+              <div class="nav_second">
+                <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+                <span>
+
+                </span>
+              </div>
+              <div class="nav_second">
+                <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+                <span>
+
+                </span>
+              </div>
+              <div class="nav_second">
+                <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+                <span>
+
+                </span>
+              </div>
+              <div class="nav_second">
+                <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+                <span>{dede:arclist  typeid='' row=111 }
+                  <a href="[field:arcurl/]">[field:title/]</a>
+                {/dede:arclist}</span>
+              </div>
+            </div>
+          </li>
+          
+          
+          
+          
+          
+        {/dede:channelartlist}</ul>
+      </div>
+      <ul class="nav_bar">{dede:channelartlist typeid='3' row='24'}
+        <li><a href="{dede:field.typeurl/}">{dede:field.typename/}</a></li>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      {/dede:channelartlist}</ul>
+    </div>
+  </div>
+  
+  
+  
+  <div class="main_part">
+    <div class="region6 fl">
+      <div id="slideBox" class="slideBox">
+        <div class="hd">
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+        <div class="bd">
+          <ul>{dede:arclist  typeid='' row=4 }
+            <li>
+              <div class="pic"><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></div>
+              <div class="tit"><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></div>
+              <div class="bg"></div>
+            </li>
+            
+            
+            
+            
+
+          {/dede:arclist}</ul>
+        </div>
+      </div>
+      
+      <div class="region0">
+        <div class="t_1">本周推荐</div>
+        <ul class="block3">{dede:arclist  typeid='' row=8 }
+          <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>
+          </li>
+          
+          
+          
+          
+          
+          
+          
+          
+
+        {/dede:arclist}</ul>
+      </div>
+    </div>
+    <div class="region1 fl">
+      <div class="t_1 today">今日推荐</div>
+      <h1><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h1>
+      <p>[field:description function="cn_substr(@me,250)"/]...</p>
+
+      <ul class="t_hot">{dede:arclist  typeid='' row=81 }
+        
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+        
+        
+
+        <div class="clear"></div>
+      {/dede:arclist}</ul>
+      <ul class="t_updata">{dede:arclist  typeid='' row=161 }
+        <div class="t_1 new_tit">今日更新</div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="right_1 fr">
+      <div class="region2">
+        <div class="t_1">精编专题</div>
+        <ul class="ib_pic">{dede:channelartlist typeid='3' row='1'}
+          <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+          
+
+        {/dede:channelartlist}</ul>
+        <ul class="iblock1">{dede:arclist  typeid='' row=7 }
+          <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+          
+          
+          
+          
+          
+          
+          
+
+        {/dede:arclist}</ul>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="main_column">
+    <div class="t_2"> <span>{dede:channelartlist typeid='3' row='131'}
+           |  |  |  |  |  |  |  |  |  |  |  | <a href="{dede:field.typeurl/}" rel="dropmenu207">{dede:field.typename/}</a>
+      {/dede:channelartlist}</span>
+      <h3><a href="/fanwen/">范文大全</a></h3>
+    </div>
+    <div class="region3 fl">
+      <ul class="block2">
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>[field:description function="cn_substr(@me,250)"/]...</li>
+
+      </ul>
+      <ul class="block3">{dede:arclist  typeid='' row=7 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>
+        </li>
+        
+        
+        
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="region4 fl">
+      <h3><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h3>
+      <p>[field:description function="cn_substr(@me,250)"/]...</p>
+
+      <ul class="block8">{dede:channelartlist typeid='3' row='1'}
+        <li> <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+          <h4><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h4>
+          <p>[field:description function="cn_substr(@me,250)"/]...</p>
+        </li>
+        
+
+      {/dede:channelartlist}</ul>
+    </div>
+    <div class="region3 fl">
+      <div class="t_3">热门文章</div>
+      <ul class="block4">{dede:arclist  typeid='' row=7 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="main_column">
+    <div class="t_2"> <span>{dede:channelartlist typeid='3' row='51'}
+        | | | | | <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>|
+      {/dede:channelartlist}</span>
+      <h3><a href="/baogao/">工作文档</a></h3>
+    </div>
+    <div class="region3 fl">
+      <ul class="block2">
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>[field:description function="cn_substr(@me,250)"/]...</li>
+
+      </ul>
+      <ul class="block3">{dede:arclist  typeid='' row=7 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="region4 fl">
+      <h3><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h3>
+      <p>[field:description function="cn_substr(@me,250)"/]...</p>
+
+      <ul class="block8">{dede:arclist  typeid='' row=1 }
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>
+          <h4><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>
+          </h4>
+          <p>[field:description function="cn_substr(@me,250)"/]...</p>
+        </li>
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="region3 fl">
+      <div class="t_3">热门文章</div>
+      <ul class="block4">{dede:arclist  typeid='' row=7 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="main_column">
+    <div class="t_2"> <span>{dede:channelartlist typeid='3' row='81'}
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+      {/dede:channelartlist}</span>
+      <h3><a href="/jiaoxue/">教学资料</a></h3>
+    </div>
+    <div class="region3 fl">
+      <ul class="block2">{dede:arclist  typeid='' row=1 }
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>[field:description function="cn_substr(@me,250)"/]...</li>
+        
+
+      {/dede:arclist}</ul>
+      <ul class="block3">{dede:arclist  typeid='' row=4 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="region4 fl">
+      <h3><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h3>
+      <p>[field:description function="cn_substr(@me,250)"/]...</p>
+
+      <ul class="block8">{dede:channelartlist typeid='3' row='1'}
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>
+          <h4><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h4>
+          <p>[field:description function="cn_substr(@me,250)"/]...</p>
+        </li>
+        
+
+      {/dede:channelartlist}</ul>
+    </div>
+    <div class="region3 fl">
+      <div class="t_3">热门文章</div>
+      <ul class="block4">{dede:arclist  typeid='' row=7 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="main_column">
+    <div class="t_2"> <span>{dede:channelartlist typeid='3' row='101'}
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+      {/dede:channelartlist}</span>
+      <h3><a href="/wenmi/">文秘办公</a></h3>
+    </div>
+    <div class="region3 fl">
+      <ul class="block2">{dede:arclist  typeid='' row=1 }
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>[field:description function="cn_substr(@me,250)"/]...</li>
+        
+
+      {/dede:arclist}</ul>
+      <ul class="block3">{dede:arclist  typeid='' row=4 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="region4 fl">
+      <h3><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h3>
+      <p>[field:description function="cn_substr(@me,250)"/]...</p>
+
+      <ul class="block8">{dede:channelartlist typeid='3' row='1'}
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>
+          <h4><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h4>
+          <p>[field:description function="cn_substr(@me,250)"/]...</p>
+        </li>
+        
+
+      {/dede:channelartlist}</ul>
+    </div>
+    <div class="region3 fl">
+      <div class="t_3">热门文章</div>
+      <ul class="block4">{dede:arclist  typeid='' row=7 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="main_column">
+    <div class="t_2"> <span>{dede:channelartlist typeid='3' row='81'}
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>
+      {/dede:channelartlist}</span>
+      <h3><a href="/xuexi/">学习/方法</a></h3>
+    </div>
+    <div class="region3 fl">
+      <ul class="block2">{dede:arclist  typeid='' row=1 }
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>[field:description function="cn_substr(@me,250)"/]...</li>
+        
+
+      {/dede:arclist}</ul>
+      <ul class="block3">{dede:arclist  typeid='' row=4 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="region4 fl">
+      <h3><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h3>
+      <p>[field:description function="cn_substr(@me,250)"/]...</p>
+
+      <ul class="block8">{dede:channelartlist typeid='3' row='1'}
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>
+          <h4><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h4>
+          <p>[field:description function="cn_substr(@me,250)"/]...</p>
+        </li>
+        
+
+      {/dede:channelartlist}</ul>
+    </div>
+    <div class="region3 fl">
+      <div class="t_3">热门文章</div>
+      <ul class="block4">{dede:arclist  typeid='' row=7 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="main_column">
+    <div class="t_2"> <span>{dede:channelartlist typeid='3' row='91'}
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        |
+
+        <a href="{dede:field.typeurl/}">{dede:field.typename/}</a>|
+
+      {/dede:channelartlist}</span>
+      <h3><a href="/wendang/">实用文档</a></h3>
+    </div>
+    <div class="region3 fl">
+      <ul class="block2">{dede:arclist  typeid='' row=1 }
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>[field:description function="cn_substr(@me,250)"/]...</li>
+        
+
+      {/dede:arclist}</ul>
+      <ul class="block3">{dede:arclist  typeid='' row=4 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="region4 fl">
+      <h3><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h3>
+      <p>[field:description function="cn_substr(@me,250)"/]...</p>
+
+      <ul class="block8">{dede:channelartlist typeid='3' row='1'}
+        <li> <a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a>
+          <h4><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></h4>
+          <p>[field:description function="cn_substr(@me,250)"/]...</p>
+        </li>
+        
+
+      {/dede:channelartlist}</ul>
+    </div>
+    <div class="region3 fl">
+      <div class="t_3">热门文章</div>
+      <ul class="block4">{dede:arclist  typeid='' row=7 }
+        <li><a href="[field:arcurl/]" title="[field:title/]" target="_blank">[field:title/]</a></li>
+        
+        
+        
+        
+        
+        
+        
+
+      {/dede:arclist}</ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="link">
+    <h3>友情链接</h3>
+    <p>{dede:channelartlist typeid='3' row='101'}           <a href="{dede:field.typeurl/}" target="_blank">{dede:field.typename/}</a> {/dede:channelartlist}</p>
+  </div>
+  <div class="foot">Copyright © 2008-2021 免费范文网 版权所有<br>
+    声明 :本网站尊重并保护知识产权，根据《信息网络传播权保护条例》，如果我们转载的作品侵犯了您的权利,请在一个月内通知我们，我们会及时删除。<br>
+    客服QQ：370150219 邮箱：370150219@qq.com<br><a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">苏ICP备16052595号-18</a>
+
+  </div>
+  <a href="#0" class="cd-top">Top</a>
+  
+  
+  <div style="display:none;">
+    
+    
+  </div>
+
+
+<script type="text/javascript" src="style/js/jquery.min.js"></script><script type="text/javascript" src="style/js/jquery.superslide.2.1.1.js"></script><script type="text/javascript" src="style/js/gotop.js"></script><script type="text/javascript">if (window.location.toString().indexOf('pref=padindex') != -1) { } else { if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))) { if (window.location.href.indexOf("?mobile") < 0) { try { if (/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) { window.location.href = "https://m.77cn.com.cn"; } else if (/iPad/i.test(navigator.userAgent)) { } else { } } catch (e) { } } } }</script><script type="text/javascript">
+    function search() {
+      var q = document.getElementById("q").value;
+      window.location.href = "/search/" + q + ".html";
+    }
+    function enterIn(obj, evt) {
+      var evt = evt ? evt : (window.event ? window.event : null);
+      if (evt.keyCode == 13) {
+        var q = obj.value;
+        window.location.href = "/search/" + q + ".html";
+      }
+    }
+  </script><script type="text/javascript">
+    $(function () {
+      $.ajax({
+        type: "GET",
+        dataType: "text",
+        url: "/user/ajax_checkstate.php",
+        data: "",
+        async: false,
+        success: function (data, textStatus, jqXHR) {
+          if (data != "") {
+            $(".user-login").html(data);
+          }
+        }
+      });
+    })
+  </script><script type="text/javascript">
+    $(function () {
+      $(".user-box").hover(function () {
+        $(".drop-menu").stop(true, true).fadeIn(0);
+      }, function () {
+        $(".drop-menu").fadeOut(500, function () {
+          $(".drop-menu").css("display", "none");
+        });
+      });
+    });
+  </script><script type="text/javascript">
+        jQuery("#slideBox").slide({
+          mainCell: ".bd ul", autoPlay: true, effect: "left",
+          endFun: function (i, c) {
+            jQuery("#slideBox .tit").css({ "bottom": -40 }).eq(i).animate({ "bottom": 0 });
+            jQuery("#slideBox .bg").css({ "bottom": -40 }).eq(i).animate({ "bottom": 0 });
+          }
+        });
+      </script><script type="text/javascript">
+    //首页分类
+    $('.nav_list li').hover(function () {
+      $(".nav_list > li > div ").css('display', 'none');
+      $(this).children("div").show();
+    }, function () {
+      $(".nav_list > li > div ").css('display', 'none');
+    });
+    //分类下拉
+    $(function () {
+      $(".nav.down").hover(function () {
+        $(".nav.down > ul").fadeIn("slow");
+        $(".nav.down > ul").css('display', 'block');
+      }, function () {
+        $(".nav.down > ul").css('display', 'none');
+      });
+    });
+    $(document).on("keydown", function (e) {
+      if (e.keyCode == 13 && $("#txt_search").is(":focus")) {
+        $("#search_button").click();
+      }
+    });
+  </script><script type="text/javascript">
+    $(".right-tag a").each(function () { $(this).addClass("tags" + (Math.floor(Math.random() * 9) + 1)); });
+    $(function () { var c = $("#FontSizeBtn i"), a = $(".art_body"); c.click(function () { var b = $(this).index(); 0 == b && a.css("font-size", "18px"); 1 == b && a.css("font-size", "16px"); 2 == b && a.css("font-size", "14px"); c.removeClass("active"); $(this).addClass("active") }) });
+  </script><script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?731c14e2b04fc5b703912a0a3d4d6ea3";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script><script>
+      (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+      })();
+    </script></body></html>

@@ -12,6 +12,7 @@ fs.readFile(path.join(__dirname, 'index-1.html'), 'utf-8', function (err, data) 
   $2("script").remove()
   $2("link").remove()
   $2("head").append(links)
+
   let count_obj = {}
   $2("div[class]").each(function (idx, el) {
     let cls = $2(this).attr("class")
@@ -74,7 +75,6 @@ fs.readFile(path.join(__dirname, 'index-1.html'), 'utf-8', function (err, data) 
           avg = sum / ct
           if (avg < 8) {
             target_arr[i].find("a").each(function () {
-              console.log($2(this).attr("href"))
               $2(this).attr("href", "{dede:field.typeurl/}")
               $2(this).text("{dede:field.typename/}")
             })
@@ -83,6 +83,9 @@ fs.readFile(path.join(__dirname, 'index-1.html'), 'utf-8', function (err, data) 
           } else {
             target_arr[i].find("a").each(function () {
               $2(this).attr("href", "[field:arcurl/]")
+              if ($2(this).attr("title")) {
+                $2(this).attr("title", "[field:title/]")
+              }
               $2(this).text("[field:title/]")
             })
             target_arr[i].parent().html("{dede:arclist  typeid='' row=" + len + " }" + target_arr[i].parent().html() + "{/dede:arclist}")
@@ -97,12 +100,74 @@ fs.readFile(path.join(__dirname, 'index-1.html'), 'utf-8', function (err, data) 
 
     }
   }
-  let a_arr = []
   $2("a:parent").each(function () {
+    let count = 0
+    let that = $2(this)
+    let len = that.siblings().length
 
+    that.siblings().each(function () {
+      if ($2(this).get(0).name === that.get(0).name) {
+        ++count
+      }
+      // 如果相同类型 则判断是文章还是标签
+      if (count === len) {
+        let sum = 0
+        let ct = 0
+        let avg = 0
+        that.siblings().each(function () {
+          sum += $2(this).text().replace(" ", "").length
+          ++ct
+        })
+        avg = sum / ct
+        $2(this).siblings().remove()
+        if (avg < 8) {
+          $2(this).attr("href", "{dede:field.typeurl/}")
+          $2(this).text("{dede:field.typename/}")
+          $2(this).parent().html("{dede:channelartlist typeid='3' row='" + len + 1 + "'}" + $2(this).parent().html() + "{/dede:channelartlist}")
+
+        } else {
+          $2(this).attr("href", "[field:arcurl/]")
+          if ($2(this).attr("title")) {
+            $2(this).attr("title", "[field:title/]")
+          }
+          $2(this).text("[field:title/]")
+          $2(this).parent().html("{dede:arclist  typeid='' row=" + len + 1 + " }" + $2(this).parent().html() + "{/dede:arclist}")
+
+        }
+        count = 0
+      }
+    })
   })
-  console.log($2.html())
+  $2("a[title]:parent").each(function () {
+    if ($2(this).attr('href') !== "[field:arcurl/]" || $2(this).attr('href') !== "/" || $2(this).attr('href').indexOf('#') !== 0) {
+      $2(this).attr('href', "[field:arcurl/]")
+      $2(this).attr('title', "[field:title/]")
+      $2(this).attr('href', "[field:arcurl/]")
+      $2(this).text("[field:title/]")
+    }
+  })
+  $2("li:parent").each(function () {
+    let that = $2(this)
+    let len = that.siblings().length
 
+    that.siblings().each(function () {
+
+      $2(this).siblings('li').remove()
+      $2(this).parent().html("{dede:arclist  typeid='' row=" + len + 1 + " }" + $2(this).parent().html() + "{/dede:arclist}")
+    })
+  })
+
+  $2("body").append(scripts)
+  let output = $2.html().replace(/>[^<]+\.\.\.</ig, '>' + dede.desc + '<')
+  output = output.replace("|", '')
+  console.log(output)
+  fs.writeFile(path.join(__dirname, '../dede/index.html'), output, 'utf-8', function (err) {
+    if (err) {
+      console.log(err)
+      return
+    }
+    console.log("写入成功")
+  })
 })
 
 
@@ -124,3 +189,4 @@ var dede = {}
 dede.head_index = `	<title>{dede:global.cfg_webname/}</title>
 <meta name="keywords" content="{dede:global.cfg_keywords/}"/>
 <meta name="description" content="{dede:global.cfg_description/}"/>`
+dede.desc = `[field:description function="cn_substr(@me,250)"/]...`
