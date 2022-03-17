@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>demo05.html</title>
+  <style>
+ input[type="text" ] {
+    padding: 1px 2px;
+}
+    ol,ul,li{
+        margin: 0;
+        padding: 0;
+    }
+    li{
+
+        list-style: none;
+    }
+    .list{
+        margin: 30px auto 0;
+        width: 80%;
+    }
+    .list-ul{
+ 
+    }
+    .list-option{
+      
+    }
+    .list-input{
+        width: 60%;
+        height: 40px;
+        font-size: 18px;
+        margin-bottom:20px;
+        letter-spacing: 1px;
+        color: #ccc;
+    }
+    .list-btn{
+        width: 30%;
+        padding: 0 5%;
+        height: 120px;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+    }
+    .list-btn span{
+        cursor: pointer;
+        color: #333;
+    }
+    .list-add-show{
+        height: 30px;
+        line-height: 30px;
+         padding: 0 28px;
+         position: relative; 
+         cursor: pointer;
+
+    }
+    .list-add-show .add-ico{
+        font-weight: bold;
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        left: -2px;
+        top:-2px;
+        font-size: 28px; 
+        font-style: normal; 
+        cursor: pointer;
+        transform: rotate(0);
+        transition: 1s ease all;
+        display: block; 
+
+    }
+    .list-add-show .add-ico:hover{
+        font-size: 30px;
+        transform: rotate(30deg);
+    }
+    .list-add-show:hover .add-ico{
+        font-size: 30px;
+        transform: rotate(30deg);
+    }
+    .list-add-area{
+        height: 36px; 
+        padding: 2px
+    }
+    .list-add-input{
+        margin-top: 8px;
+        height: 20px;
+
+    }
+    .list-add-area input[type=button]{
+      height: 28px;
+      cursor: pointer;
+      display: inline-block;
+      border:1px solid #ccc;
+    }
+    .list-hide{
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <form action="">
+    <div class="list">
+      <ul class="list-ul">
+        <li class="list-option">
+          <input type="text" class="list-input" name="list[]">
+          <span class="list-btn">
+              <span class="list-up">[上移]</span>
+              <span class="list-down">[下移]</span>
+              <span class="list-del">[删除]</span>
+          </span>
+        </li>
+      </ul>
+      <div class="list-bottom">
+          <div class="list-add-show"><i class="add-ico">+</i>添加项目</div>
+          <div class="list-add-area list-hide">添加到列表:
+              <input type="text" class="list-add-input" name="list[]">
+              <input type="button" class="list-add-add" value="添加">
+              <input type="button" class="list-add-cancel" value="取消">
+          </div>
+      </div>
+    </div>
+  </form>
+  <script src="SmartList.js"></script>
+  <script>
+      SmartList('list',['PHP','JavaScript'])
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>demo06</title>
+</head>
+<body>
+  <p>用户名称：<input type="text" name="uname"></p>
+  <p>电子邮箱：<input type="text" name="email"></p>
+  <p>手机号码：<input type="text" name="tel"></p>
+  <script>
+    $('input[type=text]').focus(function() {
+      let tips=$('<span></span>')
+      tips.html('请按要求输入')
+      $('input:focus').after(tips)
+    })
+    $('input[type=text]').blur(function() {
+      $(this).next().remove()
+    })
+  </script>
+</body>
+</html>                                  

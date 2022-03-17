@@ -21,8 +21,8 @@ body {
     opacity: .0;
   }
   100% {
-    -webkit-transform: rotateX(456deg) rotateY(222deg) rotateZ(7deg) translate3d(869px, 164px, 48px) scale(1);
-            transform: rotateX(456deg) rotateY(222deg) rotateZ(7deg) translate3d(869px, 164px, 48px) scale(1);
+    -webkit-transform: rotateX(842deg) rotateY(169deg) rotateZ(93deg) translate3d(270px, 500px, 45px) scale(1);
+            transform: rotateX(842deg) rotateY(169deg) rotateZ(93deg) translate3d(270px, 500px, 45px) scale(1);
     opacity: .6;
   }
 }
@@ -32,1209 +32,1209 @@ body {
     opacity: .0;
   }
   100% {
-    -webkit-transform: rotateX(456deg) rotateY(222deg) rotateZ(7deg) translate3d(869px, 164px, 48px) scale(1);
-            transform: rotateX(456deg) rotateY(222deg) rotateZ(7deg) translate3d(869px, 164px, 48px) scale(1);
+    -webkit-transform: rotateX(842deg) rotateY(169deg) rotateZ(93deg) translate3d(270px, 500px, 45px) scale(1);
+            transform: rotateX(842deg) rotateY(169deg) rotateZ(93deg) translate3d(270px, 500px, 45px) scale(1);
     opacity: .6;
   }
 }
 
 .tri-span:nth-child(1) {
-  border-top: 109px solid rgba(43, 0, 255, 0.7);
-  border-right: 109px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 109px solid transparent;
-  top: 9px;
-  left: 7%;
-  -webkit-animation-delay: -3.4s;
-          animation-delay: -3.4s;
+  border-top: 80.66667px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 80.66667px solid transparent;
+  border-left: 242px solid rgba(0, 9, 255, 0.7);
+  top: 75px;
+  left: 4%;
+  -webkit-animation-delay: -0.2s;
+          animation-delay: -0.2s;
   z-index: 1;
 }
 
 .tri-span:nth-child(2) {
-  border-top: 10.33333px solid transparent;
-  border-right: 31px solid rgba(255, 0, 191, 0.7);
-  border-bottom: 10.33333px solid transparent;
-  border-left: 0 solid transparent;
-  top: 73px;
-  left: 56%;
-  -webkit-animation-delay: -0.5s;
-          animation-delay: -0.5s;
+  border-top: 103px solid rgba(0, 55, 255, 0.7);
+  border-right: 34.33333px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 34.33333px solid transparent;
+  top: 33px;
+  left: 52%;
+  -webkit-animation-delay: -7.7s;
+          animation-delay: -7.7s;
   z-index: 2;
 }
 
 .tri-span:nth-child(3) {
-  border-top: 150px solid transparent;
+  border-top: 284px solid transparent;
   border-right: 0 solid transparent;
-  border-bottom: 150px solid transparent;
-  border-left: 150px solid rgba(255, 0, 170, 0.7);
-  top: 63px;
-  left: 54%;
-  -webkit-animation-delay: -0.7s;
-          animation-delay: -0.7s;
+  border-bottom: 284px solid transparent;
+  border-left: 284px solid rgba(221, 0, 255, 0.7);
+  top: 86px;
+  left: 22%;
+  -webkit-animation-delay: -7.2s;
+          animation-delay: -7.2s;
   z-index: 3;
 }
 
 .tri-span:nth-child(4) {
-  border-top: 91px solid transparent;
-  border-right: 273px solid rgba(21, 0, 255, 0.7);
-  border-bottom: 91px solid transparent;
-  border-left: 0 solid transparent;
-  top: 6px;
-  left: 35%;
-  -webkit-animation-delay: -3.3s;
-          animation-delay: -3.3s;
+  border-top: 10px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 30px solid rgba(255, 238, 0, 0.7);
+  top: 86px;
+  left: 54%;
+  -webkit-animation-delay: -9.9s;
+          animation-delay: -9.9s;
   z-index: 4;
 }
 
 .tri-span:nth-child(5) {
-  border-top: 135px solid rgba(17, 0, 255, 0.7);
-  border-right: 67.5px solid transparent;
+  border-top: 275px solid rgba(149, 0, 255, 0.7);
+  border-right: 68.75px solid transparent;
   border-bottom: 0 solid transparent;
-  border-left: 67.5px solid transparent;
-  top: 75px;
-  left: 40%;
-  -webkit-animation-delay: -4.5s;
-          animation-delay: -4.5s;
+  border-left: 68.75px solid transparent;
+  top: 38px;
+  left: 21%;
+  -webkit-animation-delay: -8.5s;
+          animation-delay: -8.5s;
   z-index: 5;
 }
 
 .tri-span:nth-child(6) {
   border-top: 0 solid transparent;
-  border-right: 58px solid transparent;
-  border-bottom: 58px solid rgba(255, 157, 0, 0.7);
-  border-left: 58px solid transparent;
-  top: 45px;
-  left: 54%;
-  -webkit-animation-delay: -9.6s;
-          animation-delay: -9.6s;
+  border-right: 40px solid transparent;
+  border-bottom: 160px solid rgba(217, 0, 255, 0.7);
+  border-left: 40px solid transparent;
+  top: 29px;
+  left: 42%;
+  -webkit-animation-delay: -5s;
+          animation-delay: -5s;
   z-index: 6;
 }
 
 .tri-span:nth-child(7) {
-  border-top: 11.66667px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 11.66667px solid transparent;
-  border-left: 35px solid rgba(0, 255, 115, 0.7);
-  top: 40px;
-  left: 77%;
-  -webkit-animation-delay: -5.9s;
-          animation-delay: -5.9s;
+  border-top: 95.33333px solid transparent;
+  border-right: 286px solid rgba(255, 0, 38, 0.7);
+  border-bottom: 95.33333px solid transparent;
+  border-left: 0 solid transparent;
+  top: 18px;
+  left: 75%;
+  -webkit-animation-delay: -2.4s;
+          animation-delay: -2.4s;
   z-index: 7;
 }
 
 .tri-span:nth-child(8) {
-  border-top: 76px solid transparent;
+  border-top: 211px solid transparent;
   border-right: 0 solid transparent;
-  border-bottom: 76px solid transparent;
-  border-left: 228px solid rgba(89, 0, 255, 0.7);
-  top: 92px;
-  left: 7%;
-  -webkit-animation-delay: -5.1s;
-          animation-delay: -5.1s;
+  border-bottom: 211px solid transparent;
+  border-left: 211px solid rgba(98, 255, 0, 0.7);
+  top: 72px;
+  left: 42%;
+  -webkit-animation-delay: -1.7s;
+          animation-delay: -1.7s;
   z-index: 8;
 }
 
 .tri-span:nth-child(9) {
-  border-top: 25px solid transparent;
+  border-top: 46.66667px solid transparent;
   border-right: 0 solid transparent;
-  border-bottom: 25px solid transparent;
-  border-left: 50px solid rgba(0, 102, 255, 0.7);
-  top: 6px;
-  left: 90%;
-  -webkit-animation-delay: -6.9s;
-          animation-delay: -6.9s;
+  border-bottom: 46.66667px solid transparent;
+  border-left: 140px solid rgba(174, 0, 255, 0.7);
+  top: 85px;
+  left: 16%;
+  -webkit-animation-delay: -4.6s;
+          animation-delay: -4.6s;
   z-index: 9;
 }
 
 .tri-span:nth-child(10) {
-  border-top: 78px solid rgba(0, 47, 255, 0.7);
-  border-right: 39px solid transparent;
+  border-top: 80px solid rgba(106, 0, 255, 0.7);
+  border-right: 40px solid transparent;
   border-bottom: 0 solid transparent;
-  border-left: 39px solid transparent;
-  top: 1px;
-  left: 15%;
-  -webkit-animation-delay: -1.2s;
-          animation-delay: -1.2s;
+  border-left: 40px solid transparent;
+  top: 44px;
+  left: 71%;
+  -webkit-animation-delay: -5.9s;
+          animation-delay: -5.9s;
   z-index: 10;
 }
 
 .tri-span:nth-child(11) {
-  border-top: 300px solid rgba(0, 81, 255, 0.7);
-  border-right: 300px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 300px solid transparent;
-  top: 45px;
-  left: 49%;
-  -webkit-animation-delay: -1s;
-          animation-delay: -1s;
+  border-top: 58.66667px solid transparent;
+  border-right: 176px solid rgba(255, 247, 0, 0.7);
+  border-bottom: 58.66667px solid transparent;
+  border-left: 0 solid transparent;
+  top: 16px;
+  left: 62%;
+  -webkit-animation-delay: -1.2s;
+          animation-delay: -1.2s;
   z-index: 11;
 }
 
 .tri-span:nth-child(12) {
-  border-top: 251px solid rgba(0, 208, 255, 0.7);
-  border-right: 125.5px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 125.5px solid transparent;
-  top: 11px;
-  left: 65%;
-  -webkit-animation-delay: -2.6s;
-          animation-delay: -2.6s;
+  border-top: 0 solid transparent;
+  border-right: 48.5px solid transparent;
+  border-bottom: 97px solid rgba(132, 0, 255, 0.7);
+  border-left: 48.5px solid transparent;
+  top: 54px;
+  left: 71%;
+  -webkit-animation-delay: -0.9s;
+          animation-delay: -0.9s;
   z-index: 12;
 }
 
 .tri-span:nth-child(13) {
-  border-top: 144px solid rgba(255, 0, 187, 0.7);
-  border-right: 48px solid transparent;
+  border-top: 290px solid rgba(255, 119, 0, 0.7);
+  border-right: 145px solid transparent;
   border-bottom: 0 solid transparent;
-  border-left: 48px solid transparent;
-  top: 7px;
-  left: 85%;
-  -webkit-animation-delay: -8.2s;
-          animation-delay: -8.2s;
+  border-left: 145px solid transparent;
+  top: 61px;
+  left: 67%;
+  -webkit-animation-delay: -8.5s;
+          animation-delay: -8.5s;
   z-index: 13;
 }
 
 .tri-span:nth-child(14) {
-  border-top: 0 solid transparent;
-  border-right: 95px solid transparent;
-  border-bottom: 95px solid rgba(0, 255, 145, 0.7);
-  border-left: 95px solid transparent;
-  top: 12px;
-  left: 69%;
-  -webkit-animation-delay: -6.6s;
-          animation-delay: -6.6s;
+  border-top: 19.66667px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 19.66667px solid transparent;
+  border-left: 59px solid rgba(238, 0, 255, 0.7);
+  top: 79px;
+  left: 49%;
+  -webkit-animation-delay: -7.7s;
+          animation-delay: -7.7s;
   z-index: 14;
 }
 
 .tri-span:nth-child(15) {
-  border-top: 32.25px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 32.25px solid transparent;
-  border-left: 129px solid rgba(0, 111, 255, 0.7);
-  top: 56px;
-  left: 85%;
-  -webkit-animation-delay: -5.4s;
-          animation-delay: -5.4s;
+  border-top: 186px solid rgba(255, 0, 170, 0.7);
+  border-right: 46.5px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 46.5px solid transparent;
+  top: 31px;
+  left: 93%;
+  -webkit-animation-delay: -0.4s;
+          animation-delay: -0.4s;
   z-index: 15;
 }
 
 .tri-span:nth-child(16) {
-  border-top: 268px solid rgba(255, 0, 136, 0.7);
-  border-right: 268px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 268px solid transparent;
-  top: 50px;
-  left: 11%;
-  -webkit-animation-delay: -4.8s;
-          animation-delay: -4.8s;
+  border-top: 0 solid transparent;
+  border-right: 68.66667px solid transparent;
+  border-bottom: 206px solid rgba(255, 0, 145, 0.7);
+  border-left: 68.66667px solid transparent;
+  top: 31px;
+  left: 8%;
+  -webkit-animation-delay: -4s;
+          animation-delay: -4s;
   z-index: 16;
 }
 
 .tri-span:nth-child(17) {
-  border-top: 0 solid transparent;
-  border-right: 128px solid transparent;
-  border-bottom: 128px solid rgba(255, 0, 230, 0.7);
-  border-left: 128px solid transparent;
-  top: 95px;
-  left: 59%;
-  -webkit-animation-delay: -2.3s;
-          animation-delay: -2.3s;
+  border-top: 232px solid rgba(0, 106, 255, 0.7);
+  border-right: 77.33333px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 77.33333px solid transparent;
+  top: 20px;
+  left: 42%;
+  -webkit-animation-delay: -8.5s;
+          animation-delay: -8.5s;
   z-index: 17;
 }
 
 .tri-span:nth-child(18) {
-  border-top: 0 solid transparent;
-  border-right: 39px solid transparent;
-  border-bottom: 117px solid rgba(0, 255, 98, 0.7);
-  border-left: 39px solid transparent;
-  top: 4px;
-  left: 60%;
-  -webkit-animation-delay: -8.9s;
-          animation-delay: -8.9s;
+  border-top: 5.5px solid transparent;
+  border-right: 11px solid rgba(0, 255, 140, 0.7);
+  border-bottom: 5.5px solid transparent;
+  border-left: 0 solid transparent;
+  top: 80px;
+  left: 79%;
+  -webkit-animation-delay: -0.3s;
+          animation-delay: -0.3s;
   z-index: 18;
 }
 
 .tri-span:nth-child(19) {
   border-top: 0 solid transparent;
-  border-right: 24.5px solid transparent;
-  border-bottom: 49px solid rgba(255, 0, 230, 0.7);
-  border-left: 24.5px solid transparent;
-  top: 42px;
-  left: 72%;
-  -webkit-animation-delay: -8.5s;
-          animation-delay: -8.5s;
+  border-right: 34.66667px solid transparent;
+  border-bottom: 104px solid rgba(0, 115, 255, 0.7);
+  border-left: 34.66667px solid transparent;
+  top: 24px;
+  left: 61%;
+  -webkit-animation-delay: -5.6s;
+          animation-delay: -5.6s;
   z-index: 19;
 }
 
 .tri-span:nth-child(20) {
-  border-top: 194px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 194px solid transparent;
-  border-left: 194px solid rgba(0, 255, 128, 0.7);
-  top: 40px;
-  left: 50%;
-  -webkit-animation-delay: -9.7s;
-          animation-delay: -9.7s;
+  border-top: 140px solid rgba(255, 238, 0, 0.7);
+  border-right: 70px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 70px solid transparent;
+  top: 84px;
+  left: 48%;
+  -webkit-animation-delay: -6.3s;
+          animation-delay: -6.3s;
   z-index: 20;
 }
 
 .tri-span:nth-child(21) {
   border-top: 0 solid transparent;
-  border-right: 82.33333px solid transparent;
-  border-bottom: 247px solid rgba(0, 9, 255, 0.7);
-  border-left: 82.33333px solid transparent;
-  top: 95px;
-  left: 34%;
-  -webkit-animation-delay: -3.1s;
-          animation-delay: -3.1s;
+  border-right: 78px solid transparent;
+  border-bottom: 234px solid rgba(0, 247, 255, 0.7);
+  border-left: 78px solid transparent;
+  top: 71px;
+  left: 61%;
+  -webkit-animation-delay: -2.2s;
+          animation-delay: -2.2s;
   z-index: 21;
 }
 
 .tri-span:nth-child(22) {
-  border-top: 42px solid transparent;
+  border-top: 147px solid transparent;
   border-right: 0 solid transparent;
-  border-bottom: 42px solid transparent;
-  border-left: 42px solid rgba(0, 255, 85, 0.7);
-  top: 33px;
-  left: 89%;
-  -webkit-animation-delay: -8.1s;
-          animation-delay: -8.1s;
+  border-bottom: 147px solid transparent;
+  border-left: 294px solid rgba(0, 255, 64, 0.7);
+  top: 99px;
+  left: 15%;
+  -webkit-animation-delay: -3.2s;
+          animation-delay: -3.2s;
   z-index: 22;
 }
 
 .tri-span:nth-child(23) {
-  border-top: 205px solid transparent;
-  border-right: 205px solid rgba(255, 0, 187, 0.7);
-  border-bottom: 205px solid transparent;
-  border-left: 0 solid transparent;
-  top: 31px;
-  left: 85%;
-  -webkit-animation-delay: -6.1s;
-          animation-delay: -6.1s;
+  border-top: 0 solid transparent;
+  border-right: 8.75px solid transparent;
+  border-bottom: 35px solid rgba(85, 255, 0, 0.7);
+  border-left: 8.75px solid transparent;
+  top: 28px;
+  left: 94%;
+  -webkit-animation-delay: -0.7s;
+          animation-delay: -0.7s;
   z-index: 23;
 }
 
 .tri-span:nth-child(24) {
-  border-top: 229px solid rgba(166, 255, 0, 0.7);
-  border-right: 57.25px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 57.25px solid transparent;
-  top: 16px;
-  left: 30%;
-  -webkit-animation-delay: -3.9s;
-          animation-delay: -3.9s;
+  border-top: 121px solid transparent;
+  border-right: 121px solid rgba(0, 255, 208, 0.7);
+  border-bottom: 121px solid transparent;
+  border-left: 0 solid transparent;
+  top: 91px;
+  left: 47%;
+  -webkit-animation-delay: -7.6s;
+          animation-delay: -7.6s;
   z-index: 24;
 }
 
 .tri-span:nth-child(25) {
-  border-top: 0 solid transparent;
-  border-right: 81.66667px solid transparent;
-  border-bottom: 245px solid rgba(255, 111, 0, 0.7);
-  border-left: 81.66667px solid transparent;
-  top: 22px;
-  left: 25%;
-  -webkit-animation-delay: -7.8s;
-          animation-delay: -7.8s;
+  border-top: 124px solid transparent;
+  border-right: 248px solid rgba(255, 102, 0, 0.7);
+  border-bottom: 124px solid transparent;
+  border-left: 0 solid transparent;
+  top: 81px;
+  left: 55%;
+  -webkit-animation-delay: -6.6s;
+          animation-delay: -6.6s;
   z-index: 25;
 }
 
 .tri-span:nth-child(26) {
-  border-top: 244px solid rgba(132, 0, 255, 0.7);
-  border-right: 122px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 122px solid transparent;
-  top: 57px;
-  left: 48%;
-  -webkit-animation-delay: -6.2s;
-          animation-delay: -6.2s;
+  border-top: 0 solid transparent;
+  border-right: 16.5px solid transparent;
+  border-bottom: 66px solid rgba(255, 0, 115, 0.7);
+  border-left: 16.5px solid transparent;
+  top: 30px;
+  left: 31%;
+  -webkit-animation-delay: -1.7s;
+          animation-delay: -1.7s;
   z-index: 26;
 }
 
 .tri-span:nth-child(27) {
-  border-top: 0 solid transparent;
-  border-right: 42px solid transparent;
-  border-bottom: 168px solid rgba(255, 0, 179, 0.7);
-  border-left: 42px solid transparent;
-  top: 77px;
-  left: 85%;
-  -webkit-animation-delay: -3s;
-          animation-delay: -3s;
+  border-top: 53.5px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 53.5px solid transparent;
+  border-left: 107px solid rgba(255, 102, 0, 0.7);
+  top: 63px;
+  left: 100%;
+  -webkit-animation-delay: -4.5s;
+          animation-delay: -4.5s;
   z-index: 27;
 }
 
 .tri-span:nth-child(28) {
-  border-top: 252px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 252px solid transparent;
-  border-left: 252px solid rgba(0, 81, 255, 0.7);
-  top: 93px;
-  left: 45%;
-  -webkit-animation-delay: -7.5s;
-          animation-delay: -7.5s;
+  border-top: 233px solid transparent;
+  border-right: 233px solid rgba(119, 0, 255, 0.7);
+  border-bottom: 233px solid transparent;
+  border-left: 0 solid transparent;
+  top: 19px;
+  left: 49%;
+  -webkit-animation-delay: -7.3s;
+          animation-delay: -7.3s;
   z-index: 28;
 }
 
 .tri-span:nth-child(29) {
-  border-top: 11px solid rgba(43, 255, 0, 0.7);
-  border-right: 3.66667px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 3.66667px solid transparent;
-  top: 30px;
-  left: 81%;
-  -webkit-animation-delay: -1.7s;
-          animation-delay: -1.7s;
+  border-top: 0 solid transparent;
+  border-right: 68.5px solid transparent;
+  border-bottom: 137px solid rgba(115, 0, 255, 0.7);
+  border-left: 68.5px solid transparent;
+  top: 52px;
+  left: 58%;
+  -webkit-animation-delay: -2.3s;
+          animation-delay: -2.3s;
   z-index: 29;
 }
 
 .tri-span:nth-child(30) {
-  border-top: 5px solid rgba(119, 255, 0, 0.7);
-  border-right: 5px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 5px solid transparent;
-  top: 58px;
-  left: 40%;
-  -webkit-animation-delay: -6.1s;
-          animation-delay: -6.1s;
+  border-top: 51.33333px solid transparent;
+  border-right: 154px solid rgba(0, 111, 255, 0.7);
+  border-bottom: 51.33333px solid transparent;
+  border-left: 0 solid transparent;
+  top: 66px;
+  left: 76%;
+  -webkit-animation-delay: -9.4s;
+          animation-delay: -9.4s;
   z-index: 30;
 }
 
 .tri-span:nth-child(31) {
-  border-top: 91.66667px solid transparent;
+  border-top: 12px solid transparent;
   border-right: 0 solid transparent;
-  border-bottom: 91.66667px solid transparent;
-  border-left: 275px solid rgba(196, 255, 0, 0.7);
-  top: 19px;
-  left: 4%;
-  -webkit-animation-delay: -8.9s;
-          animation-delay: -8.9s;
+  border-bottom: 12px solid transparent;
+  border-left: 48px solid rgba(123, 0, 255, 0.7);
+  top: 70px;
+  left: 49%;
+  -webkit-animation-delay: -7.9s;
+          animation-delay: -7.9s;
   z-index: 31;
 }
 
 .tri-span:nth-child(32) {
   border-top: 0 solid transparent;
-  border-right: 59.66667px solid transparent;
-  border-bottom: 179px solid rgba(94, 0, 255, 0.7);
-  border-left: 59.66667px solid transparent;
-  top: 53px;
-  left: 39%;
-  -webkit-animation-delay: -7.2s;
-          animation-delay: -7.2s;
+  border-right: 86.33333px solid transparent;
+  border-bottom: 259px solid rgba(21, 0, 255, 0.7);
+  border-left: 86.33333px solid transparent;
+  top: 93px;
+  left: 53%;
+  -webkit-animation-delay: -1.6s;
+          animation-delay: -1.6s;
   z-index: 32;
 }
 
 .tri-span:nth-child(33) {
-  border-top: 67px solid rgba(0, 242, 255, 0.7);
-  border-right: 22.33333px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 22.33333px solid transparent;
-  top: 58px;
-  left: 14%;
-  -webkit-animation-delay: -4s;
-          animation-delay: -4s;
+  border-top: 10.75px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 10.75px solid transparent;
+  border-left: 43px solid rgba(0, 255, 38, 0.7);
+  top: 90px;
+  left: 94%;
+  -webkit-animation-delay: -1.4s;
+          animation-delay: -1.4s;
   z-index: 33;
 }
 
 .tri-span:nth-child(34) {
-  border-top: 37px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 37px solid transparent;
-  border-left: 37px solid rgba(111, 255, 0, 0.7);
-  top: 42px;
-  left: 71%;
-  -webkit-animation-delay: -7.3s;
-          animation-delay: -7.3s;
+  border-top: 15.5px solid transparent;
+  border-right: 31px solid rgba(0, 255, 145, 0.7);
+  border-bottom: 15.5px solid transparent;
+  border-left: 0 solid transparent;
+  top: 83px;
+  left: 23%;
+  -webkit-animation-delay: -5.1s;
+          animation-delay: -5.1s;
   z-index: 34;
 }
 
 .tri-span:nth-child(35) {
-  border-top: 52px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 52px solid transparent;
-  border-left: 156px solid rgba(255, 140, 0, 0.7);
-  top: 89px;
-  left: 77%;
-  -webkit-animation-delay: -6.3s;
-          animation-delay: -6.3s;
+  border-top: 0 solid transparent;
+  border-right: 5.66667px solid transparent;
+  border-bottom: 17px solid rgba(132, 0, 255, 0.7);
+  border-left: 5.66667px solid transparent;
+  top: 25px;
+  left: 62%;
+  -webkit-animation-delay: -5.6s;
+          animation-delay: -5.6s;
   z-index: 35;
 }
 
 .tri-span:nth-child(36) {
-  border-top: 159px solid transparent;
-  border-right: 159px solid rgba(255, 123, 0, 0.7);
-  border-bottom: 159px solid transparent;
-  border-left: 0 solid transparent;
-  top: 56px;
-  left: 23%;
-  -webkit-animation-delay: -6.2s;
-          animation-delay: -6.2s;
+  border-top: 76px solid rgba(0, 255, 179, 0.7);
+  border-right: 38px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 38px solid transparent;
+  top: 57px;
+  left: 21%;
+  -webkit-animation-delay: -8.9s;
+          animation-delay: -8.9s;
   z-index: 36;
 }
 
 .tri-span:nth-child(37) {
-  border-top: 11.66667px solid transparent;
-  border-right: 35px solid rgba(217, 0, 255, 0.7);
-  border-bottom: 11.66667px solid transparent;
-  border-left: 0 solid transparent;
-  top: 26px;
-  left: 11%;
-  -webkit-animation-delay: -8.8s;
-          animation-delay: -8.8s;
+  border-top: 131px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 131px solid transparent;
+  border-left: 131px solid rgba(255, 170, 0, 0.7);
+  top: 66px;
+  left: 37%;
+  -webkit-animation-delay: -0.7s;
+          animation-delay: -0.7s;
   z-index: 37;
 }
 
 .tri-span:nth-child(38) {
-  border-top: 21.33333px solid transparent;
+  border-top: 13.5px solid transparent;
   border-right: 0 solid transparent;
-  border-bottom: 21.33333px solid transparent;
-  border-left: 64px solid rgba(0, 255, 153, 0.7);
-  top: 11px;
-  left: 62%;
-  -webkit-animation-delay: -4.7s;
-          animation-delay: -4.7s;
+  border-bottom: 13.5px solid transparent;
+  border-left: 27px solid rgba(255, 213, 0, 0.7);
+  top: 23px;
+  left: 46%;
+  -webkit-animation-delay: -4.6s;
+          animation-delay: -4.6s;
   z-index: 38;
 }
 
 .tri-span:nth-child(39) {
-  border-top: 221px solid rgba(255, 136, 0, 0.7);
-  border-right: 110.5px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 110.5px solid transparent;
-  top: 92px;
-  left: 3%;
-  -webkit-animation-delay: -2.6s;
-          animation-delay: -2.6s;
+  border-top: 35.75px solid transparent;
+  border-right: 143px solid rgba(13, 255, 0, 0.7);
+  border-bottom: 35.75px solid transparent;
+  border-left: 0 solid transparent;
+  top: 14px;
+  left: 27%;
+  -webkit-animation-delay: -1.4s;
+          animation-delay: -1.4s;
   z-index: 39;
 }
 
 .tri-span:nth-child(40) {
-  border-top: 72.25px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 72.25px solid transparent;
-  border-left: 289px solid rgba(255, 0, 153, 0.7);
-  top: 96px;
-  left: 84%;
-  -webkit-animation-delay: -1.2s;
-          animation-delay: -1.2s;
+  border-top: 0 solid transparent;
+  border-right: 100px solid transparent;
+  border-bottom: 200px solid rgba(157, 0, 255, 0.7);
+  border-left: 100px solid transparent;
+  top: 68px;
+  left: 94%;
+  -webkit-animation-delay: -8s;
+          animation-delay: -8s;
   z-index: 40;
 }
 
 .tri-span:nth-child(41) {
-  border-top: 0 solid transparent;
-  border-right: 62.25px solid transparent;
-  border-bottom: 249px solid rgba(55, 255, 0, 0.7);
-  border-left: 62.25px solid transparent;
-  top: 24px;
-  left: 46%;
-  -webkit-animation-delay: -6.5s;
-          animation-delay: -6.5s;
+  border-top: 28.66667px solid transparent;
+  border-right: 86px solid rgba(179, 0, 255, 0.7);
+  border-bottom: 28.66667px solid transparent;
+  border-left: 0 solid transparent;
+  top: 88px;
+  left: 61%;
+  -webkit-animation-delay: -6.6s;
+          animation-delay: -6.6s;
   z-index: 41;
 }
 
 .tri-span:nth-child(42) {
-  border-top: 277px solid transparent;
-  border-right: 277px solid rgba(60, 0, 255, 0.7);
-  border-bottom: 277px solid transparent;
-  border-left: 0 solid transparent;
-  top: 66px;
-  left: 87%;
-  -webkit-animation-delay: -7.7s;
-          animation-delay: -7.7s;
+  border-top: 0 solid transparent;
+  border-right: 137px solid transparent;
+  border-bottom: 137px solid rgba(13, 255, 0, 0.7);
+  border-left: 137px solid transparent;
+  top: 11px;
+  left: 50%;
+  -webkit-animation-delay: -7.3s;
+          animation-delay: -7.3s;
   z-index: 42;
 }
 
 .tri-span:nth-child(43) {
-  border-top: 171px solid rgba(255, 0, 38, 0.7);
-  border-right: 57px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 57px solid transparent;
-  top: 55px;
-  left: 6%;
-  -webkit-animation-delay: -1.4s;
-          animation-delay: -1.4s;
+  border-top: 0 solid transparent;
+  border-right: 72.75px solid transparent;
+  border-bottom: 291px solid rgba(255, 247, 0, 0.7);
+  border-left: 72.75px solid transparent;
+  top: 27px;
+  left: 97%;
+  -webkit-animation-delay: -0.1s;
+          animation-delay: -0.1s;
   z-index: 43;
 }
 
 .tri-span:nth-child(44) {
-  border-top: 3px solid rgba(0, 47, 255, 0.7);
-  border-right: 1px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 1px solid transparent;
-  top: 50px;
-  left: 53%;
-  -webkit-animation-delay: -5.8s;
-          animation-delay: -5.8s;
+  border-top: 89px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 89px solid transparent;
+  border-left: 178px solid rgba(0, 255, 13, 0.7);
+  top: 51px;
+  left: 27%;
+  -webkit-animation-delay: -2.1s;
+          animation-delay: -2.1s;
   z-index: 44;
 }
 
 .tri-span:nth-child(45) {
-  border-top: 0 solid transparent;
-  border-right: 144px solid transparent;
-  border-bottom: 288px solid rgba(255, 0, 0, 0.7);
-  border-left: 144px solid transparent;
-  top: 2px;
-  left: 21%;
-  -webkit-animation-delay: -9.6s;
-          animation-delay: -9.6s;
+  border-top: 31.66667px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 31.66667px solid transparent;
+  border-left: 95px solid rgba(102, 255, 0, 0.7);
+  top: 12px;
+  left: 23%;
+  -webkit-animation-delay: -7.3s;
+          animation-delay: -7.3s;
   z-index: 45;
 }
 
 .tri-span:nth-child(46) {
-  border-top: 105px solid rgba(13, 0, 255, 0.7);
-  border-right: 52.5px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 52.5px solid transparent;
-  top: 55px;
-  left: 55%;
-  -webkit-animation-delay: -5.6s;
-          animation-delay: -5.6s;
+  border-top: 111.5px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 111.5px solid transparent;
+  border-left: 223px solid rgba(26, 0, 255, 0.7);
+  top: 19px;
+  left: 58%;
+  -webkit-animation-delay: -1.8s;
+          animation-delay: -1.8s;
   z-index: 46;
 }
 
 .tri-span:nth-child(47) {
-  border-top: 0 solid transparent;
-  border-right: 14.75px solid transparent;
-  border-bottom: 59px solid rgba(68, 255, 0, 0.7);
-  border-left: 14.75px solid transparent;
-  top: 32px;
-  left: 67%;
-  -webkit-animation-delay: -6s;
-          animation-delay: -6s;
+  border-top: 11.75px solid transparent;
+  border-right: 47px solid rgba(179, 255, 0, 0.7);
+  border-bottom: 11.75px solid transparent;
+  border-left: 0 solid transparent;
+  top: 68px;
+  left: 83%;
+  -webkit-animation-delay: -2.7s;
+          animation-delay: -2.7s;
   z-index: 47;
 }
 
 .tri-span:nth-child(48) {
-  border-top: 0 solid transparent;
-  border-right: 59px solid transparent;
-  border-bottom: 118px solid rgba(0, 255, 149, 0.7);
-  border-left: 59px solid transparent;
-  top: 90px;
-  left: 59%;
-  -webkit-animation-delay: -3.2s;
-          animation-delay: -3.2s;
+  border-top: 20.5px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 20.5px solid transparent;
+  border-left: 41px solid rgba(242, 255, 0, 0.7);
+  top: 77px;
+  left: 98%;
+  -webkit-animation-delay: -2.3s;
+          animation-delay: -2.3s;
   z-index: 48;
 }
 
 .tri-span:nth-child(49) {
-  border-top: 0 solid transparent;
-  border-right: 57px solid transparent;
-  border-bottom: 171px solid rgba(251, 255, 0, 0.7);
-  border-left: 57px solid transparent;
-  top: 75px;
-  left: 12%;
-  -webkit-animation-delay: -4s;
-          animation-delay: -4s;
+  border-top: 191px solid rgba(51, 255, 0, 0.7);
+  border-right: 95.5px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 95.5px solid transparent;
+  top: 61px;
+  left: 62%;
+  -webkit-animation-delay: -7.4s;
+          animation-delay: -7.4s;
   z-index: 49;
 }
 
 .tri-span:nth-child(50) {
-  border-top: 269px solid rgba(255, 0, 21, 0.7);
-  border-right: 269px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 269px solid transparent;
-  top: 74px;
-  left: 40%;
-  -webkit-animation-delay: -5.9s;
-          animation-delay: -5.9s;
+  border-top: 86.66667px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 86.66667px solid transparent;
+  border-left: 260px solid rgba(0, 47, 255, 0.7);
+  top: 37px;
+  left: 9%;
+  -webkit-animation-delay: -6.8s;
+          animation-delay: -6.8s;
   z-index: 50;
 }
 
 .tri-span:nth-child(51) {
-  border-top: 157px solid rgba(225, 0, 255, 0.7);
-  border-right: 39.25px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 39.25px solid transparent;
-  top: 96px;
-  left: 55%;
-  -webkit-animation-delay: -9.8s;
-          animation-delay: -9.8s;
+  border-top: 28.66667px solid transparent;
+  border-right: 86px solid rgba(0, 68, 255, 0.7);
+  border-bottom: 28.66667px solid transparent;
+  border-left: 0 solid transparent;
+  top: 78px;
+  left: 53%;
+  -webkit-animation-delay: -5.9s;
+          animation-delay: -5.9s;
   z-index: 51;
 }
 
 .tri-span:nth-child(52) {
-  border-top: 0 solid transparent;
-  border-right: 36.5px solid transparent;
-  border-bottom: 73px solid rgba(0, 255, 43, 0.7);
-  border-left: 36.5px solid transparent;
-  top: 92px;
-  left: 37%;
-  -webkit-animation-delay: -9.8s;
-          animation-delay: -9.8s;
+  border-top: 76.66667px solid transparent;
+  border-right: 230px solid rgba(255, 0, 153, 0.7);
+  border-bottom: 76.66667px solid transparent;
+  border-left: 0 solid transparent;
+  top: 20px;
+  left: 81%;
+  -webkit-animation-delay: -5.6s;
+          animation-delay: -5.6s;
   z-index: 52;
 }
 
 .tri-span:nth-child(53) {
-  border-top: 84px solid transparent;
+  border-top: 147px solid transparent;
   border-right: 0 solid transparent;
-  border-bottom: 84px solid transparent;
-  border-left: 168px solid rgba(4, 0, 255, 0.7);
-  top: 95px;
-  left: 28%;
-  -webkit-animation-delay: -2.9s;
-          animation-delay: -2.9s;
+  border-bottom: 147px solid transparent;
+  border-left: 294px solid rgba(47, 255, 0, 0.7);
+  top: 34px;
+  left: 49%;
+  -webkit-animation-delay: -7.8s;
+          animation-delay: -7.8s;
   z-index: 53;
 }
 
 .tri-span:nth-child(54) {
-  border-top: 36px solid transparent;
+  border-top: 24px solid transparent;
   border-right: 0 solid transparent;
-  border-bottom: 36px solid transparent;
-  border-left: 72px solid rgba(0, 255, 183, 0.7);
-  top: 75px;
-  left: 77%;
-  -webkit-animation-delay: -9.2s;
-          animation-delay: -9.2s;
+  border-bottom: 24px solid transparent;
+  border-left: 96px solid rgba(0, 255, 162, 0.7);
+  top: 98px;
+  left: 61%;
+  -webkit-animation-delay: -0.5s;
+          animation-delay: -0.5s;
   z-index: 54;
 }
 
 .tri-span:nth-child(55) {
-  border-top: 35.33333px solid transparent;
-  border-right: 106px solid rgba(251, 0, 255, 0.7);
-  border-bottom: 35.33333px solid transparent;
-  border-left: 0 solid transparent;
-  top: 36px;
-  left: 84%;
-  -webkit-animation-delay: -8.6s;
-          animation-delay: -8.6s;
+  border-top: 0 solid transparent;
+  border-right: 269px solid transparent;
+  border-bottom: 269px solid rgba(4, 0, 255, 0.7);
+  border-left: 269px solid transparent;
+  top: 92px;
+  left: 8%;
+  -webkit-animation-delay: -6.6s;
+          animation-delay: -6.6s;
   z-index: 55;
 }
 
 .tri-span:nth-child(56) {
-  border-top: 216px solid rgba(17, 255, 0, 0.7);
-  border-right: 54px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 54px solid transparent;
-  top: 63px;
-  left: 92%;
-  -webkit-animation-delay: -4.9s;
-          animation-delay: -4.9s;
+  border-top: 30.75px solid transparent;
+  border-right: 123px solid rgba(43, 255, 0, 0.7);
+  border-bottom: 30.75px solid transparent;
+  border-left: 0 solid transparent;
+  top: 41px;
+  left: 97%;
+  -webkit-animation-delay: -7.4s;
+          animation-delay: -7.4s;
   z-index: 56;
 }
 
 .tri-span:nth-child(57) {
-  border-top: 48.25px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 48.25px solid transparent;
-  border-left: 193px solid rgba(255, 26, 0, 0.7);
-  top: 83px;
-  left: 45%;
-  -webkit-animation-delay: -0.1s;
-          animation-delay: -0.1s;
+  border-top: 0 solid transparent;
+  border-right: 43px solid transparent;
+  border-bottom: 172px solid rgba(26, 255, 0, 0.7);
+  border-left: 43px solid transparent;
+  top: 3px;
+  left: 2%;
+  -webkit-animation-delay: -1.8s;
+          animation-delay: -1.8s;
   z-index: 57;
 }
 
 .tri-span:nth-child(58) {
-  border-top: 128px solid rgba(30, 255, 0, 0.7);
-  border-right: 32px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 32px solid transparent;
-  top: 22px;
-  left: 67%;
-  -webkit-animation-delay: -7s;
-          animation-delay: -7s;
+  border-top: 0 solid transparent;
+  border-right: 124px solid transparent;
+  border-bottom: 248px solid rgba(255, 0, 170, 0.7);
+  border-left: 124px solid transparent;
+  top: 19px;
+  left: 35%;
+  -webkit-animation-delay: -6.3s;
+          animation-delay: -6.3s;
   z-index: 58;
 }
 
 .tri-span:nth-child(59) {
-  border-top: 172px solid rgba(191, 255, 0, 0.7);
-  border-right: 43px solid transparent;
+  border-top: 285px solid rgba(255, 0, 21, 0.7);
+  border-right: 142.5px solid transparent;
   border-bottom: 0 solid transparent;
-  border-left: 43px solid transparent;
-  top: 85px;
-  left: 85%;
-  -webkit-animation-delay: -6.6s;
-          animation-delay: -6.6s;
+  border-left: 142.5px solid transparent;
+  top: 90px;
+  left: 46%;
+  -webkit-animation-delay: -2.1s;
+          animation-delay: -2.1s;
   z-index: 59;
 }
 
 .tri-span:nth-child(60) {
-  border-top: 230px solid rgba(102, 255, 0, 0.7);
-  border-right: 230px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 230px solid transparent;
-  top: 5px;
-  left: 38%;
-  -webkit-animation-delay: -7.6s;
-          animation-delay: -7.6s;
+  border-top: 196px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 196px solid transparent;
+  border-left: 196px solid rgba(255, 0, 51, 0.7);
+  top: 56px;
+  left: 69%;
+  -webkit-animation-delay: -5.1s;
+          animation-delay: -5.1s;
   z-index: 60;
 }
 
 .tri-span:nth-child(61) {
-  border-top: 0 solid transparent;
-  border-right: 65px solid transparent;
-  border-bottom: 260px solid rgba(0, 255, 183, 0.7);
-  border-left: 65px solid transparent;
-  top: 22px;
-  left: 21%;
-  -webkit-animation-delay: -8.9s;
-          animation-delay: -8.9s;
+  border-top: 76.66667px solid transparent;
+  border-right: 230px solid rgba(255, 149, 0, 0.7);
+  border-bottom: 76.66667px solid transparent;
+  border-left: 0 solid transparent;
+  top: 10px;
+  left: 82%;
+  -webkit-animation-delay: -4.7s;
+          animation-delay: -4.7s;
   z-index: 61;
 }
 
 .tri-span:nth-child(62) {
-  border-top: 47px solid rgba(255, 196, 0, 0.7);
-  border-right: 23.5px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 23.5px solid transparent;
-  top: 20px;
-  left: 76%;
-  -webkit-animation-delay: -3.8s;
-          animation-delay: -3.8s;
+  border-top: 0 solid transparent;
+  border-right: 86.5px solid transparent;
+  border-bottom: 173px solid rgba(255, 196, 0, 0.7);
+  border-left: 86.5px solid transparent;
+  top: 30px;
+  left: 74%;
+  -webkit-animation-delay: -4.8s;
+          animation-delay: -4.8s;
   z-index: 62;
 }
 
 .tri-span:nth-child(63) {
-  border-top: 69.33333px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 69.33333px solid transparent;
-  border-left: 208px solid rgba(255, 0, 55, 0.7);
-  top: 74px;
-  left: 68%;
-  -webkit-animation-delay: -2s;
-          animation-delay: -2s;
+  border-top: 74px solid transparent;
+  border-right: 222px solid rgba(187, 255, 0, 0.7);
+  border-bottom: 74px solid transparent;
+  border-left: 0 solid transparent;
+  top: 25px;
+  left: 83%;
+  -webkit-animation-delay: -4.6s;
+          animation-delay: -4.6s;
   z-index: 63;
 }
 
 .tri-span:nth-child(64) {
-  border-top: 57px solid transparent;
-  border-right: 171px solid rgba(0, 255, 162, 0.7);
-  border-bottom: 57px solid transparent;
-  border-left: 0 solid transparent;
-  top: 69px;
-  left: 84%;
-  -webkit-animation-delay: -4.5s;
-          animation-delay: -4.5s;
+  border-top: 0 solid transparent;
+  border-right: 37px solid transparent;
+  border-bottom: 111px solid rgba(255, 111, 0, 0.7);
+  border-left: 37px solid transparent;
+  top: 93px;
+  left: 7%;
+  -webkit-animation-delay: -1.3s;
+          animation-delay: -1.3s;
   z-index: 64;
 }
 
 .tri-span:nth-child(65) {
-  border-top: 2px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 2px solid transparent;
-  border-left: 4px solid rgba(30, 0, 255, 0.7);
-  top: 100px;
-  left: 16%;
-  -webkit-animation-delay: -0.1s;
-          animation-delay: -0.1s;
+  border-top: 168px solid transparent;
+  border-right: 168px solid rgba(0, 51, 255, 0.7);
+  border-bottom: 168px solid transparent;
+  border-left: 0 solid transparent;
+  top: 79px;
+  left: 70%;
+  -webkit-animation-delay: -2.3s;
+          animation-delay: -2.3s;
   z-index: 65;
 }
 
 .tri-span:nth-child(66) {
-  border-top: 62px solid rgba(255, 0, 4, 0.7);
-  border-right: 31px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 31px solid transparent;
-  top: 11px;
-  left: 42%;
-  -webkit-animation-delay: -0.5s;
-          animation-delay: -0.5s;
+  border-top: 58.25px solid transparent;
+  border-right: 233px solid rgba(255, 21, 0, 0.7);
+  border-bottom: 58.25px solid transparent;
+  border-left: 0 solid transparent;
+  top: 14px;
+  left: 77%;
+  -webkit-animation-delay: -3.6s;
+          animation-delay: -3.6s;
   z-index: 66;
 }
 
 .tri-span:nth-child(67) {
-  border-top: 159px solid transparent;
-  border-right: 159px solid rgba(0, 255, 247, 0.7);
-  border-bottom: 159px solid transparent;
-  border-left: 0 solid transparent;
-  top: 32px;
-  left: 38%;
-  -webkit-animation-delay: -5.9s;
-          animation-delay: -5.9s;
+  border-top: 0 solid transparent;
+  border-right: 53px solid transparent;
+  border-bottom: 53px solid rgba(162, 0, 255, 0.7);
+  border-left: 53px solid transparent;
+  top: 87px;
+  left: 2%;
+  -webkit-animation-delay: -5.2s;
+          animation-delay: -5.2s;
   z-index: 67;
 }
 
 .tri-span:nth-child(68) {
-  border-top: 139px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 139px solid transparent;
-  border-left: 139px solid rgba(0, 255, 221, 0.7);
-  top: 92px;
-  left: 98%;
-  -webkit-animation-delay: -1.4s;
-          animation-delay: -1.4s;
+  border-top: 0 solid transparent;
+  border-right: 130.5px solid transparent;
+  border-bottom: 261px solid rgba(255, 0, 196, 0.7);
+  border-left: 130.5px solid transparent;
+  top: 78px;
+  left: 72%;
+  -webkit-animation-delay: -1.1s;
+          animation-delay: -1.1s;
   z-index: 68;
 }
 
 .tri-span:nth-child(69) {
-  border-top: 297px solid transparent;
-  border-right: 297px solid rgba(0, 255, 191, 0.7);
-  border-bottom: 297px solid transparent;
+  border-top: 61.5px solid transparent;
+  border-right: 123px solid rgba(115, 255, 0, 0.7);
+  border-bottom: 61.5px solid transparent;
   border-left: 0 solid transparent;
-  top: 12px;
-  left: 79%;
-  -webkit-animation-delay: -1.9s;
-          animation-delay: -1.9s;
+  top: 13px;
+  left: 76%;
+  -webkit-animation-delay: -4.4s;
+          animation-delay: -4.4s;
   z-index: 69;
 }
 
 .tri-span:nth-child(70) {
-  border-top: 202px solid rgba(187, 0, 255, 0.7);
-  border-right: 50.5px solid transparent;
+  border-top: 254px solid rgba(0, 255, 43, 0.7);
+  border-right: 84.66667px solid transparent;
   border-bottom: 0 solid transparent;
-  border-left: 50.5px solid transparent;
-  top: 30px;
-  left: 47%;
-  -webkit-animation-delay: -0.7s;
-          animation-delay: -0.7s;
+  border-left: 84.66667px solid transparent;
+  top: 60px;
+  left: 3%;
+  -webkit-animation-delay: -9.5s;
+          animation-delay: -9.5s;
   z-index: 70;
 }
 
 .tri-span:nth-child(71) {
-  border-top: 75.5px solid transparent;
-  border-right: 151px solid rgba(0, 30, 255, 0.7);
-  border-bottom: 75.5px solid transparent;
+  border-top: 84px solid transparent;
+  border-right: 252px solid rgba(119, 0, 255, 0.7);
+  border-bottom: 84px solid transparent;
   border-left: 0 solid transparent;
-  top: 53px;
-  left: 18%;
-  -webkit-animation-delay: -2s;
-          animation-delay: -2s;
+  top: 99px;
+  left: 17%;
+  -webkit-animation-delay: -0.2s;
+          animation-delay: -0.2s;
   z-index: 71;
 }
 
 .tri-span:nth-child(72) {
   border-top: 0 solid transparent;
-  border-right: 30.5px solid transparent;
-  border-bottom: 122px solid rgba(255, 94, 0, 0.7);
-  border-left: 30.5px solid transparent;
-  top: 74px;
-  left: 44%;
-  -webkit-animation-delay: -8.7s;
-          animation-delay: -8.7s;
+  border-right: 59px solid transparent;
+  border-bottom: 177px solid rgba(234, 255, 0, 0.7);
+  border-left: 59px solid transparent;
+  top: 71px;
+  left: 45%;
+  -webkit-animation-delay: -1.9s;
+          animation-delay: -1.9s;
   z-index: 72;
 }
 
 .tri-span:nth-child(73) {
-  border-top: 0 solid transparent;
-  border-right: 125.5px solid transparent;
-  border-bottom: 251px solid rgba(0, 255, 21, 0.7);
-  border-left: 125.5px solid transparent;
-  top: 91px;
-  left: 55%;
-  -webkit-animation-delay: -8.3s;
-          animation-delay: -8.3s;
+  border-top: 88.5px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 88.5px solid transparent;
+  border-left: 177px solid rgba(0, 221, 255, 0.7);
+  top: 23px;
+  left: 95%;
+  -webkit-animation-delay: -3.3s;
+          animation-delay: -3.3s;
   z-index: 73;
 }
 
 .tri-span:nth-child(74) {
-  border-top: 56px solid transparent;
+  border-top: 11.5px solid transparent;
   border-right: 0 solid transparent;
-  border-bottom: 56px solid transparent;
-  border-left: 112px solid rgba(255, 106, 0, 0.7);
-  top: 61px;
-  left: 80%;
-  -webkit-animation-delay: -2.2s;
-          animation-delay: -2.2s;
+  border-bottom: 11.5px solid transparent;
+  border-left: 23px solid rgba(153, 255, 0, 0.7);
+  top: 96px;
+  left: 43%;
+  -webkit-animation-delay: -6s;
+          animation-delay: -6s;
   z-index: 74;
 }
 
 .tri-span:nth-child(75) {
-  border-top: 65.25px solid transparent;
+  border-top: 60.75px solid transparent;
   border-right: 0 solid transparent;
-  border-bottom: 65.25px solid transparent;
-  border-left: 261px solid rgba(255, 0, 166, 0.7);
-  top: 99px;
-  left: 90%;
-  -webkit-animation-delay: -8.1s;
-          animation-delay: -8.1s;
+  border-bottom: 60.75px solid transparent;
+  border-left: 243px solid rgba(0, 145, 255, 0.7);
+  top: 81px;
+  left: 84%;
+  -webkit-animation-delay: -7.7s;
+          animation-delay: -7.7s;
   z-index: 75;
 }
 
 .tri-span:nth-child(76) {
-  border-top: 9.75px solid transparent;
-  border-right: 39px solid rgba(255, 166, 0, 0.7);
-  border-bottom: 9.75px solid transparent;
-  border-left: 0 solid transparent;
-  top: 56px;
-  left: 81%;
-  -webkit-animation-delay: -5.4s;
-          animation-delay: -5.4s;
+  border-top: 290px solid rgba(255, 183, 0, 0.7);
+  border-right: 290px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 290px solid transparent;
+  top: 10px;
+  left: 39%;
+  -webkit-animation-delay: -5.7s;
+          animation-delay: -5.7s;
   z-index: 76;
 }
 
 .tri-span:nth-child(77) {
-  border-top: 0 solid transparent;
-  border-right: 17px solid transparent;
-  border-bottom: 68px solid rgba(0, 255, 213, 0.7);
-  border-left: 17px solid transparent;
-  top: 63px;
-  left: 82%;
-  -webkit-animation-delay: -3.8s;
-          animation-delay: -3.8s;
+  border-top: 67.25px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 67.25px solid transparent;
+  border-left: 269px solid rgba(34, 255, 0, 0.7);
+  top: 59px;
+  left: 47%;
+  -webkit-animation-delay: -2.2s;
+          animation-delay: -2.2s;
   z-index: 77;
 }
 
 .tri-span:nth-child(78) {
-  border-top: 0 solid transparent;
-  border-right: 64px solid transparent;
-  border-bottom: 192px solid rgba(255, 0, 217, 0.7);
-  border-left: 64px solid transparent;
-  top: 38px;
-  left: 50%;
-  -webkit-animation-delay: -9.2s;
-          animation-delay: -9.2s;
+  border-top: 122px solid rgba(255, 43, 0, 0.7);
+  border-right: 40.66667px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 40.66667px solid transparent;
+  top: 35px;
+  left: 29%;
+  -webkit-animation-delay: -6.6s;
+          animation-delay: -6.6s;
   z-index: 78;
 }
 
 .tri-span:nth-child(79) {
-  border-top: 103.5px solid transparent;
-  border-right: 207px solid rgba(255, 0, 77, 0.7);
-  border-bottom: 103.5px solid transparent;
-  border-left: 0 solid transparent;
-  top: 52px;
-  left: 10%;
-  -webkit-animation-delay: -3.7s;
-          animation-delay: -3.7s;
+  border-top: 0 solid transparent;
+  border-right: 68px solid transparent;
+  border-bottom: 272px solid rgba(0, 21, 255, 0.7);
+  border-left: 68px solid transparent;
+  top: 57px;
+  left: 19%;
+  -webkit-animation-delay: -5.8s;
+          animation-delay: -5.8s;
   z-index: 79;
 }
 
 .tri-span:nth-child(80) {
-  border-top: 21.75px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 21.75px solid transparent;
-  border-left: 87px solid rgba(255, 0, 162, 0.7);
-  top: 32px;
-  left: 42%;
-  -webkit-animation-delay: -4.7s;
-          animation-delay: -4.7s;
+  border-top: 50px solid transparent;
+  border-right: 200px solid rgba(255, 234, 0, 0.7);
+  border-bottom: 50px solid transparent;
+  border-left: 0 solid transparent;
+  top: 33px;
+  left: 34%;
+  -webkit-animation-delay: -1.6s;
+          animation-delay: -1.6s;
   z-index: 80;
 }
 
 .tri-span:nth-child(81) {
-  border-top: 20.5px solid transparent;
-  border-right: 82px solid rgba(255, 0, 170, 0.7);
-  border-bottom: 20.5px solid transparent;
-  border-left: 0 solid transparent;
-  top: 59px;
-  left: 49%;
-  -webkit-animation-delay: -4.2s;
-          animation-delay: -4.2s;
+  border-top: 0 solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 45px solid rgba(0, 255, 140, 0.7);
+  border-left: 15px solid transparent;
+  top: 58px;
+  left: 72%;
+  -webkit-animation-delay: -0.8s;
+          animation-delay: -0.8s;
   z-index: 81;
 }
 
 .tri-span:nth-child(82) {
-  border-top: 115px solid transparent;
-  border-right: 115px solid rgba(255, 128, 0, 0.7);
-  border-bottom: 115px solid transparent;
-  border-left: 0 solid transparent;
-  top: 82px;
-  left: 17%;
-  -webkit-animation-delay: -6.7s;
-          animation-delay: -6.7s;
+  border-top: 0 solid transparent;
+  border-right: 24px solid transparent;
+  border-bottom: 72px solid rgba(0, 255, 106, 0.7);
+  border-left: 24px solid transparent;
+  top: 77px;
+  left: 69%;
+  -webkit-animation-delay: -5s;
+          animation-delay: -5s;
   z-index: 82;
 }
 
 .tri-span:nth-child(83) {
-  border-top: 0 solid transparent;
-  border-right: 23.75px solid transparent;
-  border-bottom: 95px solid rgba(255, 0, 234, 0.7);
-  border-left: 23.75px solid transparent;
-  top: 68px;
-  left: 12%;
-  -webkit-animation-delay: -5.9s;
-          animation-delay: -5.9s;
+  border-top: 46.5px solid transparent;
+  border-right: 186px solid rgba(0, 68, 255, 0.7);
+  border-bottom: 46.5px solid transparent;
+  border-left: 0 solid transparent;
+  top: 81px;
+  left: 29%;
+  -webkit-animation-delay: -9.7s;
+          animation-delay: -9.7s;
   z-index: 83;
 }
 
 .tri-span:nth-child(84) {
-  border-top: 0 solid transparent;
-  border-right: 153px solid transparent;
-  border-bottom: 153px solid rgba(64, 255, 0, 0.7);
-  border-left: 153px solid transparent;
-  top: 12px;
-  left: 58%;
-  -webkit-animation-delay: -3.6s;
-          animation-delay: -3.6s;
+  border-top: 73px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 73px solid transparent;
+  border-left: 292px solid rgba(242, 0, 255, 0.7);
+  top: 29px;
+  left: 18%;
+  -webkit-animation-delay: -3.5s;
+          animation-delay: -3.5s;
   z-index: 84;
 }
 
 .tri-span:nth-child(85) {
-  border-top: 291px solid transparent;
-  border-right: 291px solid rgba(255, 225, 0, 0.7);
-  border-bottom: 291px solid transparent;
-  border-left: 0 solid transparent;
-  top: 54px;
-  left: 85%;
-  -webkit-animation-delay: -5s;
-          animation-delay: -5s;
+  border-top: 0 solid transparent;
+  border-right: 54.66667px solid transparent;
+  border-bottom: 164px solid rgba(162, 0, 255, 0.7);
+  border-left: 54.66667px solid transparent;
+  top: 27px;
+  left: 18%;
+  -webkit-animation-delay: -7.5s;
+          animation-delay: -7.5s;
   z-index: 85;
 }
 
 .tri-span:nth-child(86) {
-  border-top: 171px solid rgba(255, 26, 0, 0.7);
-  border-right: 171px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 171px solid transparent;
-  top: 75px;
+  border-top: 55.25px solid transparent;
+  border-right: 221px solid rgba(221, 0, 255, 0.7);
+  border-bottom: 55.25px solid transparent;
+  border-left: 0 solid transparent;
+  top: 47px;
   left: 49%;
-  -webkit-animation-delay: -2.4s;
-          animation-delay: -2.4s;
+  -webkit-animation-delay: -2.1s;
+          animation-delay: -2.1s;
   z-index: 86;
 }
 
 .tri-span:nth-child(87) {
-  border-top: 0 solid transparent;
-  border-right: 55.66667px solid transparent;
-  border-bottom: 167px solid rgba(208, 255, 0, 0.7);
-  border-left: 55.66667px solid transparent;
-  top: 67px;
-  left: 78%;
-  -webkit-animation-delay: -2.8s;
-          animation-delay: -2.8s;
+  border-top: 68.33333px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 68.33333px solid transparent;
+  border-left: 205px solid rgba(149, 0, 255, 0.7);
+  top: 56px;
+  left: 71%;
+  -webkit-animation-delay: -7.4s;
+          animation-delay: -7.4s;
   z-index: 87;
 }
 
 .tri-span:nth-child(88) {
-  border-top: 120px solid rgba(0, 13, 255, 0.7);
-  border-right: 120px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 120px solid transparent;
-  top: 10px;
-  left: 17%;
-  -webkit-animation-delay: -8s;
-          animation-delay: -8s;
+  border-top: 26.33333px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 26.33333px solid transparent;
+  border-left: 79px solid rgba(255, 72, 0, 0.7);
+  top: 100px;
+  left: 47%;
+  -webkit-animation-delay: -2.4s;
+          animation-delay: -2.4s;
   z-index: 88;
 }
 
 .tri-span:nth-child(89) {
-  border-top: 0 solid transparent;
-  border-right: 26.5px solid transparent;
-  border-bottom: 106px solid rgba(0, 217, 255, 0.7);
-  border-left: 26.5px solid transparent;
-  top: 15px;
-  left: 8%;
-  -webkit-animation-delay: -9s;
-          animation-delay: -9s;
+  border-top: 47.66667px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 47.66667px solid transparent;
+  border-left: 143px solid rgba(0, 255, 9, 0.7);
+  top: 94px;
+  left: 53%;
+  -webkit-animation-delay: -3.9s;
+          animation-delay: -3.9s;
   z-index: 89;
 }
 
 .tri-span:nth-child(90) {
-  border-top: 99px solid transparent;
-  border-right: 297px solid rgba(0, 255, 34, 0.7);
-  border-bottom: 99px solid transparent;
-  border-left: 0 solid transparent;
-  top: 40px;
-  left: 24%;
-  -webkit-animation-delay: -9.8s;
-          animation-delay: -9.8s;
+  border-top: 137px solid rgba(255, 225, 0, 0.7);
+  border-right: 68.5px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 68.5px solid transparent;
+  top: 41px;
+  left: 51%;
+  -webkit-animation-delay: -2.6s;
+          animation-delay: -2.6s;
   z-index: 90;
 }
 
 .tri-span:nth-child(91) {
-  border-top: 0 solid transparent;
-  border-right: 56.5px solid transparent;
-  border-bottom: 113px solid rgba(255, 9, 0, 0.7);
-  border-left: 56.5px solid transparent;
+  border-top: 76px solid rgba(0, 255, 204, 0.7);
+  border-right: 19px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 19px solid transparent;
   top: 64px;
-  left: 97%;
-  -webkit-animation-delay: -1.8s;
-          animation-delay: -1.8s;
+  left: 51%;
+  -webkit-animation-delay: -3.5s;
+          animation-delay: -3.5s;
   z-index: 91;
 }
 
 .tri-span:nth-child(92) {
-  border-top: 0 solid transparent;
-  border-right: 129px solid transparent;
-  border-bottom: 129px solid rgba(145, 255, 0, 0.7);
-  border-left: 129px solid transparent;
-  top: 20px;
-  left: 5%;
-  -webkit-animation-delay: -5.5s;
-          animation-delay: -5.5s;
+  border-top: 111px solid rgba(149, 255, 0, 0.7);
+  border-right: 111px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 111px solid transparent;
+  top: 86px;
+  left: 32%;
+  -webkit-animation-delay: -5.4s;
+          animation-delay: -5.4s;
   z-index: 92;
 }
 
 .tri-span:nth-child(93) {
-  border-top: 133.5px solid transparent;
-  border-right: 0 solid transparent;
-  border-bottom: 133.5px solid transparent;
-  border-left: 267px solid rgba(0, 255, 242, 0.7);
-  top: 33px;
-  left: 15%;
-  -webkit-animation-delay: -0.3s;
-          animation-delay: -0.3s;
+  border-top: 204px solid transparent;
+  border-right: 204px solid rgba(55, 255, 0, 0.7);
+  border-bottom: 204px solid transparent;
+  border-left: 0 solid transparent;
+  top: 45px;
+  left: 69%;
+  -webkit-animation-delay: -1.9s;
+          animation-delay: -1.9s;
   z-index: 93;
 }
 
 .tri-span:nth-child(94) {
-  border-top: 278px solid transparent;
-  border-right: 278px solid rgba(255, 0, 89, 0.7);
-  border-bottom: 278px solid transparent;
+  border-top: 20.5px solid transparent;
+  border-right: 82px solid rgba(255, 230, 0, 0.7);
+  border-bottom: 20.5px solid transparent;
   border-left: 0 solid transparent;
-  top: 53px;
-  left: 50%;
-  -webkit-animation-delay: -8.8s;
-          animation-delay: -8.8s;
+  top: 84px;
+  left: 9%;
+  -webkit-animation-delay: -2.6s;
+          animation-delay: -2.6s;
   z-index: 94;
 }
 
 .tri-span:nth-child(95) {
-  border-top: 194px solid rgba(55, 255, 0, 0.7);
-  border-right: 48.5px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 48.5px solid transparent;
-  top: 64px;
-  left: 89%;
-  -webkit-animation-delay: -4.5s;
-          animation-delay: -4.5s;
+  border-top: 2.75px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 2.75px solid transparent;
+  border-left: 11px solid rgba(47, 255, 0, 0.7);
+  top: 49px;
+  left: 32%;
+  -webkit-animation-delay: -9.3s;
+          animation-delay: -9.3s;
   z-index: 95;
 }
 
 .tri-span:nth-child(96) {
-  border-top: 291px solid rgba(0, 34, 255, 0.7);
-  border-right: 72.75px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 72.75px solid transparent;
-  top: 36px;
-  left: 46%;
-  -webkit-animation-delay: -4.3s;
-          animation-delay: -4.3s;
+  border-top: 0 solid transparent;
+  border-right: 1.5px solid transparent;
+  border-bottom: 3px solid rgba(255, 0, 94, 0.7);
+  border-left: 1.5px solid transparent;
+  top: 99px;
+  left: 77%;
+  -webkit-animation-delay: -0.8s;
+          animation-delay: -0.8s;
   z-index: 96;
 }
 
 .tri-span:nth-child(97) {
-  border-top: 260px solid transparent;
-  border-right: 260px solid rgba(255, 0, 4, 0.7);
-  border-bottom: 260px solid transparent;
-  border-left: 0 solid transparent;
-  top: 2px;
-  left: 2%;
-  -webkit-animation-delay: -9.3s;
-          animation-delay: -9.3s;
+  border-top: 0 solid transparent;
+  border-right: 84.33333px solid transparent;
+  border-bottom: 253px solid rgba(0, 183, 255, 0.7);
+  border-left: 84.33333px solid transparent;
+  top: 90px;
+  left: 66%;
+  -webkit-animation-delay: -7.1s;
+          animation-delay: -7.1s;
   z-index: 97;
 }
 
 .tri-span:nth-child(98) {
-  border-top: 271px solid rgba(0, 204, 255, 0.7);
-  border-right: 67.75px solid transparent;
-  border-bottom: 0 solid transparent;
-  border-left: 67.75px solid transparent;
-  top: 86px;
-  left: 21%;
-  -webkit-animation-delay: -2.8s;
-          animation-delay: -2.8s;
+  border-top: 42.33333px solid transparent;
+  border-right: 127px solid rgba(255, 0, 98, 0.7);
+  border-bottom: 42.33333px solid transparent;
+  border-left: 0 solid transparent;
+  top: 87px;
+  left: 43%;
+  -webkit-animation-delay: -8.5s;
+          animation-delay: -8.5s;
   z-index: 98;
 }
 
 .tri-span:nth-child(99) {
-  border-top: 0 solid transparent;
-  border-right: 28px solid transparent;
-  border-bottom: 56px solid rgba(43, 0, 255, 0.7);
-  border-left: 28px solid transparent;
-  top: 19px;
-  left: 95%;
-  -webkit-animation-delay: -1s;
-          animation-delay: -1s;
+  border-top: 32px solid rgba(0, 111, 255, 0.7);
+  border-right: 16px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 16px solid transparent;
+  top: 3px;
+  left: 38%;
+  -webkit-animation-delay: -9.1s;
+          animation-delay: -9.1s;
   z-index: 99;
 }
 
 .tri-span:nth-child(100) {
   border-top: 0 solid transparent;
-  border-right: 100.5px solid transparent;
-  border-bottom: 201px solid rgba(123, 0, 255, 0.7);
-  border-left: 100.5px solid transparent;
-  top: 59px;
-  left: 54%;
-  -webkit-animation-delay: -3.8s;
-          animation-delay: -3.8s;
+  border-right: 245px solid transparent;
+  border-bottom: 245px solid rgba(255, 0, 111, 0.7);
+  border-left: 245px solid transparent;
+  top: 20px;
+  left: 100%;
+  -webkit-animation-delay: -7.7s;
+          animation-delay: -7.7s;
   z-index: 100;
 }
 
@@ -1260,43 +1260,43 @@ body {
 
 @-webkit-keyframes colorChange {
   0% {
-    color: rgba(132, 255, 0, 0.2);
+    color: rgba(255, 0, 132, 0.2);
   }
   20% {
-    color: rgba(0, 255, 157, 0.2);
+    color: rgba(0, 136, 255, 0.2);
   }
   40% {
-    color: rgba(0, 98, 255, 0.2);
+    color: rgba(0, 255, 98, 0.2);
   }
   60% {
-    color: rgba(0, 221, 255, 0.2);
+    color: rgba(255, 30, 0, 0.2);
   }
   80% {
-    color: rgba(255, 0, 51, 0.2);
+    color: rgba(0, 255, 187, 0.2);
   }
   100% {
-    color: rgba(200, 255, 0, 0.6);
+    color: rgba(0, 255, 247, 0.6);
   }
 }
 
 @keyframes colorChange {
   0% {
-    color: rgba(132, 255, 0, 0.2);
+    color: rgba(255, 0, 132, 0.2);
   }
   20% {
-    color: rgba(0, 255, 157, 0.2);
+    color: rgba(0, 136, 255, 0.2);
   }
   40% {
-    color: rgba(0, 98, 255, 0.2);
+    color: rgba(0, 255, 98, 0.2);
   }
   60% {
-    color: rgba(0, 221, 255, 0.2);
+    color: rgba(255, 30, 0, 0.2);
   }
   80% {
-    color: rgba(255, 0, 51, 0.2);
+    color: rgba(0, 255, 187, 0.2);
   }
   100% {
-    color: rgba(200, 255, 0, 0.6);
+    color: rgba(0, 255, 247, 0.6);
   }
 }
 

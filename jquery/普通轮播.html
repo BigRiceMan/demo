@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="banner.css">
+</head>
+
+<body>
+  <div class="banner">
+    <div class="banner_inner">
+      <ul>
+        <li><img src="1.jpg" alt=""></li>
+        <li><img src="2.jpg" alt=""></li>
+        <li><img src="3.jpg" alt=""></li>
+        <li><img src="4.jpg" alt=""></li>
+      </ul>
+      <div class="dot_w"></div>
+      <div class="ban_crl">
+        <a href="javascript:void(0)" class="crl_left"></a>
+        <a href="javascript:void(0)" class="crl_right"></a>
+      </div>
+    </div>
+  </div>
+  <script src="jquery.js"></script>
+  <script>
+    (function ($) {
+      $(".banner li").each(function (idx, el) {
+        let span = $(`<span class="dot"></span>`)
+        if (idx == 0) {
+          $(el).addClass("active")
+          span.addClass("active")
+        }
+        $('.dot_w').append(span)
+      })
+      $(".banner ul").width(getLen() * getWidth())
+      function getWidth() {
+        return $(".banner li").width()
+      }
+      function getLen() {
+        return $('.banner li').length
+      }
+      function getId() {
+        return $('.banner li.active').index()
+      }
+      function go(id) {
+        let clone = null
+
+        $('.banner ul').css("left", -getWidth() * id + 'px')
+        $('.banner li.active').removeClass('active')
+        $('.dot_w span.active').removeClass('active')
+        $('.banner li').eq(id).addClass('active')
+        $('.dot_w span').eq(id).addClass('active')
+      }
+      function prev() {
+        let len = getLen()
+        let curId = getId()
+        if (--curId < 0) {
+          curId = len
+        }
+        go(curId)
+      }
+      function next() {
+        let len = getLen()
+        let curId = getId()
+        if (++curId > len - 1) {
+          curId = 0
+        }
+        go(curId)
+      }
+      let timer = setInterval(() => {
+        next()
+      }, 1000)
+
+    }
+    )($)
+  </script>
+</body>
+
+</html>

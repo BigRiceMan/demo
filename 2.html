@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<p id="blogTitle">
+    大萨达三多撒大飒飒大所 阿社dsad
+</p>
+<script>
+ var selection= window.getSelection()
+ p=document.querySelector("#blogTitle")
+ var range = new Range()
+ range.selectNodeContents(p)
+ selection.addRange(range,1,5)
+ 
+
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,1231 @@
+if(window.bds&&bds.util&&bds.util.setContainerWidth){bds.util.setContainerWidth(1280);}bds.comm.upn = {"browser":"chrome","os":"windows","win":"win10","browsertype":"chrome"} || {browser: '', browsertype: '', os:''};this.globalThis || (this.globalThis = this);.index-logo-srcnew {display: none;}@media (-webkit-min-device-pixel-ratio: 2),(min--moz-device-pixel-ratio: 2),(-o-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2){.index-logo-src {display: none;}.index-logo-srcnew {display: inline;}}nodelist什么意思nodelist和htmlcollectionnodelist转为数组nodelist对象nodelist是什么nodelist 遍历nodelist.itemnodelist foreachnodelist未定义nodelist java反馈按图片搜索输入法手写拼音关闭百度首页设置b9186942抗击肺炎新闻hao123地图视频贴吧学术b9186942设置更多产品
+/**
+ * @description 图片base64加载
+ * @author lizhouquan
+ */
+bds.base64 = (function () {
+    //获取base64前置参数
+    var _opt = bds._base64;
+    //内部数据;
+    var _containerAllId = "container",
+        _containerLeftId = "content_left",
+        _containerRightId = "content_right",
+        _BOTTAGLSNAME = "BASE64_BOTTAG",
+        _domain = bds._base64.domain,   //base64图片服务域名
+        _imgWatch = [],             //图片加载观察list，如果没有onload，进行容错
+        _domLoaded = [],            //标识对应dom是否已下载
+        _data = [],                 //暂存请求回调数据
+        _dataLoaded = [],        //数据是否返回
+        _finish = [],            //是否已完成渲染
+        _hasSpImg = false,          //是否有左侧模板sp_img走base64加载
+        _expGroup = 0,              //左侧实验组
+        _reqTime = 0,              //请求开始时间
+        _reqEnd = 0,               //请求返回时间 - 右侧
+        _reqEndL = 0,               //请求返回时间 - 左侧
+        _rsst = 0,                  //请求开始时间 - 测速
+        _rest = 0,                  //请求返回时间 - 测速
+        _dt = 1,                   //domain类型
+        _loadState = {},           //记录imglist的状态
+        _hasPreload = 0,           //记录页面是否开启preload
+        _ispdc = false;            //是否开启了性能统计
+    //异步下发起下次搜索时重置变量
+    var preXhrs = [],$ = window.$;
+    if($) {
+        $(window).on("swap_begin",function(){
+            _imgWatch = [];             //图片加载观察list，如果没有onload，进行容错
+            _domLoaded = [];            //标识对应dom是否已下载
+            _data = [];                 //暂存请求回调数据
+            _dataLoaded = [];        //数据是否返回
+            _finish = [];            //是否已完成渲染
+            _hasSpImg = false;          //是否有左侧模板sp_img走base64加载
+            _expGroup = 0;              //左侧实验组
+            _reqTime = 0;              //请求开始时间
+            _reqEnd = 0;               //请求返回时间 - 右侧
+            _reqEndL = 0;               //请求返回时间 - 左侧
+            _rsst = 0;                  //请求开始时间 - 测速
+            _rest = 0;                  //请求返回时间 - 测速
+            _dt = 1;                   //domain类型
+            _ispdc = false;            //是否开启了性能统计
+            //停止正在执行的base64回调操作
+            for(var i = 0 ; i < preXhrs.length; i++) {
+                preXhrs[i].abort();
+            }
+        });
+    }
+    //初始化方法
+    var init = function(imgRight,imgLeft,isPreload){
+        var imgArr = imgRight || [], imgArr2 = imgLeft || [];
+        if(window.__IS_IMG_PREFETCH){
+            //异步base64去重
+            function filter(img){
+                return !window.__IS_IMG_PREFETCH.hasOwnProperty(img);
+            }
+            imgArr=$.grep(imgArr,filter);
+            imgArr2=$.grep(imgArr2,filter);
+        }
+        if(window.__IMG_PRELOAD && isPreload) {
+            //定义loadState，防止callback乱序
+            _loadState["cbr"] = 0;
+            _loadState["cbpr"] = 0;
+            _hasPreload = 1; //标记页面中有预取
+            var imgPreloadList = window.__IMG_PRELOAD = {};
+            for(var i = 0; i < imgArr.length; i++) {
+                if(!imgPreloadList.hasOwnProperty(imgArr[i])) {
+                    window.__IMG_PRELOAD[imgArr[i]] = true;
+                }
+            }
+        } else if(window.__IMG_PRELOAD && !isPreload) {
+            //同步base64右侧去重
+            var tmpArr = [];
+            for(var i = 0; i < imgArr.length; i++){
+                if(!window.__IMG_PRELOAD.hasOwnProperty(imgArr[i])) {
+                    tmpArr.push(imgArr[i]);
+                }
+            }
+            imgArr = tmpArr;
+            //TODO
+            //提取出函数
+        }
+        if(_opt.b64Exp) {
+            _expGroup = _opt.b64Exp;
+            if(_expGroup == 1){
+                _domain = "http://b2.bdstatic.com/"; /*base64 new domain sample deploy*/
+                _dt = 2;
+            }
+        }
+        _ispdc= _opt.pdc>0 ? true : false;
+        _reqTime = new Date()*1;
+        if(_expGroup==2){
+            //左右分别发请求
+            if(imgArr2.length>0){
+                _hasSpImg = true;
+                loadJs(_domain + "image?imglist=" + imgArr2.join(",") + "&cb=bds.base64.cbl");
+            }
+            if(!isPreload) {
+                cbl({});
+            }
+        }
+        if(imgArr.length>0){
+            //发送请求
+            if(isPreload) {
+                loadJs(_domain + "image?imglist=" + imgArr.join(",") + "&cb=bds.base64.cbpr");
+            } else {
+                loadJs(_domain + "image?imglist=" + imgArr.join(",") + "&cb=bds.base64.cbr");
+            }
+            if(_ispdc){
+                if(bds.ready){
+                    bds.ready(function(){
+                        setTimeout(function(){
+                            var _bottag = botTag.get();
+                            var logstr = "dt=" + _dt + "&time=" + ((_reqEnd>0)?(_reqEnd-_reqTime):0) + "&bot=" + _bottag + "&rcount=" + imgArr.length;
+                            window._B64_REQ_LOG = ((_reqEnd>0)?(_reqEnd-_reqTime):0) + "_" + imgArr.length;
+                            if(_expGroup==2 && _reqEndL>0){
+                                var _apics = document.getElementById("ala_img_pics");
+                                var _lcount = (_apics&&_apics.children)?_apics.children.length:0;
+                                logstr += "&time2=" + (_reqEndL-_reqTime) + "&lcount=" + _lcount;
+                            }
+                            if(Math.random()*100<10){
+                                sendLog(logstr);
+                            }
+                        }, 2000);
+                    });
+                }
+            }
+        } else {
+            if(!isPreload) {
+                cbr({});
+            }
+        }
+        if(imgArr.length>0 || imgArr2.length>0){
+            if(!isPreload) {
+                watchReq(imgArr.length);
+            }
+        }
+    };
+    //异步加载js
+    function crc32 (str) {
+        if(typeof str=="string"){
+            var i,crc=0,j=0;
+            for(i=0;i<str.length;i++){
+                j=i%20+1;
+                crc+=str.charCodeAt(i)<<j;
+            }
+            return Math.abs(crc);
+        }
+        return 0;
+    }
+    var loadJs = function (url) {
+        var matchs = url.match(/.*(bds\.base64\.cb[rl])/);
+        if(!matchs){
+            return;
+        }
+        var imglist=url.match(/imglist=([^&]*)/);
+        if(!imglist||!imglist[1]){
+            return;
+        }
+        //see b64_base_popstate.js, this just sync result page
+        callback_name=crc32(imglist[1].replace(/,/g,""));
+        callback_name="cb_"+(callback_name+"").substr(Math.max(0,callback_name.length-8),8)+"_0";
+        window[callback_name]=function(data){
+            if(matchs[1] == "bds.base64.cbr") {
+                cbr(data);
+            }else if(matchs[1] == "bds.base64.cbl") {
+                cbl(data);
+            }
+            window[callback_name]=null;
+        };
+        var url = matchs[0].replace(/bds\.base64\.cb[rl]/,callback_name);
+        var a = document.createElement("script");
+        a.setAttribute("type", "text/javascript");
+        a.setAttribute("src", url);
+        a.setAttribute("defer", "defer");
+        a.setAttribute("async", "true");
+        document.getElementsByTagName("head")[0].appendChild(a);
+    };
+    //图片回填
+    var imgLoad = function(data,side){
+        if(_finish[side]){
+            return;
+        }
+        _finish[side] = true;
+        if(side=="right"){
+            botTag.ot(false); //设置超时标记减1.
+        }
+        //获取所有图片，通过data-base64-id属性获取需要回填的图片
+        var imgs = document.getElementById(_expGroup!=1?((side=="left")?_containerLeftId:_containerRightId):_containerAllId).getElementsByTagName("IMG");
+        for(var i=0;i<imgs.length;i++){
+            var b64Id = imgs[i].getAttribute("data-b64-id");
+            if(b64Id){
+                var find = false;
+                if(data.hasOwnProperty(b64Id)) {
+                    setSrc(imgs[i],data[b64Id]);
+                    find = true;
+                }
+                if(!find){
+                    //小容错
+                    failover(imgs[i]);
+                }
+            }
+        }
+        fail_ie7();
+    };
+    function fail_ie7(){
+        //外层容错 IE7
+        setTimeout(function(){
+            for( var i=0; i<_imgWatch.length; i++ ){
+                var n = _imgWatch[i];
+                if(!n.loaded){
+                    failover(n.obj);
+                }
+            }
+            _imgWatch=[];
+        },200);
+    }
+    function setSrc(img,data){
+        try{
+            img.onerror = function(){
+                failover(this);
+            };
+            //标记监视，供容错检查
+            _imgWatch.push({
+                obj:img,
+                loaded:false
+            });
+            img.onload = function(){
+                //标记已加载
+                for( var i=0; i<_imgWatch.length; i++ ){
+                    var m = _imgWatch[i];
+                    if(m.obj == this){
+                        m.loaded = true;
+                    }
+                }
+            };
+            img.src = "data:image\/jpeg;base64," + data;
+        }catch(e){
+            //触发exception
+            failover(img);
+        }
+    }
+    //容错，回填原始src
+    var failover = function(img){
+        if(img.getAttribute("data-b64-id")!=null && img.getAttribute("data-b64-id")!="" && img.getAttribute("data-src")!=null){
+            img.src = img.getAttribute("data-src");
+        }
+    };
+    var watchReq = function(len){
+        var wt = 1250;
+        if(len<6){
+            wt = 1000;
+        }else if(len>10){
+            wt = 1500;
+        }
+        setTimeout(function(){
+            if( !_dataLoaded["right"] ){
+                var imgs = document.getElementById(_containerRightId).getElementsByTagName("IMG");
+                for(var i=0;i<imgs.length;i++){
+                    failover(imgs[i]);
+                }
+                _finish["right"] = true;
+                //设置超时标记
+                botTag.ot(true);
+            }
+            setTimeout(function(){
+                if(_hasSpImg && !_dataLoaded["left"]){
+                    var imgs = document.getElementById(_containerLeftId).getElementsByTagName("IMG");
+                    for(var i=0;i<imgs.length;i++){
+                        failover(imgs[i]);
+                    }
+                    _finish["left"] = true;
+                }
+            },500);
+        },wt);
+    };
+    /**
+     * base64网速检测标记
+     *   超时次数变量 BOT
+     *   初始：0
+     *   范围：0-6
+     *   变换规则：
+     *       每次超时，BOT +1;
+     *       每次正常：BOT -1;
+     *       到达边界值时，不再继续增加/减少
+     *   如何使用：（未上线）
+     *       BOT大于3时，设置cookie: B64_BOT=1，VUI针对本次请求，读cookie，如果B64_BOT=1，关闭base64服务
+     *       当BOT小于3时，设置cookie: B64_BOT=0，VUI正常开启base64服务。
+     */
+    var botTag = {
+        ot : function(isInc){
+            var _bottag = botTag.get();
+            if(isInc){
+                if(_bottag<6){
+                    _bottag++;
+                }
+            }else{
+                if(_bottag>0){
+                    _bottag--;
+                }
+            }
+            if( _bottag>=2 ){
+                var date = new Date();
+                date.setTime(date.getTime() + 24*3600*1000*5);
+                //此处设置cookie
+                document.cookie = "B64_BOT=1; expires=" + date.toGMTString();
+                //_bottag = 0;
+            }else if( _bottag<1 ){
+                if(document.cookie.match('B64_BOT=1')){
+                    document.cookie = "B64_BOT=0;";
+                }
+            }
+            try{
+                if(window.localStorage){
+                    window.localStorage[_BOTTAGLSNAME] = _bottag;
+                }
+            }catch(e){}
+        },
+        get : function(){
+            try{
+                if(window.localStorage){
+                    var _bottag = window.localStorage[_BOTTAGLSNAME];
+                        _bottag = _bottag?parseInt(_bottag):0;
+                }else{
+                    return 0;
+                }
+                return _bottag;
+            }catch(e){
+                return 0;
+            }
+        }
+    };
+    //请求回调方法 - 右侧
+    var cbr = function(data){
+        _reqEnd = new Date()*1;
+        if(_ispdc && bds.comm && _reqTime>0 && _reqEnd>0){
+            bds.comm.cusval = "b64_" + _dt + "_" + ( _reqEnd - _reqTime );
+        }
+        _loadState["cbr"] = 1;
+        callback(data, "right");
+    };
+    //请求回调方法 - 左侧
+    var cbl = function(data){
+        _reqEndL = new Date()*1;
+        callback(data, "left");
+    };
+    //请求回调方法 - 预取
+    var cbpr = function(data){
+        _loadState["cbpr"] = 1;
+        callback(data, "right");
+    };
+    var callback = function(data, side){
+        _dataLoaded[side] = _hasPreload ? (_loadState.cbpr && _loadState.cbr) : true;
+        if(data) {
+            if(_data[side] === undefined) {_data[side] = {}};
+            for(var key in data) {
+                if(data.hasOwnProperty(key)) {
+                    _data[side][key] = data[key];
+                }
+            }
+        }
+        if(_domLoaded[side] && _dataLoaded[side]){
+            imgLoad(_data[side], side);
+        }
+    };
+    //设置Dom加载完成
+    var setDomLoad = function(side){
+        _domLoaded[side] = true;
+        if(_dataLoaded[side]){
+            imgLoad(_data[side],side);
+        }
+    };
+    var predictImg = false; //右侧base64图片是否预取
+    //发送日志
+    var sendLog = function (src) {
+        var loghost = "http://nsclick.baidu.com/v.gif?pid=315&rsv_yc_log=3&";
+        var n = "b64log__" + (new Date()).getTime(),
+            c = window[n] = new Image();
+            c.onload = (c.onerror = function () {
+                window[n] = null;
+            });
+        c.src = loghost + src + "&_t=" + new Date()*1; //LOG统计地址
+        c = null; //释放变量c，避免产生内存泄漏的可能
+    };
+    //定义测速函数:
+    //请求回调 - 测速
+    cbs = function(data){
+        _rest = new Date()*1;
+        if( (_rest - _rsst) < 1500 ){
+            botTag.ot(false);
+        }else{
+            botTag.ot(true);
+        }
+    };
+    //测试速度
+    ts = function(){
+        _expGroup = 3;
+        _rsst = new Date()*1;
+        loadJs(_domain + "image?imglist=1241886729_3226161681_58,1072899117_2953388635_58,2469877062_2085031320_58,155831992_309216365_58,2539127170_1607411613_58,1160777122_283857721_58,1577144716_3149119526_58,2339041784_1038484334_58&cb=bds.base64.cbs");
+    };
+    return {
+        init : init,
+        cbl : cbl,
+        cbr : cbr,
+        cbpr : cbpr,
+        setDomLoad : setDomLoad,
+        cbs : cbs,
+        ts : ts,
+        predictImg : predictImg
+    }
+})();
+/* 图片预取、base64预取代码 */
+                                                                                     网页知道贴吧文库资讯图片地图采购视频更多
+            换一换1讲好冬奥故事 共赴冰雪之约热491万2昨日新增本土确诊24例 涉7省市热484万3党历史自信的最大底气热473万4美国拟批准驻华使领馆“授权撤离”热467万5杭州新增1例确诊 曾多次送小孩上学热451万6学生参观私人博物馆打碎130万文物449万73年后还偷你!本泽马家中被盗434万8胡锡进:美国就是冲着破坏冬奥来的427万9北京新增14例本土确诊5例无症状416万10媒体:杀人的网络暴力不整治不行了404万11上海最惨购房人称自己损失超千万新392万12推倒性骚扰男子致其死亡属正当防卫387万13餐厅回应摆1400万现金:只有1层真钞379万14证券日报头版喊话:挺起A股的脊梁361万15腾讯视频制片人张萌被移送公安355万16神十三航天员体验太空针灸340万17赵龙任福建省长 成全国最年轻省长热336万18被《乡爱14》里的谢大脚整破防了320万19外媒:俄罗斯南部军区进行战备检查311万20王冰冰唱的这首歌驱散寒冬304万21《开端》迎来大结局298万22北京因疫情原因快件禁发?假的286万23中国银行2月起取消个人借记卡年费276万24立陶宛将派代表团参加北京冬奥会263万25黑龙江新增本土确诊4例252万26深圳摘星新242万27新疆新增2例确诊6例无症状232万28沈阳涉京病例轨迹公布:住货车上新222万29男子拒出示健康码袭击工作人员被拘210万30科比去世两周年新203万
+.pop_over_tvv9E {
+  position: absolute;
+  z-index: 237;
+  background: #fff;
+  -webkit-transition: opacity 0.218s;
+  transition: opacity 0.218s;
+  padding: 5px 0;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  color: #333333;
+  line-height: 13px;
+}
+.pop_li_2U0Bb {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+.pick_color_1rHmJ {
+  color: #333;
+}
+.pick_color_1rHmJ i {
+  color: #c4c7ce;
+}
+.hovering_1RCgm:hover {
+  color: #315efb !important;
+}
+.hovering_1RCgm:hover i {
+  color: #315efb !important;
+}
+.btn_1c-hv {
+  line-height: 13px;
+  background: #4e6ef2;
+  border-radius: 6px;
+  border: none;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  color: #ffffff;
+  cursor: pointer;
+}
+.btn_1c-hv:hover {
+  background: #315efb;
+}
+.btn_1c-hv:active {
+  background: #4662d9;
+}
+.plain_color_37fHh {
+  color: #333;
+}
+.active_color_jxNnF {
+  color: #315efb !important;
+}
+.icon_3pH83 {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-size: contain;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+.input_1139k {
+  border: 1px solid #d7d9e0;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  outline: none;
+}
+.inpt_disable_21jDv {
+  background: #f5f5f6 !important;
+  color: #333333 !important;
+}
+.c_font_2AD7M {
+  font-family: Arial, sans-serif;
+}
+.pointer_32dlN {
+  cursor: pointer;
+}
+.block_1kLUP {
+  display: block;
+}
+.relative_5Vbw9 {
+  position: relative;
+}
+.absolute_2ajt8 {
+  position: absolute;
+}
+.icons_2hrV4 {
+  margin: 0 4px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 16px;
+}
+.icon_size_3Jjg0 {
+  width: 16px;
+  height: 16px;
+}
+.err_color_1r1_s {
+  color: #f73131;
+}
+.clear_icon_1OYFR {
+  margin: 1px 4px 0 0;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  font-size: 14px;
+}
+.outer_wqJjM {
+  height: 35px;
+}
+.tool_3HMbZ {
+  position: absolute;
+  right: 0;
+}
+.tool_3HMbZ:hover {
+  color: #315efb !important;
+}
+.new_wrapper_1YQab {
+  overflow: hidden;
+  height: 35px;
+}
+.options_2Vntk {
+  position: relative;
+  height: 41px;
+  width: 560px;
+  line-height: 39px;
+  font-size: 13px;
+  color: #9195a3;
+}
+.options_2Vntk i {
+  color: #c4c7ce;
+}
+.showTool_3hHYN {
+  top: -42px;
+}
+.tsn_inner_2vlfm {
+  transition: top 0.3s;
+}
+.closeTool_9GGjj {
+  top: 0px;
+}
+.close_wrapper_2yHC1 {
+  position: absolute;
+  right: 0;
+}
+.title_pos_2AOrh {
+  margin-left: 20px;
+}
+.child_pop_2LPeu {
+  margin-left: 23px;
+}
+.put_away_3xbs9:hover {
+  color: #315efb !important;
+}
+.hint_PIwZX {
+  line-height: 39px;
+  font-size: 13px;
+  color: #9195a3;
+}
+            收起工具时间不限所有网页和文件站点内检索搜索工具百度为您找到相关结果约12,000,000个
+    bds.comm.search_tool = {};
+    bds.comm.search_tool.sl_lang = "";
+    bds.comm.search_tool.st = "";
+    bds.comm.search_tool.et = "";
+    bds.comm.search_tool.stftype = "";
+    bds.comm.search_tool.ft = "";
+    bds.comm.search_tool.si = "";
+    bds.comm.search_tool.exact = "";
+    bds.comm.search_tool.oneDay = "1643075230";
+    bds.comm.search_tool.oneWeek = "1642556830";
+    bds.comm.search_tool.oneMonth = "1640483230";
+    bds.comm.search_tool.oneYear = "1611625630";
+    bds.comm.search_tool.thisDay = "1643040000";
+    bds.comm.search_tool.thisWeek = "1642521600";
+    bds.comm.search_tool.thisMonth = "1640448000";
+    bds.comm.search_tool.thisYear = "1611590400";
+    bds.comm.search_tool.actualResultLang = "cn";
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        NodeList和HTMLCollection区别 - 5Mi17 - 博客园2016年7月10日 NodeList和HTMLCollection区别 关于DOM集合接口,主要不同在于HTMLCollection是元素集合而NodeList是节点集合(既包括元素,也包括节点)。 规定一下结果是: 1. nod....user-avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}博客园.snapshoot, .snapshoot:visited {
+        color: #9195A3!important;
+    }
+    .snapshoot:active, .snapshoot:hover {
+        color: #626675!important;
+    }百度快照
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        NodeList 和 HTMLCollection之间的关系? - 知乎2015年6月24日 不过有个事情可以用来判断，NodeList跟HTMLCollection有个差异是前者没有namedItem()方法后者是有的。所以....user-avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}知乎.snapshoot, .snapshoot:visited {
+        color: #9195A3!important;
+    }
+    .snapshoot:active, .snapshoot:hover {
+        color: #626675!important;
+    }百度快照
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        NodeList和HTMLCollection_Meskjei的博客-CSDN博客_html...2019年3月15日 以前从来没怎么注意NodeList和HTMLCollection之间的区别。直到我今天重新看了《JavaScript高级程序设计》才注意到它们之间是有着微妙的区别的。 先来看下面的代码 <!DOCTYPE html><h....user-avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}CSDN技术社区.snapshoot, .snapshoot:visited {
+        color: #9195A3!important;
+    }
+    .snapshoot:active, .snapshoot:hover {
+        color: #626675!important;
+    }百度快照
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        DOM中的NodeList与HTMLCollection - 淡夏的绿茶 - 博客园2015年11月6日 最近在看《Javascript高级程序设计》的时候,看到了这样一句话:“理解NodeList和HTMLCollection,是从整体上透彻理解DOM的关键所在。”,所以觉得应该写一篇关于No....user-avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}博客园.snapshoot, .snapshoot:visited {
+        color: #9195A3!important;
+    }
+    .snapshoot:active, .snapshoot:hover {
+        color: #626675!important;
+    }百度快照
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        HTMLCollection vs. NodeList - 简书2017年1月18日 HTMLCollection的item()方法和通过属性获取元素(document.forms.f1)可以支持id和name,而NodeList对象只支持id 但是我并没有完全看懂,大概掌握程度是0.6左右,于....user-avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}简书社区.snapshoot, .snapshoot:visited {
+        color: #9195A3!important;
+    }
+    .snapshoot:active, .snapshoot:hover {
+        color: #626675!important;
+    }百度快照
+    其他人还在搜
+        index.htmlcollection的用法html网页hcollection事件对象event的属性collection类如何将jquery对象转换成dom对象new collection什么是闭包vipluscollection
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        NodeList 与 HTMLCollection 二三事 - SegmentFault 思否2017年9月16日 1.NodeList 是 querySelectorAll 的返回结果 2.HtmlCollection 是 getElementByTagName的结果 3.不要在意两个数量的区别, 首先NodeList 是DOM 快照,节点数量和....user-avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}思否开发者社区.snapshoot, .snapshoot:visited {
+        color: #9195A3!important;
+    }
+    .snapshoot:active, .snapshoot:hover {
+        color: #626675!important;
+    }百度快照
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        HTML5 HTMLCollection和NodeList的区别详解_html5_网页制...2020年4月29日 这篇文章主要介绍了HTML5 HTMLCollection和NodeList的区别详解,文中通过示例代码介绍的非常详细,对大家的学习或者工作具有一定的参考学习价值,需要的朋友们下面....user-avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}脚本之家.snapshoot, .snapshoot:visited {
+        color: #9195A3!important;
+    }
+    .snapshoot:active, .snapshoot:hover {
+        color: #626675!important;
+    }百度快照
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        HTMLCollection和NodeList的区别 - 简书HTMLCollection: html元素的合集,可以通过id、name或索引获取元素。 NodeList: 文档节点的集合,只能通过索引获取。 由Node.childNodes 和 querySelectorAll 方法返回。 var h....user-avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}简书社区.snapshoot, .snapshoot:visited {
+        color: #9195A3!important;
+    }
+    .snapshoot:active, .snapshoot:hover {
+        color: #626675!important;
+    }百度快照
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        JavaScript-html Dom中的HTMLCollection和NodeList - 知乎2019年4月13日 HTMLCollection 对象类似 HTML 元素的一个数组,获取的是html元素集合。 NodeList对象 NodeList 对象是一个从文档中获取的节点列表 (集合) 。一些旧版本浏览器中....user-avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}知乎.snapshoot, .snapshoot:visited {
+        color: #9195A3!important;
+    }
+    .snapshoot:active, .snapshoot:hover {
+        color: #626675!important;
+    }百度快照
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        htmlcollection和nodelist的区别 - 百度知道2个回答 - 回答时间: 2015年11月13日最佳答案: getElementsByClassName,getElementsByTagName=> HTMLCollection childNodes, getElementsByName,querySelectorAll =>NodeList ie中：getElementsByName是HTMLColl....new-pmd .c-abstract br{display: none;}更多关于nodelist和htmlcollection的问题>>.user-avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}百度知道.snapshoot, .snapshoot:visited {
+        color: #9195A3!important;
+    }
+    .snapshoot:active, .snapshoot:hover {
+        color: #626675!important;
+    }百度快照
+/* 适老化配色 */
+.darkmode.dark .rs-link_2DE3Q {
+  background: #292930;
+}
+.darkmode.dark .rs-link_2DE3Q:hover {
+  background: #3B3B45;
+  color: #FFF762;
+}
+.darkmode.dark .pictxt-link_30HNK:hover {
+  color: #FFF762;
+  background: #3B3B45;
+}
+.darkmode.dark .pictxt-link_30HNK:hover .pictxt-icon_2RNRK {
+  color: #FFF762;
+}
+.darkmode.dark .pictxt-link_30HNK:hover .pictxt-img_1JaOC {
+  border-color: #3B3B45;
+  background: #3B3B45;
+}
+.darkmode.dark .pictxt-img_1JaOC {
+  border-color: #292930;
+  background: #292930;
+}
+.darkmode.blue .rs-link_2DE3Q {
+  background: #1C295C;
+}
+.darkmode.blue .rs-link_2DE3Q:hover {
+  background: #273A80;
+  color: #FFF762;
+}
+.darkmode.blue .pictxt-link_30HNK:hover {
+  color: #FFF762;
+  background: #273A80;
+}
+.darkmode.blue .pictxt-link_30HNK:hover .pictxt-icon_2RNRK {
+  color: #FFF762;
+}
+.darkmode.blue .pictxt-link_30HNK:hover .pictxt-img_1JaOC {
+  border-color: #273A80;
+  background: #273A80;
+}
+.darkmode.blue .pictxt-img_1JaOC {
+  border-color: #1C295C;
+  background: #1C295C;
+}
+/* 适老化配色 */
+.rs-normal-width_2T91A {
+  margin: 6px 0 30px 0;
+  width: 704px;
+}
+.rs-table_3RiQc {
+  margin-top: -3px;
+}
+.rs-label_ihUhK {
+  font-size: 18px;
+  line-height: 18px;
+  margin-bottom: -4px;
+}
+.rs-col_8Qlx- {
+  padding: 6px 8px;
+}
+.rs-col_8Qlx-:last-child {
+  padding-right: 0;
+}
+.rs-col_8Qlx-:first-child {
+  padding-left: 0;
+}
+.rs-link_2DE3Q {
+  display: inline-block;
+  padding: 10px 12px;
+  margin-bottom: -10px;
+  background: #F5F5F6;
+  font-size: 14px;
+  height: 14px;
+  line-height: 14px;
+  border-radius: 17px;
+  text-align: left;
+  width: 224px;
+}
+.rs-link_2DE3Q:hover {
+  text-decoration: none;
+  color: #315EFB;
+  background: #F0F3FD;
+}
+.rs-link_2DE3Q:visited {
+  color: #771DAA;
+}
+.pictxt-table_2Jwps {
+  margin-top: -4px;
+}
+.pictxt-col_2EoTB {
+  padding: 7px 8px;
+}
+.pictxt-img_1JaOC {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #F5F5F6;
+  border-radius: 8px;
+  background: #F5F5F6;
+  z-index: 10;
+  display: inline-block;
+}
+.pictxt-link_30HNK {
+  position: relative;
+  width: 210px;
+  border-radius: 8px;
+  padding: 10px 20px 10px 42px;
+}
+.pictxt-link_30HNK .pictxt-icon_2RNRK {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  font-size: 14px;
+  color: #9195A3;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+.pictxt-link_30HNK:hover {
+  text-decoration: none;
+  color: #315EFB;
+  background: #F0F3FD;
+}
+.pictxt-link_30HNK:hover .pictxt-icon_2RNRK {
+  color: #315EFB;
+  -ms-transform: scale(1.14285714);
+  -webkit-transform: scale(1.14285714);
+  transform: scale(1.14285714);
+  -ms-transform-origin: center;
+  -webkit-transform-origin: center;
+  transform-origin: center;
+}
+.pictxt-link_30HNK:hover .pictxt-img_1JaOC {
+  border-color: #F0F3FD;
+  background: #F0F3FD;
+}
+        相关搜索
+                        la collection
+                        ms collection
+                        html表单标签
+                        html div
+                        my collection
+                        html input
+                        html格式
+                        html是什么
+#page {
+  background-color: #f5f5f6;
+  margin: 30px 0 0 0;
+  padding: 0;
+  font: 14px arial;
+  white-space: nowrap;
+}
+#page .n {
+  width: 80px;
+  padding: 0;
+  line-height: 36px;
+  border: none;
+}
+#page .n:hover {
+  border: none;
+  background: #4e6ef2;
+  color: #fff;
+}
+.page_2muyV span {
+  display: block;
+}
+.page_2muyV .page-item_M4MDr {
+  border: none;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+}
+.page_2muyV strong,
+.page_2muyV a {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #3951b3;
+  margin-right: 12px;
+  display: inline-block;
+  vertical-align: text-bottom;
+  text-align: center;
+  text-decoration: none;
+  overflow: hidden;
+}
+.page_2muyV a {
+  cursor: pointer;
+}
+.page_2muyV a .page-item_M4MDr {
+  cursor: pointer;
+}
+.page_2muyV strong {
+  background: #4e6ef2;
+  color: #fff;
+  font-weight: normal;
+}
+.page_2muyV a:hover,
+.page_2muyV a:hover .page-item_M4MDr {
+  border: none;
+  background: #4e6ef2;
+  color: #fff;
+}
+.page_2muyV .page-inner_2jZi2 {
+  padding: 14px 0 14px 150px;
+}
+@media screen and (min-width: 1921px) {
+  .page_2muyV .page-inner_2jZi2 {
+    width: 1212px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 14px 0 14px 140px;
+  }
+}
+            12345678910下一页 >
+.hint-float-ball-right_35qVn {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  position: fixed;
+  right: 24px;
+  bottom: 64px;
+  font-size: 14px;
+  z-index: 1000;
+}
+.activity-enter_3KGmI {
+  position: relative;
+  float: right\0;
+}
+.activity-enter-area_1DNYN {
+  width: 96px;
+  height: 96px;
+  margin-left: 8px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.hint-float-ball-closebtn_2V4jN {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  background-image: url(https://pss.bdstatic.com/r/www/cache/static/molecules/app/hint-float-ball-right/img/close_7bc47f9.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.activity-text_D3ilj {
+  position: absolute;
+  bottom: 12px;
+  color: #ffe5ca;
+  font-size: 16px;
+  font-family: PingFangSC-Medium;
+  line-height: 16px;
+  text-align: center;
+  width: 96px;
+  margin-left: 8px;
+}
+.ball-desc_2fz6C {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.qrcode-area_3ttcf {
+  margin-right: 8px;
+  float: right\0;
+}
+.qrcode-col_3MBJk {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 103px;
+  height: 128px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.qrcode-col_3MBJk:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 102px;
+  bottom: 20px;
+  border-top: solid 10px transparent;
+  border-left: solid 10px #ffffff;
+  /* 白色小三角形 */
+  border-bottom: solid 10px transparent;
+}
+.qrcode-col_3MBJk .qrcode-box_3svoY {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 12px 8px;
+}
+.qrcode-col_3MBJk .qrcode-content_t_13k {
+  width: 64px;
+  height: 64px;
+  margin: 4px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.qrcode-col_3MBJk .qrcode-title_3gmBA,
+.qrcode-col_3MBJk .qrcode-desc_al226 {
+  padding: 0 9px;
+  font-size: 13px;
+  line-height: 15px;
+  color: #222222;
+  margin-bottom: 8px;
+}
+.qrcode-row_1t-Zs {
+  display: flex;
+  justify-content: center;
+  width: 296px;
+  height: 102px;
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.qrcode-row_1t-Zs:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: -9px;
+  bottom: 20px;
+  border-top: solid 10px transparent;
+  border-left: solid 10px #ffffff;
+  /* 白色小三角形 */
+  border-bottom: solid 10px transparent;
+}
+.qrcode-row_1t-Zs .qrcode-obox_TLjKl {
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.qrcode-row_1t-Zs .qrcode-box_3svoY {
+  float: right;
+}
+.qrcode-row_1t-Zs .qrcode-content_t_13k {
+  width: 70px;
+  height: 70px;
+  margin-left: 20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.qrcode-row_1t-Zs .qrcode-text_2QPZ1 {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.qrcode-row_1t-Zs .qrcode-title_3gmBA {
+  font-family: Helvetica;
+  font-size: 20px;
+  color: #222222;
+  line-height: 20px;
+  margin-bottom: 6px;
+}
+.qrcode-row_1t-Zs .qrcode-desc_al226 {
+  font-family: MicrosoftYaHei;
+  font-size: 14px;
+  color: #f73131;
+  letter-spacing: 0;
+  line-height: 16px;
+}
+try{document.cookie="WWW_ST=;expires=Sat, 01 Jan 2000 00:00:00 GMT";}catch(e){}
+.foot-container_2X1Nt {
+  text-align: left;
+  height: 42px;
+  line-height: 42px;
+  border-top: none;
+  margin-top: 0;
+  background: #f5f6f5;
+}
+.foot-container_2X1Nt span {
+  color: #666666;
+}
+.help-container_3VJQo {
+  zoom: 1;
+  float: left !important;
+  padding-left: 150px !important;
+}
+.help-container_3VJQo a {
+  color: #9195a3;
+  padding: 0 12px;
+  text-decoration: none;
+}
+.help-container_3VJQo a:hover {
+  color: #222;
+}
+.help-container_3VJQo a:first-child {
+  padding-left: 0;
+}
+@media screen and (min-width: 1921px) {
+  .foot-container_2X1Nt div {
+    width: 1212px;
+    margin: 0 auto;
+  }
+  .help-container_3VJQo {
+    padding-left: 140px !important;
+  }
+}
+            帮助举报用户反馈
+    (function () {
+        var searchMap = {"bundles": {"search-ui-pc/core_f7194c7":["search-ui-pc/WujiContainer/WujiContainer_b4371ce","search-ui-pc/WujiContainer/WujiComponent_84f3b0d","search-ui-pc/Title/Title_4bef466","search-ui-pc/Row/Row_a439c0b","search-ui-pc/Row/Span_95c943f","search-ui-pc/Label/Label_b373da5","search-ui-pc/Image/Image_9401194","search-ui-pc/Board/Board_7e3b18b","search-ui-pc/Link/Link_8ac6ef4","search-ui-pc/Slink/Slink_759f1a4","search-ui-pc/SlinkItem/SlinkItem_ad93793"],"search-ui-pc/enhance_f636eb0":["search-ui-pc/Audio/Audio_0cc1394","search-ui-pc/AudioBubble/AudioBubble_1e20e3f","search-ui-pc/Button/Button_de90e07","search-ui-pc/Calendar/Calendar_858bd64","search-ui-pc/Checkbox/Checkbox_8ee887a","search-ui-pc/Fold/Fold_618f0a8","search-ui-pc/Forward/Forward_f7af8c6","search-ui-pc/ImageSet/ImageSet_15b5082","search-ui-pc/ImageVideo/ImageVideo_95371b6","search-ui-pc/ImageView/ImageView_bb579d6","search-ui-pc/ImgContent/ImgContent_f53719d","search-ui-pc/Input/Input_5bff81e","search-ui-pc/More/More_611a23a","search-ui-pc/PageNav/PageNav_a01236c","search-ui-pc/Popup/Popup_cfc07ac","search-ui-pc/Radio/Radio_05956b5","search-ui-pc/Radio/RadioGroup_d516ae9","search-ui-pc/Rank/Rank_6bebc2e","search-ui-pc/Scroll/Scroll_2e22a51","search-ui-pc/ScrollVideo/ScrollVideo_a9320ab","search-ui-pc/Select/Select_37a2058","search-ui-pc/Source/Source_3067746","search-ui-pc/Star/Star_67b1ba1","search-ui-pc/Swiper/Swiper_5c4b99f","search-ui-pc/Tab/Tab_c620684","search-ui-pc/Tab/TabItem_150a17f","search-ui-pc/Table/Table_24fcc1e","search-ui-pc/Table/TableColumn_beefe30","search-ui-pc/Table/TableRow_f70fd20","search-ui-pc/Tag/Tag_21235e3","search-ui-pc/TagSearch/TagSearch_14747f3","search-ui-pc/TextLine/TextLine_e099049","search-ui-pc/Toast/Toast_364969f","search-ui-pc/Tts/Tts_74fcab1","search-ui-pc/User/User_b57f93f","search-ui-pc/User/vip_5a95827","search-ui-pc/Video/Video_287f1a2","search-ui-pc/VideoArticle/VideoArticle_4ce5ccd"]}, "paths": {"search-ui-pc/core_f7194c7":"https://pss.bdstatic.com/r/www/cache/static/search-ui-pc/core_f7194c7","search-ui-pc/enhance_f636eb0":"https://pss.bdstatic.com/r/www/cache/static/search-ui-pc/enhance_f636eb0"}};
+        var nodePlaceholder = '{"bundles": {"search-ui-pc/core_8a1840e":["search-ui-pc/WujiContainer/WujiContainer_2fde9eb","search-ui-pc/WujiContainer/WujiComponent_c86bf0d","search-ui-pc/Title/Title_2e3e972","search-ui-pc/Row/Row_c433424","search-ui-pc/Row/Span_6fe04d3","search-ui-pc/Label/Label_a62ad8e","search-ui-pc/Image/Image_38023d6","search-ui-pc/Board/Board_1680f48","search-ui-pc/Link/Link_64f8256","search-ui-pc/Slink/Slink_2d898d8","search-ui-pc/SlinkItem/SlinkItem_8ee6651"],"search-ui-pc/enhance_d95c41b":["search-ui-pc/Audio/Audio_a27a5ad","search-ui-pc/AudioBubble/AudioBubble_3dba03e","search-ui-pc/Button/Button_fd79f74","search-ui-pc/Calendar/Calendar_9307c5f","search-ui-pc/Checkbox/Checkbox_a8237f2","search-ui-pc/Fold/Fold_0df61c7","search-ui-pc/Forward/Forward_7d7ddf3","search-ui-pc/ImageSet/ImageSet_99caa3d","search-ui-pc/ImageVideo/ImageVideo_3d731c3","search-ui-pc/ImageView/ImageView_bd54a9f","search-ui-pc/ImgContent/ImgContent_63ba4d2","search-ui-pc/Input/Input_ab13b07","search-ui-pc/More/More_ada878e","search-ui-pc/PageNav/PageNav_b7f991f","search-ui-pc/Popup/Popup_2ab06a9","search-ui-pc/Radio/Radio_f2abe31","search-ui-pc/Radio/RadioGroup_493e6f0","search-ui-pc/Rank/Rank_664247f","search-ui-pc/Scroll/Scroll_646225f","search-ui-pc/ScrollVideo/ScrollVideo_258204b","search-ui-pc/Select/Select_dfc6687","search-ui-pc/Source/Source_0ca0af9","search-ui-pc/Star/Star_6880dde","search-ui-pc/Swiper/SlideList_0f34f17","search-ui-pc/Swiper/Swiper_c240a15","search-ui-pc/Tab/Tab_b7181ab","search-ui-pc/Tab/TabItem_5674d1e","search-ui-pc/Table/Table_372f586","search-ui-pc/Table/TableColumn_57e30ef","search-ui-pc/Table/TableRow_bb3c02c","search-ui-pc/Tag/Tag_2424b33","search-ui-pc/TagSearch/TagSearch_81ef233","search-ui-pc/TextLine/TextLine_c504972","search-ui-pc/Toast/Toast_5549a06","search-ui-pc/Tts/Tts_55ba9cc","search-ui-pc/User/User_09d0db6","search-ui-pc/User/vip_7695211","search-ui-pc/VerticalScroll/VerticalScroll_02b5afb","search-ui-pc/Video/Video_3ceefa5","search-ui-pc/VideoArticle/VideoArticle_ce670fe"]}, "paths": {"search-ui-pc/core_8a1840e":"https://pss.bdstatic.com/r/www/cache/static/search-ui-pc/core_8a1840e","search-ui-pc/enhance_d95c41b":"https://pss.bdstatic.com/r/www/cache/static/search-ui-pc/enhance_d95c41b"}}';
+        if (typeof nodePlaceholder === 'string') {
+            try {
+                nodePlaceholder = JSON.parse(nodePlaceholder);
+                require.config(nodePlaceholder);
+                window.searchUiPcNode = processData(nodePlaceholder);
+            }catch(e){}
+        }
+        require.config(searchMap);
+        window.searchUiPc = processData(searchMap);
+        function processData (config) {
+            if (!config || !config.bundles) {
+                return;
+            }
+            var bundles = config.bundles;
+            var componentList = [];
+            var list = {};
+            for(var key in bundles) {
+                componentList = componentList.concat(bundles[key]);
+            }
+            componentList.forEach(function (item, index) {
+                var key = item.split('_')[0];
+                key = key.match(/^search-ui-pc\/(.+)/)[1].replace(/\//g, '_');
+                list[key] = item;
+            });
+            return list;
+        }
+    })();
+(function () {
+    bds.amd.addConfig({"paths":{"search-ui/v2/core":"//www.baidu.com/cache/atom/search-ui/v2/core_4f18d6d","search-ui/v2/few":"//www.baidu.com/cache/atom/search-ui/v2/few_708d2f8","search-ui/v2/enhance":"//www.baidu.com/cache/atom/search-ui/v2/enhance_cd0044d"},"bundles":{"search-ui/v2/core":["search-ui/v2/Aladdin/Aladdin","search-ui/v2/Button/BtnLayout","search-ui/v2/Button/Button","search-ui/v2/Divider/Divider","search-ui/v2/Footer/Footer","search-ui/v2/Footer/MipIcon","search-ui/v2/Icon/Icon","search-ui/v2/Image/Image","search-ui/v2/Image/ImageMask","search-ui/v2/KgFooter/KgFooter","search-ui/v2/KgHeader/KgHeader","search-ui/v2/Label/Label","search-ui/v2/Line/Line","search-ui/v2/Link/Link","search-ui/v2/List/List","search-ui/v2/List/ListItem","search-ui/v2/Loading/Loading","search-ui/v2/More/More","search-ui/v2/Navs/ListMore","search-ui/v2/Navs/Navs","search-ui/v2/Navs/NavsCommon","search-ui/v2/Navs/NavsScroll","search-ui/v2/Row/Row","search-ui/v2/Row/Span","search-ui/v2/Scroll/Scroll","search-ui/v2/Scroll/ScrollAuto","search-ui/v2/Scroll/ScrollInner","search-ui/v2/Scroll/ScrollItem","search-ui/v2/Share/Share","search-ui/v2/Sigma/Sigma","search-ui/v2/Sigma/SigmaFooter","search-ui/v2/Slink/Slink","search-ui/v2/Tabs/Tabs","search-ui/v2/Tabs/TabsContent","search-ui/v2/Tabs/TabsItem","search-ui/v2/TextLine/TextLine","search-ui/v2/Timespan/Timespan","search-ui/v2/Title/Title","search-ui/v2/Title/TitleBase","search-ui/v2/TouchableFeedback/TouchableFeedback","search-ui/v2/TouchableFeedback/TouchableStop","search-ui/v2/util/async","search-ui/v2/util/deviceUtil","search-ui/v2/util/domUtil","search-ui/v2/util/orientationMixin","search-ui/v2/util/stopIOSDoubleTapMixin","search-ui/v2/util/stopScrollThroughMixin","search-ui/v2/TooltipFuncBtn/TooltipFuncBtn","search-ui/v2/Tooltip/Tooltip","search-ui/v2/Popup/Popup","search-ui/v2/Motion/Transition","search-ui/v2/Motion/animations","search-ui/v2/Toast/Toast","search-ui/v2/Toast/ToastPopup"],"search-ui/v2/few":["search-ui/v2/Calendar/Calendar","search-ui/v2/Calendar/CalendarMonthItem","search-ui/v2/Calendar/Mask","search-ui/v2/Carousel/Carousel","search-ui/v2/Carousel/CarouselFrame","search-ui/v2/Carousel/CarouselItem","search-ui/v2/Carousel/Indicator","search-ui/v2/Cascader/Cascader","search-ui/v2/ErrorPage/ErrorPage","search-ui/v2/FilterEnhanced/BottomLayout","search-ui/v2/FilterEnhanced/Checkbox","search-ui/v2/FilterEnhanced/CustomLayout","search-ui/v2/FilterEnhanced/Filter","search-ui/v2/FilterEnhanced/FilterEnhanced","search-ui/v2/FilterEnhanced/FilterFrame","search-ui/v2/FilterEnhanced/ListLayout","search-ui/v2/FilterEnhanced/Mask","search-ui/v2/FilterEnhanced/MultiCheckbox","search-ui/v2/FilterEnhanced/MultiLayout","search-ui/v2/FilterEnhanced/MultiRangeInput","search-ui/v2/FilterEnhanced/store","search-ui/v2/FilterEnhanced/TagLayout","search-ui/v2/ImageViewer/asset/js/animate-config","search-ui/v2/ImageViewer/asset/js/animate","search-ui/v2/ImageViewer/asset/js/link","search-ui/v2/ImageViewer/asset/js/store","search-ui/v2/ImageViewer/asset/js/touch-helper","search-ui/v2/ImageViewer/asset/js/util","search-ui/v2/ImageViewer/ImageViewer","search-ui/v2/ImageViewer/ImageViewerClose","search-ui/v2/ImageViewer/ImageViewerContent","search-ui/v2/ImageViewer/ImageViewerImg","search-ui/v2/ImageViewer/ImageViewerInfo","search-ui/v2/ImageViewer/ImageViewerItem","search-ui/v2/ImageViewer/ImageViewerZoom","search-ui/v2/Tombstone/ImgTombstone","search-ui/v2/Tombstone/ImgTombstoneItem","search-ui/v2/Tombstone/Tombstone","search-ui/v2/Tombstone/TombstoneItem","search-ui/v2/Waterfall/ImgItem","search-ui/v2/Waterfall/Waterfall"],"search-ui/v2/enhance":["search-ui/v2/AnimateIcon/Arrow","search-ui/v2/AnimateIcon/Triangle","search-ui/v2/Article/Article","search-ui/v2/Article/ArticleExtInfo","search-ui/v2/Audio/Audio","search-ui/v2/Content/Content","search-ui/v2/Dialog/Dialog","search-ui/v2/Drawer/Drawer","search-ui/v2/Dropdown/Dropdown","search-ui/v2/Dropdown/DropdownEnhanced","search-ui/v2/Filter/Filter","search-ui/v2/Filter/FilterListPanel","search-ui/v2/Filter/FilterMultiListPanel","search-ui/v2/Filter/FilterNormal","search-ui/v2/Filter/FilterRangeInput","search-ui/v2/Filter/FilterThreeListPanel","search-ui/v2/Filter/FilterTwoListPanel","search-ui/v2/FilterSimple/FilterSimple","search-ui/v2/FilterSimple/FilterTagLayout","search-ui/v2/FilterSimple/FilterTagLayoutItem","search-ui/v2/ImageViewerSimple/Base","search-ui/v2/ImageViewerSimple/ImageViewerSimple","search-ui/v2/ImageViewerSimple/Toolbar","search-ui/v2/ImgContent/ImgContent","search-ui/v2/InfiniteScroll/InfiniteScroll","search-ui/v2/InfiniteScroll/InfiniteScrollBottomBar","search-ui/v2/Input/Input","search-ui/v2/Input/RangeInput","search-ui/v2/LetterSort/LetterSort","search-ui/v2/LetterSort/LetterSortToast","search-ui/v2/ListArticle/ListArticle","search-ui/v2/ListResult/ListResult","search-ui/v2/Lottie/Lottie","search-ui/v2/Mask/Mask","search-ui/v2/Motion/Animation","search-ui/v2/Motion/Flip","search-ui/v2/NewsArticle/NewsArticle","search-ui/v2/PageScroll/PageScroll","search-ui/v2/PageScroll/PageScrollItem","search-ui/v2/PageScrollImgs/PageScrollImgs","search-ui/v2/PageScrollImgs/PageScrollImgsItem","search-ui/v2/PageScrollVideo/PageScrollVideo","search-ui/v2/PullRefresh/PullRefresh","search-ui/v2/Rec/Rec","search-ui/v2/ScrollArticle/ScrollArticle","search-ui/v2/ScrollArticle/ScrollArticleItem","search-ui/v2/ScrollImgs/ScrollImgs","search-ui/v2/ScrollImgs/ScrollImgsItem","search-ui/v2/ScrollTwo/ScrollTwo","search-ui/v2/ScrollTwoFrame/ScrollTwoFrame","search-ui/v2/ScrollVideo/ScrollVideo","search-ui/v2/Selector/Selector","search-ui/v2/Selector/SelectorMulti","search-ui/v2/Selector/SelectorRadio","search-ui/v2/Source/Source","search-ui/v2/Spread/Spread","search-ui/v2/SpreadEnhanced/Spread","search-ui/v2/SpreadEnhanced/SpreadBottomBtn","search-ui/v2/SpreadEnhanced/SpreadEnhanced","search-ui/v2/SpreadEnhanced/SpreadRightBottomBtn","search-ui/v2/SpreadEnhanced/SpreadTopBtn","search-ui/v2/Stars/Stars","search-ui/v2/StitchImgs/StitchImgs","search-ui/v2/StitchImgs/StitchImgsFive","search-ui/v2/StitchImgs/StitchImgsRevertTwo","search-ui/v2/StitchImgs/StitchImgsThree","search-ui/v2/StitchImgs/StitchImgsTwo","search-ui/v2/StrongLink/StrongLink","search-ui/v2/Switch/Switch","search-ui/v2/Table/Table","search-ui/v2/TableGrid/TableGrid","search-ui/v2/TagGroup/TagGroup","search-ui/v2/Tags/SpreadTags","search-ui/v2/Tags/TagItem","search-ui/v2/Tags/Tags","search-ui/v2/Tags/TagsContent","search-ui/v2/Tags/TagsItem","search-ui/v2/Tags/TagsWrapper","search-ui/v2/ToTop/ToTop","search-ui/v2/Video/Video","search-ui/v2/Video/VideoCol","search-ui/v2/Video/VideoContent","search-ui/v2/Video/VideoThumbnail"]}});
+})();
+    {"graph.baidu.com": "https://sp1.baidu.com/-aYHfD0a2gU2pMbgoY3K","p.qiao.baidu.com":"https://sp1.baidu.com/5PoXdTebKgQFm2e88IuM_a","vse.baidu.com":"https://sp3.baidu.com/6qUDsjip0QIZ8tyhnq","hdpreload.baidu.com":"https://sp3.baidu.com/7LAWfjuc_wUI8t7jm9iCKT-xh_","lcr.open.baidu.com":"//pcrec.baidu.com","kankan.baidu.com":"https://sp3.baidu.com/7bM1dzeaKgQFm2e88IuM_a","xapp.baidu.com":"https://sp2.baidu.com/yLMWfHSm2Q5IlBGlnYG","dr.dh.baidu.com":"https://sp1.baidu.com/-KZ1aD0a2gU2pMbgoY3K","xiaodu.baidu.com":"https://sp1.baidu.com/yLsHczq6KgQFm2e88IuM_a","sensearch.baidu.com":"https://sp1.baidu.com/5b11fzupBgM18t7jm9iCKT-xh_","s1.bdstatic.com":"https://dss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K","olime.baidu.com":"https://sp1.baidu.com/8bg4cTva2gU2pMbgoY3K","app.baidu.com":"https://sp2.baidu.com/9_QWsjip0QIZ8tyhnq","i.baidu.com":"https://sp1.baidu.com/74oIbT3kAMgDnd_","c.baidu.com":"https://sp1.baidu.com/9foIbT3kAMgDnd_","sclick.baidu.com":"https://sp1.baidu.com/5bU_dTmfKgQFm2e88IuM_a","nsclick.baidu.com":"https://sp1.baidu.com/8qUJcD3n0sgCo2Kml5_Y_D3","sestat.baidu.com":"https://sp1.baidu.com/5b1ZeDe5KgQFm2e88IuM_a","eclick.baidu.com":"https://sp3.baidu.com/-0U_dTmfKgQFm2e88IuM_a","api.map.baidu.com":"https://sp2.baidu.com/9_Q4sjOpB1gCo2Kml5_Y_D3","ecma.bdimg.com":"https://dss1.bdstatic.com/-0U0bXSm1A5BphGlnYG","ecmb.bdimg.com":"https://dss0.bdstatic.com/-0U0bnSm1A5BphGlnYG","t1.baidu.com":"https://t1.baidu.com","t2.baidu.com":"https://t2.baidu.com","t3.baidu.com":"https://t3.baidu.com","t10.baidu.com":"https://t10.baidu.com","t11.baidu.com":"https://t11.baidu.com","t12.baidu.com":"https://t12.baidu.com","i7.baidu.com":"https://dss0.baidu.com/73F1bjeh1BF3odCf","i8.baidu.com":"https://dss0.baidu.com/73x1bjeh1BF3odCf","i9.baidu.com":"https://dss0.baidu.com/73t1bjeh1BF3odCf","b1.bdstatic.com":"https://dss0.bdstatic.com/9uN1bjq8AAUYm2zgoY3K","ss.bdimg.com":"https://dss1.bdstatic.com/5aV1bjqh_Q23odCf","opendata.baidu.com":"https://sp1.baidu.com/8aQDcjqpAAV3otqbppnN2DJv","api.open.baidu.com":"https://sp1.baidu.com/9_Q4sjW91Qh3otqbppnN2DJv","tag.baidu.com":"https://sp1.baidu.com/6LMFsjip0QIZ8tyhnq","f3.baidu.com":"https://sp2.baidu.com/-uV1bjeh1BF3odCf","s.share.baidu.com":"https://sp1.baidu.com/5foZdDe71MgCo2Kml5_Y_D3","bdimg.share.baidu.com":"https://dss1.baidu.com/9rA4cT8aBw9FktbgoI7O1ygwehsv","1.su.bdimg.com":"https://dss0.bdstatic.com/k4oZeXSm1A5BphGlnYG","2.su.bdimg.com":"https://dss1.bdstatic.com/kvoZeXSm1A5BphGlnYG","3.su.bdimg.com":"https://dss2.bdstatic.com/kfoZeXSm1A5BphGlnYG","4.su.bdimg.com":"https://dss3.bdstatic.com/lPoZeXSm1A5BphGlnYG","5.su.bdimg.com":"https://dss0.bdstatic.com/l4oZeXSm1A5BphGlnYG","6.su.bdimg.com":"https://dss1.bdstatic.com/lvoZeXSm1A5BphGlnYG","7.su.bdimg.com":"https://dss2.bdstatic.com/lfoZeXSm1A5BphGlnYG","8.su.bdimg.com":"https://dss3.bdstatic.com/iPoZeXSm1A5BphGlnYG"}
+{"query":"nodelist\u548chtmlcollection","tn":"44004473_6_oem_dg","qid":"9370edb30003252f","encTn":"5a722NwTBlSPtvRjGlchNhzsQO2oPiDGZP8eCELTB3EF3sOhk9O5U9vnc\/t79b\/NeE8oOnAyBAc","queryEnc":"nodelist%BA%CDhtmlcollection","inter":"","ubsurl":"https:\/\/sp1.baidu.com\/5bU_dTmfKgQFm2e88IuM_a\/union.gif","cid":"0","topicPn":""}{"sampleval": [],"sid": "26350"}{"user":"b9186942","username":"b9186942","isLogin":1,"userPortrait":"https:\/\/himg.bdimg.com\/sys\/portraitn\/item\/public.1.3283a616.ntXZwDZixICsbxdtSbz4-A"}{"isHit": "","mode": "","color": ""}{"staticDomain": "https://pss.bdstatic.com","env": "prod"}{"disableVoice": ""}
+        define("modules/monitor/log-send",["require","exports"],function(e,o){"use strict";function t(e){if(!e)return!1;var o=document.cookie.indexOf("webbtest=1")>-1;return o||Math.random()<e}function i(e,o){if(void 0===o&&(o="except"),!e.group||!t(n.sample[e.group]))return"";var i=e.pid||"1_87";bds.comm.ishome&&(i="1_79");var r=bds.comm.qid||bds.comm.queryId,s=n.logServer+"?pid="+i+"&lid="+r+"&ts="+Date.now()+"&type="+o+"&group="+e.group+"&info="+encodeURIComponent(JSON.stringify(e.info))+"&dim="+encodeURIComponent(JSON.stringify(e.dim||{})),a=new Image;
+return a.src=s,s}o.__esModule=!0,o.send=void 0;var n={pid:"1_87",sample:{jserror:.02,iframe:.02,imgLoadSlow:.02,imgError:.02,resBigimg:.02,httpRes:.02,lsInfo:1,lsCost:.02,codeCoverage:.02,pcUrlUnEncode:.02},logServer:"https://sp1.baidu.com/5b1ZeDe5KgQFm2e88IuM_a/mwb2.gif"};o.send=i}),define("modules/monitor/js-except",["require","exports","./log-send"],function(e,o,t){"use strict";function i(e,o){if(o.indexOf("chrome-extension://")>-1||o.indexOf("moz-extension://")>-1)return!1;var t=e.toLowerCase();
+return"script error."===t||"script error"===t?!1:!0}function n(e,o){try{var n={info:{},dim:{},group:""},r=n.info,s=e.target||e.srcElement,a=navigator.connection||{};if(r.downlink=a.downlink,r.effectiveType=a.effectiveType,r.rtt=a.rtt,r.deviceMemory=navigator.deviceMemory||0,r.hardwareConcurrency=navigator.hardwareConcurrency||0,r.saveData=!!a.saveData,s!==window&&"onerror"!==o)return;var c=e.error||{},m=c.stack||"";e.message&&i(e.message,m)&&(n.group="jserror",r.msg=e.message,r.file=e.filename,r.ln=e.lineno,r.col=e.colno,r.stack=m.split("\n").slice(0,3).join("\n"),t.send(n))
+}catch(p){console.error(p)}}function r(){var e,o=!1,t=navigator.userAgent.toLowerCase(),i=/msie ([0-9]+)/.exec(t);if(i&&i[1]){if(e=parseInt(i[1],10),7>=e)return;9>=e&&(o=!0)}o?window.onerror=function(e,o,t,i){n({message:e,filename:o,lineno:t,colno:i},"onerror")}:window.addEventListener&&window.addEventListener("error",n,!0)}o.__esModule=!0,o.listenerExcept=void 0,o.listenerExcept=r});var Cookie={set:function(e,o,t,i,n,r){document.cookie=e+"="+(r?o:escape(o))+(n?"; expires="+n.toGMTString():"")+(i?"; path="+i:"; path=/")+(t?"; domain="+t:"")
+},get:function(e,o){var t=document.cookie.match(new RegExp("(^| )"+e+"=([^;]*)(;|$)"));return null!=t?unescape(t[2]):o},clear:function(e,o,t){this.get(e)&&(document.cookie=e+"="+(o?"; path="+o:"; path=/")+(t?"; domain="+t:"")+";expires=Fri, 02-Jan-1970 00:00:00 GMT")}};!function(){function save(e){var o=[];for(tmpName in options)options.hasOwnProperty(tmpName)&&"duRobotState"!==tmpName&&o.push('"'+tmpName+'":"'+options[tmpName]+'"');var t="{"+o.join(",")+"}";bds.comm.personalData?$.ajax({url:"//www.baidu.com/ups/submit/addtips?product=ps&from=pcfe&tips="+encodeURIComponent(t)+"&_r="+(new Date).getTime(),success:function(){writeCookie(),"function"==typeof e&&e()
+}}):(writeCookie(),"function"==typeof e&&setTimeout(e,0))}function set(e,o){options[e]=o}function get(e){return options[e]}function writeCookie(){if(options.hasOwnProperty("sugSet")){var e="0"==options.sugSet?"0":"3";clearCookie("sug"),Cookie.set("sug",e,document.domain,"/",expire30y)}if(options.hasOwnProperty("sugStoreSet")){var e=0==options.sugStoreSet?"0":"1";clearCookie("sugstore"),Cookie.set("sugstore",e,document.domain,"/",expire30y)}if(options.hasOwnProperty("isSwitch")){var o={0:"2",1:"0",2:"1"},e=o[options.isSwitch];
+clearCookie("ORIGIN"),Cookie.set("ORIGIN",e,document.domain,"/",expire30y)}if(options.hasOwnProperty("imeSwitch")){var e=options.imeSwitch;clearCookie("bdime"),Cookie.set("bdime",e,document.domain,"/",expire30y)}}function writeBAIDUID(){var e,o,t,i=Cookie.get("BAIDUID");/FG=(\d+)/.test(i)&&(o=RegExp.$1),/SL=(\d+)/.test(i)&&(t=RegExp.$1),/NR=(\d+)/.test(i)&&(e=RegExp.$1),options.hasOwnProperty("resultNum")&&(e=options.resultNum),options.hasOwnProperty("resultLang")&&(t=options.resultLang),Cookie.set("BAIDUID",i.replace(/:.*$/,"")+("undefined"!=typeof t?":SL="+t:"")+("undefined"!=typeof e?":NR="+e:"")+("undefined"!=typeof o?":FG="+o:""),".baidu.com","/",expire30y,!0)
+}function clearCookie(e){Cookie.clear(e,"/"),Cookie.clear(e,"/",document.domain),Cookie.clear(e,"/","."+document.domain),Cookie.clear(e,"/",".baidu.com")}function reset(e){options=defaultOptions,save(e)}var defaultOptions={sugSet:1,sugStoreSet:1,isSwitch:1,isJumpHttps:1,imeSwitch:0,resultNum:10,skinOpen:1,resultLang:0,duRobotState:"000"},options={},tmpName,expire30y=new Date;expire30y.setTime(expire30y.getTime()+94608e7);try{if(bds&&bds.comm&&bds.comm.personalData){if("string"==typeof bds.comm.personalData&&(bds.comm.personalData=eval("("+bds.comm.personalData+")")),!bds.comm.personalData)return;
+for(tmpName in bds.comm.personalData)defaultOptions.hasOwnProperty(tmpName)&&bds.comm.personalData.hasOwnProperty(tmpName)&&"SUCCESS"==bds.comm.personalData[tmpName].ErrMsg&&(options[tmpName]=bds.comm.personalData[tmpName].value)}try{parseInt(options.resultNum)||delete options.resultNum,parseInt(options.resultLang)||"0"==options.resultLang||delete options.resultLang}catch(e){}writeCookie(),"sugSet"in options||(options.sugSet=3!=Cookie.get("sug",3)?0:1),"sugStoreSet"in options||(options.sugStoreSet=Cookie.get("sugstore",0));
+var BAIDUID=Cookie.get("BAIDUID");"resultNum"in options||(options.resultNum=/NR=(\d+)/.test(BAIDUID)&&RegExp.$1?parseInt(RegExp.$1):10),"resultLang"in options||(options.resultLang=/SL=(\d+)/.test(BAIDUID)&&RegExp.$1?parseInt(RegExp.$1):0),"isSwitch"in options||(options.isSwitch=2==Cookie.get("ORIGIN",0)?0:1==Cookie.get("ORIGIN",0)?2:1),"imeSwitch"in options||(options.imeSwitch=Cookie.get("bdime",0))}catch(e){}window.UPS={writeBAIDUID:writeBAIDUID,reset:reset,get:get,set:set,save:save}}(),function(){require(["modules/monitor/js-except"],function(e){e.listenerExcept()
+});var e="https://pss.bdstatic.com/r/www/cache/static/protocol/https/plugins/every_cookie_4644b13.js";("Mac68K"==navigator.platform||"MacPPC"==navigator.platform||"Macintosh"==navigator.platform||"MacIntel"==navigator.platform)&&(e="https://pss.bdstatic.com/r/www/cache/static/protocol/https/plugins/every_cookie_mac_82990d4.js"),setTimeout(function(){$.ajax({url:e,cache:!0,dataType:"script"})},0);var o=navigator&&navigator.userAgent?navigator.userAgent:"",t=document&&document.cookie?document.cookie:"",i=!!(o.match(/(msie [2-8])/i)||o.match(/windows.*safari/i)&&!o.match(/chrome/i)||o.match(/(linux.*firefox)/i)||o.match(/Chrome\/29/i)||o.match(/mac os x.*firefox/i)||t.match(/\bISSW=1/)||0==UPS.get("isSwitch"));
+bds&&bds.comm&&(bds.comm.supportis=!i,bds.comm.isui=!0),window.__restart_confirm_timeout=!0,window.__confirm_timeout=8e3,window.__disable_is_guide=!0,window.__disable_swap_to_empty=!0,window.__switch_add_mask=!0,bds.comm.newindex&&$(window).on("index_off",function(){$('<div class="c-tips-container" id="c-tips-container"></div>').insertAfter("#wrapper"),window.__sample_dynamic_tab&&$("#s_tab").remove()}),bds.comm&&bds.comm.ishome&&Cookie.get("H_PS_PSSID")&&(bds.comm.indexSid=Cookie.get("H_PS_PSSID"));
+var n=$(document).find("#s_tab").find("a");n&&n.length>0&&n.each(function(e,o){o.innerHTML&&o.innerHTML.match(/新闻/)&&(o.innerHTML="资讯",o.href="//www.baidu.com/s?rtt=1&bsst=1&cl=2&tn=news&word=",o.setAttribute("sync",!0))})}();
+    (function () {
+        var searchMap = {"bundles": {"search-ui-pc/core_f7194c7":["search-ui-pc/WujiContainer/WujiContainer_b4371ce","search-ui-pc/WujiContainer/WujiComponent_84f3b0d","search-ui-pc/Title/Title_4bef466","search-ui-pc/Row/Row_a439c0b","search-ui-pc/Row/Span_95c943f","search-ui-pc/Label/Label_b373da5","search-ui-pc/Image/Image_9401194","search-ui-pc/Board/Board_7e3b18b","search-ui-pc/Link/Link_8ac6ef4","search-ui-pc/Slink/Slink_759f1a4","search-ui-pc/SlinkItem/SlinkItem_ad93793"],"search-ui-pc/enhance_f636eb0":["search-ui-pc/Audio/Audio_0cc1394","search-ui-pc/AudioBubble/AudioBubble_1e20e3f","search-ui-pc/Button/Button_de90e07","search-ui-pc/Calendar/Calendar_858bd64","search-ui-pc/Checkbox/Checkbox_8ee887a","search-ui-pc/Fold/Fold_618f0a8","search-ui-pc/Forward/Forward_f7af8c6","search-ui-pc/ImageSet/ImageSet_15b5082","search-ui-pc/ImageVideo/ImageVideo_95371b6","search-ui-pc/ImageView/ImageView_bb579d6","search-ui-pc/ImgContent/ImgContent_f53719d","search-ui-pc/Input/Input_5bff81e","search-ui-pc/More/More_611a23a","search-ui-pc/PageNav/PageNav_a01236c","search-ui-pc/Popup/Popup_cfc07ac","search-ui-pc/Radio/Radio_05956b5","search-ui-pc/Radio/RadioGroup_d516ae9","search-ui-pc/Rank/Rank_6bebc2e","search-ui-pc/Scroll/Scroll_2e22a51","search-ui-pc/ScrollVideo/ScrollVideo_a9320ab","search-ui-pc/Select/Select_37a2058","search-ui-pc/Source/Source_3067746","search-ui-pc/Star/Star_67b1ba1","search-ui-pc/Swiper/Swiper_5c4b99f","search-ui-pc/Tab/Tab_c620684","search-ui-pc/Tab/TabItem_150a17f","search-ui-pc/Table/Table_24fcc1e","search-ui-pc/Table/TableColumn_beefe30","search-ui-pc/Table/TableRow_f70fd20","search-ui-pc/Tag/Tag_21235e3","search-ui-pc/TagSearch/TagSearch_14747f3","search-ui-pc/TextLine/TextLine_e099049","search-ui-pc/Toast/Toast_364969f","search-ui-pc/Tts/Tts_74fcab1","search-ui-pc/User/User_b57f93f","search-ui-pc/User/vip_5a95827","search-ui-pc/Video/Video_287f1a2","search-ui-pc/VideoArticle/VideoArticle_4ce5ccd"]}, "paths": {"search-ui-pc/core_f7194c7":"https://pss.bdstatic.com/r/www/cache/static/search-ui-pc/core_f7194c7","search-ui-pc/enhance_f636eb0":"https://pss.bdstatic.com/r/www/cache/static/search-ui-pc/enhance_f636eb0"}};
+        var nodePlaceholder = '{"bundles": {"search-ui-pc/core_8a1840e":["search-ui-pc/WujiContainer/WujiContainer_2fde9eb","search-ui-pc/WujiContainer/WujiComponent_c86bf0d","search-ui-pc/Title/Title_2e3e972","search-ui-pc/Row/Row_c433424","search-ui-pc/Row/Span_6fe04d3","search-ui-pc/Label/Label_a62ad8e","search-ui-pc/Image/Image_38023d6","search-ui-pc/Board/Board_1680f48","search-ui-pc/Link/Link_64f8256","search-ui-pc/Slink/Slink_2d898d8","search-ui-pc/SlinkItem/SlinkItem_8ee6651"],"search-ui-pc/enhance_d95c41b":["search-ui-pc/Audio/Audio_a27a5ad","search-ui-pc/AudioBubble/AudioBubble_3dba03e","search-ui-pc/Button/Button_fd79f74","search-ui-pc/Calendar/Calendar_9307c5f","search-ui-pc/Checkbox/Checkbox_a8237f2","search-ui-pc/Fold/Fold_0df61c7","search-ui-pc/Forward/Forward_7d7ddf3","search-ui-pc/ImageSet/ImageSet_99caa3d","search-ui-pc/ImageVideo/ImageVideo_3d731c3","search-ui-pc/ImageView/ImageView_bd54a9f","search-ui-pc/ImgContent/ImgContent_63ba4d2","search-ui-pc/Input/Input_ab13b07","search-ui-pc/More/More_ada878e","search-ui-pc/PageNav/PageNav_b7f991f","search-ui-pc/Popup/Popup_2ab06a9","search-ui-pc/Radio/Radio_f2abe31","search-ui-pc/Radio/RadioGroup_493e6f0","search-ui-pc/Rank/Rank_664247f","search-ui-pc/Scroll/Scroll_646225f","search-ui-pc/ScrollVideo/ScrollVideo_258204b","search-ui-pc/Select/Select_dfc6687","search-ui-pc/Source/Source_0ca0af9","search-ui-pc/Star/Star_6880dde","search-ui-pc/Swiper/SlideList_0f34f17","search-ui-pc/Swiper/Swiper_c240a15","search-ui-pc/Tab/Tab_b7181ab","search-ui-pc/Tab/TabItem_5674d1e","search-ui-pc/Table/Table_372f586","search-ui-pc/Table/TableColumn_57e30ef","search-ui-pc/Table/TableRow_bb3c02c","search-ui-pc/Tag/Tag_2424b33","search-ui-pc/TagSearch/TagSearch_81ef233","search-ui-pc/TextLine/TextLine_c504972","search-ui-pc/Toast/Toast_5549a06","search-ui-pc/Tts/Tts_55ba9cc","search-ui-pc/User/User_09d0db6","search-ui-pc/User/vip_7695211","search-ui-pc/VerticalScroll/VerticalScroll_02b5afb","search-ui-pc/Video/Video_3ceefa5","search-ui-pc/VideoArticle/VideoArticle_ce670fe"]}, "paths": {"search-ui-pc/core_8a1840e":"https://pss.bdstatic.com/r/www/cache/static/search-ui-pc/core_8a1840e","search-ui-pc/enhance_d95c41b":"https://pss.bdstatic.com/r/www/cache/static/search-ui-pc/enhance_d95c41b"}}';
+        if (typeof nodePlaceholder === 'string') {
+            try {
+                nodePlaceholder = JSON.parse(nodePlaceholder);
+                require.config(nodePlaceholder);
+                window.searchUiPcNode = processData(nodePlaceholder);
+            }catch(e){}
+        }
+        require.config(searchMap);
+        window.searchUiPc = processData(searchMap);
+        function processData (config) {
+            if (!config || !config.bundles) {
+                return;
+            }
+            var bundles = config.bundles;
+            var componentList = [];
+            var list = {};
+            for(var key in bundles) {
+                componentList = componentList.concat(bundles[key]);
+            }
+            componentList.forEach(function (item, index) {
+                var key = item.split('_')[0];
+                key = key.match(/^search-ui-pc\/(.+)/)[1].replace(/\//g, '_');
+                list[key] = item;
+            });
+            return list;
+        }
+    })();
+    A.merge("bk_polysemy",function(){A.setup(function(){function isInVisibleArea(elem){if(!elem||!elem.getBoundingClientRect)return false;var rect=elem.getBoundingClientRect();return rect.top<window.innerHeight&&rect.bottom>0}function getVideos(pn,callback){$.ajax({url:videoUrl,data:{lemmaId:_this.data.lemmaid,from:"aladdin",scene:"pc",pn:pn,rn:videoRn},dataType:"jsonp",success:function(res){if(0===res.errno&&res.data&&res.data.list&&res.data.list.length)callback(res);else callback(false)},error:function(){callback(false)}})}function handleBrandVideo(url){if(0===brandVideo.length)window.open(url);else try{var list=brandVideo,showVideo=list.splice(0,1);$videoPlayer.attr("src",showVideo[0].content.playUrl.mp4),videoPlay(list)}catch(e){window.open(url)}}function initRecommendVideo(list){if(list.length){recommendLength=list.length>recommendLength?recommendLength:list.length;for(var page=Math.ceil(recommendLength/recommendPer),html="",dotHtml="",i=0;i<recommendPer*page;i++){if(html+=i%recommendPer===0?'<li class="c-clearfix op-bk-polysemy-recommend__slide">':"",i>=recommendLength)html+='<a class="c-span'+(1==_this.data.newStyle?"3":"6")+' op-bk-polysemy-recommend__item"></a>';else{var baseUrl=_this.data.url+"&secondId="+list[i].secondId;html+=['<a class="c-span'+(1==_this.data.newStyle?"3":"6")+' op-bk-polysemy-recommend__item OP_LOG_LINK" href="'+baseUrl+'" target="_blank">','<div class="op-bk-polysemy-recommend__img c-gap-bottom-small" style="background: url('+list[i].content.cover.url+') no-repeat center center;background-size: cover;"></div>','<p class="op-bk-polysemy-recommend__title">'+list[i].content.title+"</p>","</a>"].join("")}html+=i%recommendPer===recommendPer-1?"</li>":""}if($recommendWrap.append(html),page>1){for(var i=0;i<page;i++)dotHtml+='<i class="op-bk-polysemy__dots-item"></i>';$dotWrap.append(dotHtml)}_this.find(".op-bk-polysemy-recommend__item").on("click",function(){clickstream.logActClick({page:"pc-polysemy",element:"video-recommend-clk",video_id:_this.data.secondid,lemmaid:_this.data.lemmaid})
+})}else _this.find(".op-bk-polysemy-video__control").addClass("empty")}function videoPlay(list){if($imgWrap.hide(),$contentWrap)$contentWrap.removeClass("c-span9").removeClass("c-span18").addClass("c-span"+(1==_this.data.newStyle?"12":"24"));if($videoWrap.show(),$video.play(),$video.controls=true,0===$recommendWrap.children().length)initRecommendVideo(list);clickstream.logActClick({page:"pc-polysemy",element:"video-play-clk",video_id:_this.data.secondid,lemmaid:_this.data.lemmaid})}function logActualPlay(){clickstream.logActVideo({page:"pc-polysemy",video_action:"play",video_id:_this.data.secondid,duration:1e3*$video.duration,video_position:1e3*duration,lemmaid:_this.data.lemmaid})}var _this=this,$focusrightf=_this.find(".op-bk-polysemy-focusrightf:first span");if($focusrightf.length)$focusrightf.last().remove();window.clickstream={init:{}};var clickstream=window.clickstream;require.config({paths:{clickstream:"https://bkssl.bdimg.com/static/clickstream-mis/dist/static/js/index"}});var $playBtn=_this.find(".op-bk-polysemy-play")[0],playBtnShowed=false;require(["clickstream"],function(cl){if(cl.init({appname:"baike",platform:"web",device:"pc"}),clickstream=cl,isInVisibleArea($playBtn))playBtnShowed=true,cl.logViewEl({page:"pc-polysemy",element:"video-play-show",video_id:_this.data.secondid,lemmaid:_this.data.lemmaid})}),window.addEventListener("scroll",function(){if(!playBtnShowed&&isInVisibleArea($playBtn))playBtnShowed=true,clickstream.logViewEl({page:"pc-polysemy",element:"video-play-show",video_id:_this.data.secondid,lemmaid:_this.data.lemmaid})});var $imgWrap=_this.find(".op-bk-polysemy-imgWrap"),$videoWrap=_this.find(".op-bk-polysemy-video__wrap"),$videoPlayer=_this.find(".op-bk-polysemy-video"),$video=$videoPlayer.get(0),$videoLayer=_this.find(".op-bk-polysemy-video__layer"),$recommendWrap=_this.find(".op-bk-polysemy-video__recommend"),$contentWrap=_this.find(".op-bk-polysemy-piccontent"),$dotWrap=_this.find(".op-bk-polysemy__dots"),timer=null,duration=0,played3Seconds=false,playedAll=false,hasCarousel=false,videoUrl="https://baike.baidu.com/api/second/video/list",videoRn=10,recommendPer=3,recommendLength=4*recommendPer,brandVideo,hasBrandVideo=false;
+try{brandVideo=JSON.parse(_this.data.brandVideo),hasBrandVideo=brandVideo.length>0}catch(e){}var carousel={opts:{index:0,auto:true,time:5e3,wrap:".carousel-wrap",slide:".carousel-slide",btnPrev:".carousel-prev",btnNext:".carousel-next",btnDots:".carousel-dots"},width:0,timer:null,init:function(d,b){this.opts=$.extend(this.opts,b),this.$wrap=d.find(this.opts.wrap),this.$slide=d.find(this.opts.slide),this.$btnPrev=d.find(this.opts.btnPrev),this.$btnNext=d.find(this.opts.btnNext),this.$btnDots=d.find(this.opts.btnDots),this.width=this.$slide.outerWidth(true),this.len=this.$slide.length,this.index=this.opts.index<0||this.opts.index>this.len-1?0:this.opts.index;var c=this.$slide.first().clone(),a=this.$slide.last().clone();this.$wrap.prepend(a).append(c).css({width:(this.len+2)*this.width,left:-(this.index+1)*this.width}),this.eventBind(),this.setDots(),this.loop()},loop:function(){var a=this;if(a.opts.auto)a.timer=setInterval(function(){a.animate(-a.width)},a.opts.time)},animate:function(c){var a=this;if(this.$wrap.is(":animated"))return false;else{var b=parseInt(this.$wrap.css("left"));c+=b,this.$wrap.animate({left:c},500,function(){if(c<0&&c<-a.len*a.width)a.$wrap.css("left",-a.width);else if(c>=0&&c>-a.width)a.$wrap.css("left",-a.len*a.width);a.index=parseInt(a.$wrap.css("left"))/-a.width-1,a.setDots()})}},setDots:function(a){if(void 0==a)a=this.index;else this.index=a<0||a>this.len-1?this.index:a;this.$btnDots.removeClass("active").eq(a).addClass("active")},eventBind:function(){var a=this;this.$btnPrev.click(function(){clearInterval(a.timer),a.animate(a.width),a.loop()}),this.$btnNext.click(function(){clearInterval(a.timer),a.animate(-a.width),a.loop()}),this.$btnDots.each(function(b){$(this).click(function(){if($(this).hasClass("active"))return false;else clearInterval(a.timer),a.animate(-(b-a.index)*a.width),a.loop()})}),this.$slide.hover(function(){clearInterval(a.timer)},function(){a.loop()})}};$imgWrap.on("click",function(){if(document.createElement("video").play)if(!$videoPlayer.attr("src"))if(hasBrandVideo)handleBrandVideo($imgWrap.data("url"));
+else getVideos(1,function(res){if(!res)window.open($imgWrap.data("url"));else try{var list=res.data.list,showVideo=list.splice(0,1);if($videoPlayer.attr("src",showVideo[0].content.playUrl.mp4),res.data.hasMore)getVideos(2,function(response){videoPlay(list.concat(response.data.list))});else videoPlay(list)}catch(e){window.open($imgWrap.data("url"))}});else videoPlay([]);else window.open($imgWrap.data("url"))}),$video.addEventListener("play",function(){$video.controls=true,$videoLayer.hide(),timer=setInterval(function(){if(duration+=1,!played3Seconds&&duration>=3)played3Seconds=true,clickstream.logActVideo({page:"pc-polysemy",video_action:"validplay",video_id:_this.data.secondid,lemmaid:_this.data.lemmaid})},1e3),clearInterval(carousel.timer)}),$video.addEventListener("pause",function(){clearInterval(timer)}),$video.addEventListener("timeupdate",function(){if(!playedAll&&$video.currentTime>.8*$video.duration)playedAll=true,clickstream.logActVideo({page:"pc-polysemy",video_action:"play",video_id:_this.data.secondid,video_position_p:.8,lemmaid:_this.data.lemmaid})}),$video.addEventListener("ended",function(){if($video.controls=false,$videoLayer.show(),!hasCarousel&&recommendLength>recommendPer)hasCarousel=true,carousel.init(_this.find(".op-bk-polysemy-video__container"),{wrap:".op-bk-polysemy-video__recommend",slide:".op-bk-polysemy-recommend__slide",btnDots:".op-bk-polysemy__dots-item"});else if(hasCarousel)carousel.setDots(0),carousel.$wrap.css({left:-carousel.width}),carousel.loop();logActualPlay(),clearInterval(timer),duration=0,played3Seconds=false,playedAll=false}),_this.find(".op-bk-polysemy-video__close").on("click",function(){if($video.pause(),$videoWrap.hide(),$videoLayer.hide(),$contentWrap)$contentWrap.removeClass("c-span12").removeClass("c-span24").addClass("c-span"+(1==_this.data.newStyle?"9":"18"));if($imgWrap.show(),clearInterval(carousel.timer),clearInterval(timer),!$video.ended)logActualPlay()}),_this.find(".op-bk-polysemy-video__replay").on("click",function(){$videoLayer.hide(),$video.controls=true,$video.play(),clearInterval(carousel.timer),clickstream.logActClick({page:"pc-polysemy",element:"video-replay-clk",video_id:_this.data.secondid,lemmaid:_this.data.lemmaid})
+}),_this.find(".op-bk-polysemy-video__btn").on("click",function(){clickstream.logActClick({page:"pc-polysemy",element:"video-enter-clk",video_id:_this.data.secondid,lemmaid:_this.data.lemmaid})}),this.dispose=function(){clearInterval(carousel.timer),clearInterval(timer)}});});A.merge("right_toplist1",function(){A.setup(function(){var _this=this,$tb=_this.find("tbody"),$refresh=_this.find(".toplist-refresh-btn"),$a=_this.find(".FYB_RD tbody a"),currentPage=0;if(_this.data.num>0)$refresh.on("click",function(e){if(currentPage<_this.data.num-1)++currentPage;else currentPage=0;$tb.hide(),$tb.eq(currentPage).show(),e.preventDefault()});$a.each(function(i){$a.eq(i).attr("href",$a.eq(i).attr("href")+"&rqid="+window.bds.comm.qid)});var pn=15,reRender=function(){var $tr=_this.find("tr"),reg=new RegExp("(^|&)rsf=([^&]*)","i");$tb.each(function(i){$tb.eq(i).html($tr.slice(i*pn,Math.min((i+1)*pn),$tr.length-i*pn))}),_this.data.num=Math.ceil($tr.length/pn),$a.each(function(i){var new_href=$a.eq(i).attr("href").replace(reg,function(value){var valueArr=value.slice(5).split("_");if(valueArr[3]%15==0)valueArr[1]=valueArr[3]-14,valueArr[2]=valueArr[3];else if(valueArr[1]=valueArr[3]-valueArr[3]%15+1,valueArr[2]=valueArr[3]-valueArr[3]%15+15,valueArr[2]>$a.length)valueArr[2]=$a.length;return"&rsf="+valueArr.join("_")});$a.eq(i).attr("href",new_href)})};$(window).on("swap_end",function(e,cacheItem){if(1===$("#con-ar").children(".result-op").length&&!$("#con-ar").hasClass("nocontent"))reRender()})});});
+bds.comm.resultPage = 1;
+bds._base64 = {
+     domain : "https://dss0.bdstatic.com/9uN1bjq8AAUYm2zgoY3K/",
+     b64Exp : -1,
+     pdc : 0
+};
+if(bds.comm.supportis){
+    window.__restart_confirm_timeout=true;
+    window.__confirm_timeout=8000;
+    window.__disable_is_guide=true;
+    window.__disable_swap_to_empty=true;
+}
+initPreload({
+    'isui':true,
+    'index_form':"#form",
+    'index_kw':"#kw",
+    'result_form':"#form",
+    'result_kw':"#kw"
+});
+(function () {
+    bds.amd.addConfig({"paths":{"search-ui/v2/core":"//www.baidu.com/cache/atom/search-ui/v2/core_4f18d6d","search-ui/v2/few":"//www.baidu.com/cache/atom/search-ui/v2/few_708d2f8","search-ui/v2/enhance":"//www.baidu.com/cache/atom/search-ui/v2/enhance_cd0044d"},"bundles":{"search-ui/v2/core":["search-ui/v2/Aladdin/Aladdin","search-ui/v2/Button/BtnLayout","search-ui/v2/Button/Button","search-ui/v2/Divider/Divider","search-ui/v2/Footer/Footer","search-ui/v2/Footer/MipIcon","search-ui/v2/Icon/Icon","search-ui/v2/Image/Image","search-ui/v2/Image/ImageMask","search-ui/v2/KgFooter/KgFooter","search-ui/v2/KgHeader/KgHeader","search-ui/v2/Label/Label","search-ui/v2/Line/Line","search-ui/v2/Link/Link","search-ui/v2/List/List","search-ui/v2/List/ListItem","search-ui/v2/Loading/Loading","search-ui/v2/More/More","search-ui/v2/Navs/ListMore","search-ui/v2/Navs/Navs","search-ui/v2/Navs/NavsCommon","search-ui/v2/Navs/NavsScroll","search-ui/v2/Row/Row","search-ui/v2/Row/Span","search-ui/v2/Scroll/Scroll","search-ui/v2/Scroll/ScrollAuto","search-ui/v2/Scroll/ScrollInner","search-ui/v2/Scroll/ScrollItem","search-ui/v2/Share/Share","search-ui/v2/Sigma/Sigma","search-ui/v2/Sigma/SigmaFooter","search-ui/v2/Slink/Slink","search-ui/v2/Tabs/Tabs","search-ui/v2/Tabs/TabsContent","search-ui/v2/Tabs/TabsItem","search-ui/v2/TextLine/TextLine","search-ui/v2/Timespan/Timespan","search-ui/v2/Title/Title","search-ui/v2/Title/TitleBase","search-ui/v2/TouchableFeedback/TouchableFeedback","search-ui/v2/TouchableFeedback/TouchableStop","search-ui/v2/util/async","search-ui/v2/util/deviceUtil","search-ui/v2/util/domUtil","search-ui/v2/util/orientationMixin","search-ui/v2/util/stopIOSDoubleTapMixin","search-ui/v2/util/stopScrollThroughMixin","search-ui/v2/TooltipFuncBtn/TooltipFuncBtn","search-ui/v2/Tooltip/Tooltip","search-ui/v2/Popup/Popup","search-ui/v2/Motion/Transition","search-ui/v2/Motion/animations","search-ui/v2/Toast/Toast","search-ui/v2/Toast/ToastPopup"],"search-ui/v2/few":["search-ui/v2/Calendar/Calendar","search-ui/v2/Calendar/CalendarMonthItem","search-ui/v2/Calendar/Mask","search-ui/v2/Carousel/Carousel","search-ui/v2/Carousel/CarouselFrame","search-ui/v2/Carousel/CarouselItem","search-ui/v2/Carousel/Indicator","search-ui/v2/Cascader/Cascader","search-ui/v2/ErrorPage/ErrorPage","search-ui/v2/FilterEnhanced/BottomLayout","search-ui/v2/FilterEnhanced/Checkbox","search-ui/v2/FilterEnhanced/CustomLayout","search-ui/v2/FilterEnhanced/Filter","search-ui/v2/FilterEnhanced/FilterEnhanced","search-ui/v2/FilterEnhanced/FilterFrame","search-ui/v2/FilterEnhanced/ListLayout","search-ui/v2/FilterEnhanced/Mask","search-ui/v2/FilterEnhanced/MultiCheckbox","search-ui/v2/FilterEnhanced/MultiLayout","search-ui/v2/FilterEnhanced/MultiRangeInput","search-ui/v2/FilterEnhanced/store","search-ui/v2/FilterEnhanced/TagLayout","search-ui/v2/ImageViewer/asset/js/animate-config","search-ui/v2/ImageViewer/asset/js/animate","search-ui/v2/ImageViewer/asset/js/link","search-ui/v2/ImageViewer/asset/js/store","search-ui/v2/ImageViewer/asset/js/touch-helper","search-ui/v2/ImageViewer/asset/js/util","search-ui/v2/ImageViewer/ImageViewer","search-ui/v2/ImageViewer/ImageViewerClose","search-ui/v2/ImageViewer/ImageViewerContent","search-ui/v2/ImageViewer/ImageViewerImg","search-ui/v2/ImageViewer/ImageViewerInfo","search-ui/v2/ImageViewer/ImageViewerItem","search-ui/v2/ImageViewer/ImageViewerZoom","search-ui/v2/Tombstone/ImgTombstone","search-ui/v2/Tombstone/ImgTombstoneItem","search-ui/v2/Tombstone/Tombstone","search-ui/v2/Tombstone/TombstoneItem","search-ui/v2/Waterfall/ImgItem","search-ui/v2/Waterfall/Waterfall"],"search-ui/v2/enhance":["search-ui/v2/AnimateIcon/Arrow","search-ui/v2/AnimateIcon/Triangle","search-ui/v2/Article/Article","search-ui/v2/Article/ArticleExtInfo","search-ui/v2/Audio/Audio","search-ui/v2/Content/Content","search-ui/v2/Dialog/Dialog","search-ui/v2/Drawer/Drawer","search-ui/v2/Dropdown/Dropdown","search-ui/v2/Dropdown/DropdownEnhanced","search-ui/v2/Filter/Filter","search-ui/v2/Filter/FilterListPanel","search-ui/v2/Filter/FilterMultiListPanel","search-ui/v2/Filter/FilterNormal","search-ui/v2/Filter/FilterRangeInput","search-ui/v2/Filter/FilterThreeListPanel","search-ui/v2/Filter/FilterTwoListPanel","search-ui/v2/FilterSimple/FilterSimple","search-ui/v2/FilterSimple/FilterTagLayout","search-ui/v2/FilterSimple/FilterTagLayoutItem","search-ui/v2/ImageViewerSimple/Base","search-ui/v2/ImageViewerSimple/ImageViewerSimple","search-ui/v2/ImageViewerSimple/Toolbar","search-ui/v2/ImgContent/ImgContent","search-ui/v2/InfiniteScroll/InfiniteScroll","search-ui/v2/InfiniteScroll/InfiniteScrollBottomBar","search-ui/v2/Input/Input","search-ui/v2/Input/RangeInput","search-ui/v2/LetterSort/LetterSort","search-ui/v2/LetterSort/LetterSortToast","search-ui/v2/ListArticle/ListArticle","search-ui/v2/ListResult/ListResult","search-ui/v2/Lottie/Lottie","search-ui/v2/Mask/Mask","search-ui/v2/Motion/Animation","search-ui/v2/Motion/Flip","search-ui/v2/NewsArticle/NewsArticle","search-ui/v2/PageScroll/PageScroll","search-ui/v2/PageScroll/PageScrollItem","search-ui/v2/PageScrollImgs/PageScrollImgs","search-ui/v2/PageScrollImgs/PageScrollImgsItem","search-ui/v2/PageScrollVideo/PageScrollVideo","search-ui/v2/PullRefresh/PullRefresh","search-ui/v2/Rec/Rec","search-ui/v2/ScrollArticle/ScrollArticle","search-ui/v2/ScrollArticle/ScrollArticleItem","search-ui/v2/ScrollImgs/ScrollImgs","search-ui/v2/ScrollImgs/ScrollImgsItem","search-ui/v2/ScrollTwo/ScrollTwo","search-ui/v2/ScrollTwoFrame/ScrollTwoFrame","search-ui/v2/ScrollVideo/ScrollVideo","search-ui/v2/Selector/Selector","search-ui/v2/Selector/SelectorMulti","search-ui/v2/Selector/SelectorRadio","search-ui/v2/Source/Source","search-ui/v2/Spread/Spread","search-ui/v2/SpreadEnhanced/Spread","search-ui/v2/SpreadEnhanced/SpreadBottomBtn","search-ui/v2/SpreadEnhanced/SpreadEnhanced","search-ui/v2/SpreadEnhanced/SpreadRightBottomBtn","search-ui/v2/SpreadEnhanced/SpreadTopBtn","search-ui/v2/Stars/Stars","search-ui/v2/StitchImgs/StitchImgs","search-ui/v2/StitchImgs/StitchImgsFive","search-ui/v2/StitchImgs/StitchImgsRevertTwo","search-ui/v2/StitchImgs/StitchImgsThree","search-ui/v2/StitchImgs/StitchImgsTwo","search-ui/v2/StrongLink/StrongLink","search-ui/v2/Switch/Switch","search-ui/v2/Table/Table","search-ui/v2/TableGrid/TableGrid","search-ui/v2/TagGroup/TagGroup","search-ui/v2/Tags/SpreadTags","search-ui/v2/Tags/TagItem","search-ui/v2/Tags/Tags","search-ui/v2/Tags/TagsContent","search-ui/v2/Tags/TagsItem","search-ui/v2/Tags/TagsWrapper","search-ui/v2/ToTop/ToTop","search-ui/v2/Video/Video","search-ui/v2/Video/VideoCol","search-ui/v2/Video/VideoContent","search-ui/v2/Video/VideoThumbnail"]}});
+})();
+        _WWW_SRV_T =1066.35;
+    

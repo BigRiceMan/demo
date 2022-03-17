@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>填写注册信息</title>
+  <style>
+  #box {
+    width: 1200px;
+    padding: 30px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  table {
+    width: 800px;
+    margin: 0 auto;
+    border:1px solid #e8e8e8;
+    background-color: #e8e8e8;
+    box-shadow: 0 0 10px #000;
+    padding: 10px 0 20px;
+  }
+ .title{
+  text-align: center;
+ }
+  th {
+    font-size: 18px;
+    font-weight: bold;
+    width: 260px;
+    height: 60px;
+    text-align: right;
+  }
+ 
+
+  td {
+    width: 250px;
+  }
+
+  input {
+    width: 260px;
+    font-size: 18px; 
+    padding: 3px 5px;
+  }
+
+  input[type=submit] {
+    width: 200px;
+    height: 38px;
+    font-size: 16px;
+    line-height: 38px;
+    border-radius: 5px;
+    margin: 0 auto;
+    display: block;
+    border: 1px solid #e8e8e8;
+    outline: none;
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+  }
+  input[type=submit]:hover{
+    background-color: rgba(0,0,0,0.5);
+  }
+  .error{
+    background-color: red;
+    color: #fff;
+  }
+  .success{
+    background-color: green;
+    color:#fff;
+  }
+  .tips{ 
+    color: #000;  
+    text-indent: 1em; 
+  }
+  .tips>div{
+    padding:5px 10px;
+    line-height: 18px;
+    height: 18px;
+    white-space: nowrap;
+    word-break: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 240px;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="box"> 
+    <table> 
+      <tr class="title"><td colspan="3"><h1>填写注册信息</h1></td></tr>
+      <tr>
+        <th>用户名称：</th>
+        <td>
+          <input type="text" name='username' placeholder="长度4~12,英文大小写字母">
+        </td>
+        <td class='tips'>
+          <div></div>
+        </td>
+      </tr>
+      <tr>
+        <th>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</th>
+        <td>
+          <input type="password" name='pwd' placeholder="长度6~20,大小写字母、数字或下划线">
+        </td>
+        <td class='tips'>
+          <div></div>
+        </td>
+      </tr>
+      <tr>
+        <th>确认密码：</th>
+        <td>
+          <input type="password" name='repwd' placeholder="请再次输入密码进行确认">
+        </td>
+        <td class='tips'>
+          <div></div>
+        </td>
+      </tr>
+      <tr>
+        <th>手机号码：</th>
+        <td>
+          <input type="text" name='tel' placeholder='13、14、15、17、18开头的11位手机号'>
+        </td>
+        <td class='tips'>
+          <div></div>
+        </td>
+      </tr>
+      <tr>
+        <th>电子邮箱：</th>
+        <td>
+          <input type="text" name='email' placeholder="用户名@域名(域名后缀至少2个字符)">
+        </td>
+        <td class='tips'>
+          <div></div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <input type="submit" value="注册">
+        </td>
+      </tr>
+    </table>
+  </div>
+  <script>
+    let inputs=document.getElementsByTagName('input')
+    for(let i=0;i<inputs.length-1;i++){
+      if(inputs[i].type=='submit'){continue;}
+      inputs[i].onblur=inputBlur 
+    }
+ 
+    function inputBlur() {
+      let name =this.name
+      let val= this.value
+      let tips=this.placeholder
+      // 获取提示信息显示的div元素
+      let tips_obj=this.parentNode.nextElementSibling.firstElementChild
+      tips_obj.className=''
+      tips_obj.innerHTML=''
+      console.log(this) 
+      // 去掉两端的空白字符
+      val=val.trim()
+      if(!val){
+        error(tips_obj,"输入框不能为空")
+        return false;
+      }
+      // 获取正则匹配规则和提示信息
+      let reg_msg=getRegMsg(name,tips)
+      console.log(reg_msg) 
+      if(reg_msg&&reg_msg.reg.test(val)){
+        success(tips_obj,reg_msg.msg.success)
+      }else{
+        switch(name){
+          case 'username':
+            error(tips_obj,'用户名输入错误,16位大小写')
+            break;
+          case 'pwd':
+            error(tips_obj,'密码错误')
+            break;
+          case 'repwd':
+            error(tips_obj,'确认密码错误')
+            break;  
+          case 'tel':
+            error(tips_obj,'电话格式错误')
+            break;  
+          case 'email':
+            error(tips_obj,'邮箱格式错误')
+            break;  
+          default:
+            break;
+        }
+        
+      }
+
+    }
+    function error(obj,msg) {
+      obj.className='error'
+      obj.innerHTML=msg+'，请重新输入'
+    }
+    function success(obj,msg) {
+      obj.className='success'
+      obj.innerHTML=msg
+    }
+    function getRegMsg(name,tips) {
+      let reg = msg = ''
+      switch(name){
+        case 'username':
+          reg=/^[a-zA-Z]{4,12}$/
+          msg={'success':'用户名输入正确','error':tips}
+          break;
+        case 'pwd':
+          reg=/^\w{6,20}$/
+          msg={'success':'密码输入正确','error':tips}
+          break;
+        case 'repwd':
+          let con=document.getElementsByTagName('input')[1].value
+          reg=new RegExp('^'+con+'$')
+          msg={'success':'确认密码输入正确','error':tips}
+          break;
+        case 'tel':
+          reg=/^1[345678]\d{9}$/
+          msg={'success':'手机输入正确','error':tips}
+          break;
+        case 'email':
+          reg=/^(\w+(\_|\-|\.)*)+@(\w+(\-)?)+(\.\w{2,})+$/
+          msg={'success':'邮箱输入正确','error':tips}
+          break;
+        default:
+          break;
+      }
+      return {reg:reg,msg:msg}
+    }
+  </script>
+</body>
+
+</html>

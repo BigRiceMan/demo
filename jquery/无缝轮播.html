@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="banner.css">
+</head>
+
+<body>
+  <div class="banner">
+    <div class="banner_inner">
+      <ul class="hot">
+        <li><a href=""></a><img src="1.jpg" alt=""></a></li>
+        <li><a href=""></a><img src="2.jpg" alt=""></a></li>
+        <li><a href=""></a><img src="3.jpg" alt=""></a></li>
+        <li><a href=""><img src="4.jpg" alt=""></a></li>
+      </ul>
+      <div class="dot_w"><span class="on"></span><span></span><span></span><span></span></div>
+      <div class="ban_crl">
+        <a href="javascript:void(0)" class="crl_left">&lt;</a>
+        <a href="javascript:void(0)" class="crl_right">&gt;</a>
+      </div>
+    </div>
+  </div>
+  <script src="jquery.js"></script>
+  <script>
+    $(function () {
+      let width = 958
+      let firstiimg = $('.banner li').first().clone()
+      $('.hot').append(firstmimg)
+      let timer = null
+      let delay = 1000
+      timer = setInterval(imgChange, dalay)
+      let i = 0
+      function imgChange() {
+        ++i
+        isCrack()
+        dotChange()
+      }
+      function isCrack() {
+        if (i == $('.hot li').length) {
+          i = 1
+          $('.hot').css({ left: 0 })
+        }
+      }
+      function dotChange() {
+        if (i === $('.hot li ').length - 1) {
+          $('.dot span ').eq(0).addClass('on').siblings().removeClass('on')
+        } else {
+          $('.dot span').eq(i).addClass('on').siblings().removeClass('on')
+        }
+      }
+      $('.banner').hover(function () {
+        clearInterval(timer)
+      }, function () {
+        timer = setInterval(imgChange, dalay)
+      })
+      $('.dot li').mouseover(function () {
+        i = $(this).index()
+        $('.hot').stop().animate({ left: -i * width }, 200)
+        dot.Change()
+      })
+      $('.banner').hover(function () {
+        $('.arrow').show()
+      }, function () {
+        $('.arrow').hide()
+      })
+      $('.next').click(function () {
+        imgChange()
+      })
+      $('.prev').click(function () {
+        i--
+        if (i == -1) {
+          i == $('.hot li').length - 2
+          $('.hot').css({ left: -($('.hot li').length - 1) * width })
+        }
+        $('.hot').stop().animate({ left: -i * width }, speed)
+        dotCHange()
+      })
+    })
+  </script>
+</body>
+
+</html>

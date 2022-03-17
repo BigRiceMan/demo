@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+<style>
+body{
+  background-color: #e8e8e8;
+}
+  #box{
+    background-color: #fff;
+    width: 1200px;
+    margin: 30px auto 0; 
+  }
+  #smallBox{
+    float: left;
+    width: 480px;
+    height: 480px;
+    border: 3px solid #000;
+    position: relative;
+    overflow: hidden;
+  }
+  #mask{ 
+    display: none;
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.2);
+    cursor:pointer; ;
+  }
+  #bigBox{ 
+    float: right;
+    width: 700px;
+    height: 700px;
+  display: none;
+     position: relative;
+     overflow: hidden;
+  }
+  
+  img{
+    width: 100%;
+    height: 100%;
+  }
+  #bigImg{
+    position: absolute; 
+    width: 1400px;
+    height: 1400px;
+    top: 0;
+    left: 0;
+
+  }
+</style>
+  <div id="box" class="box">
+    <div id="smallBox" class="small">
+      <img src="1.jpg" alt="">
+      <div id="mask" class="mask"></div>
+    </div>
+    <div id="bigBox" class="big"><img src="1.jpg" alt="" id="bigImg"></img></div>
+  </div>
+  <script>
+    window.onload=function() {
+      $("#smallBox").onmouseover=function() {
+          $("#mask").style.display='block'
+          $('#bigBox').style.display='block'
+      }
+      $("#smallBox").onmouseout=function() {
+          $("#mask").style.display='none'
+          $('#bigBox').style.display='none'
+      }
+      $("#smallBox").onmousemove=function(event) {
+        let e=event||window.event
+        let dd=document.documentElement
+        let pageX=e.pageX||e.clientX+dd.offsetLeft
+        let pageY=e.pageY||e.clientY+dd.offsetTop
+        // 计算鼠标的位置盒子的距离
+        let boxX=pageX-$('#box').offsetLeft
+        let boxY=pageY-$('#box').offsetTop
+        // 计算遮罩的位置
+        let maskX=boxX-$('#mask').offsetWidth/2
+        let maskY=boxY-$('#mask').offsetHeight/2
+        if(maskX<0){
+          maskX=0
+        }
+        if(maskX>$('#smallBox').offsetWidth-$('#mask').offsetWidth){
+          maskX=$('#smallBox').offsetWidth-$('#mask').offsetWidth
+        }
+        if(maskY<0){
+          maskX=0
+        }
+        if(maskY>$('#smallBox').offsetWidth-$('#mask').offsetWidth){
+          maskY=$('#smallBox').offsetWidth-$('#mask').offsetWidth
+        }
+        // 修改遮罩的显示位置
+        $('#mask').style.left=maskX+'px'
+        $('#mask').style.top=maskY+'px'
+
+        // 大图片能够移动的总距离=大图的宽度-大盒子的宽度
+        let bigImgToMove=$('#bigImg').offsetWidth-$('#bigBox').offsetWidth
+        let maskToMove=$('#smallBox').offsetWidth-$('#mask').offsetWidth
+        let rate=bigImgToMove/maskToMove
+        // console.log("rate的值是：",rate) 
+        $('#bigImg').style.left=-rate*maskX+'px'
+        $('#bigImg').style.top=-rate*maskY+'px'
+
+      }
+    }
+    function $(obj) {
+      return document.querySelector(obj)
+    }
+  </script>
+</body>
+</html>

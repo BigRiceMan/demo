@@ -1,8 +1,10 @@
 const fs = require('fs')
-const path = require('path')
 const cheerio = require('cheerio')
+const base_path = `D://Users/zsbigdata01/Desktop/集团官网/www.77cn.com.cn/`
 
-fs.readFile(path.join(__dirname, 'index-1.html'), 'utf-8', function (err, data) {
+
+console.log(base_path)
+fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
   if (err) return console.log('读取文件失败：' + err.message)
   const $ = cheerio.load(data)
   const $2 = cheerio.load(data)
@@ -78,7 +80,7 @@ fs.readFile(path.join(__dirname, 'index-1.html'), 'utf-8', function (err, data) 
               $2(this).attr("href", "{dede:field.typeurl/}")
               $2(this).text("{dede:field.typename/}")
             })
-            target_arr[i].parent().html("{dede:channelartlist typeid='3' row='" + len + "'}" + target_arr[i].parent().html() + "{/dede:channelartlist}")
+            target_arr[i].parent().html("{dede:channelartlist typeid='3' row='" + len + 1 + "'}" + target_arr[i].parent().html() + "{/dede:channelartlist}")
 
           } else {
             target_arr[i].find("a").each(function () {
@@ -88,7 +90,7 @@ fs.readFile(path.join(__dirname, 'index-1.html'), 'utf-8', function (err, data) 
               }
               $2(this).text("[field:title/]")
             })
-            target_arr[i].parent().html("{dede:arclist  typeid='' row=" + len + " }" + target_arr[i].parent().html() + "{/dede:arclist}")
+            target_arr[i].parent().html("{dede:arclist  typeid='' row=" + len + 1 + " }" + target_arr[i].parent().html() + "{/dede:arclist}")
 
           }
           count = 0
@@ -139,13 +141,39 @@ fs.readFile(path.join(__dirname, 'index-1.html'), 'utf-8', function (err, data) 
     })
   })
   $2("a[title]:parent").each(function () {
-    if ($2(this).attr('href') !== "[field:arcurl/]" || $2(this).attr('href') !== "/" || $2(this).attr('href').indexOf('#') !== 0) {
+    if ($2(this).attr('href') !== "[field:arcurl/]" && $2(this).attr('href') !== "/" && $2(this).attr('href').indexOf('#') !== 0) {
       $2(this).attr('href', "[field:arcurl/]")
       $2(this).attr('title', "[field:title/]")
       $2(this).attr('href', "[field:arcurl/]")
       $2(this).text("[field:title/]")
     }
   })
+  $2("a[href]:parent").each(function () {
+    if ($2(this).attr('href') !== "/" && $2(this).attr('href').indexOf('#') !== 0) {
+      if ($2(this).text().length > 8) {
+        $2(this).attr('href', "[field:arcurl/]")
+        $2(this).attr('title', "[field:title/]")
+        $2(this).attr('href', "[field:arcurl/]")
+        $2(this).text("[field:title/]")
+      }
+      if ($2(this).text().length > 2 && $2(this).text().length < 8) {
+        $2(this).attr('href', "{dede:field.typeurl/}")
+        $2(this).attr('title', "{dede:field.typename/}")
+        $2(this).attr('href', "{dede:field.typeurl/}")
+        $2(this).text("{dede:field.typename/}")
+      }
+    }
+  })
+  $2("img[alt]").each(function () {
+    if ($2(this).parent().get(0).name == 'a') {
+      $2(this).attr('alt', "[field:title/]")
+      $2(this).parent().attr('href', "[field:arcurl/]")
+      $2(this).parent().attr('title', "[field:title/]")
+      $2(this).parent().attr('href', "[field:arcurl/]")
+      $2(this).parent().text("[field:title/]")
+    }
+  })
+
   $2("li:parent").each(function () {
     let that = $2(this)
     let len = that.siblings().length
@@ -158,11 +186,11 @@ fs.readFile(path.join(__dirname, 'index-1.html'), 'utf-8', function (err, data) 
   })
 
   $2("body").append(scripts)
-  let output = $2.html().replace(/>[^<]+\.\.\.</ig, '>' + dede.desc + '<')
+  let output = $2.html().replace(/>[^<]+\.\.\.\s*</ig, '>' + dede.desc + '<')
   output = output.replace("|", '')
-  console.log(output)
-  fs.writeFile(path.join(__dirname, '../dede/index.html'), output, 'utf-8', function (err) {
-    if (err) {
+  // console.log(output)
+  fs.writeFile(base_path + "index.htm", output, 'utf-8', function (errr) {
+    if (errr) {
       console.log(err)
       return
     }
