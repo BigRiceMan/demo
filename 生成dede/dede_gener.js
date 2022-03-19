@@ -1,15 +1,17 @@
 const fs = require('fs')
 const cheerio = require('cheerio')
 const base_path = `D://Users/zsbigdata01/Desktop/集团官网/www.77cn.com.cn/`
+const base_path2 = `H://桌面/1首页/www.chagougou.com/`
 
 
-console.log(base_path)
-fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
+console.log(base_path2)
+fs.readFile(base_path2 + 'index.html', 'utf-8', function (err, data) {
   if (err) return console.log('读取文件失败：' + err.message)
   const $ = cheerio.load(data)
   const $2 = cheerio.load(data)
   let scripts = $("script")
   let links = $("link")
+  $2("head").html("")
   $2("head").html(dede.head_index)
   $2("script").remove()
   $2("link").remove()
@@ -26,7 +28,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
   $2("li:has(a)").each(function (idx, el) {
     let flag = false
     for (let i in target_arr) {
-      if ($(target_arr[i]).parent() === $2(this).parent()) {
+      if ($2(target_arr[i]).parent() === $2(this).parent()) {
         flag = true
         break
       }
@@ -40,7 +42,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
       if (count_obj[i][l] > 1) {
         let flag = false
         for (let j in target_arr) {
-          if ($(target_arr[j]) === $(count_obj[i]["obj"])) {
+          if ($2(target_arr[j]) === $(count_obj[i]["obj"])) {
             flag = true
             break
           }
@@ -80,7 +82,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
               $2(this).attr("href", "{dede:field.typeurl/}")
               $2(this).text("{dede:field.typename/}")
             })
-            target_arr[i].parent().html("{dede:channelartlist typeid='3' row='" + len + 1 + "'}" + target_arr[i].parent().html() + "{/dede:channelartlist}")
+            target_arr[i].parent().html("{dede:channelartlist typeid='3' row='" + (len + 1) + "'}" + target_arr[i].parent().html() + "{/dede:channelartlist}")
 
           } else {
             target_arr[i].find("a").each(function () {
@@ -90,7 +92,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
               }
               $2(this).text("[field:title/]")
             })
-            target_arr[i].parent().html("{dede:arclist  typeid='' row=" + len + 1 + " }" + target_arr[i].parent().html() + "{/dede:arclist}")
+            target_arr[i].parent().html("{dede:arclist  typeid='' row=" + (len + 1) + " }" + target_arr[i].parent().html() + "{/dede:arclist}")
 
           }
           count = 0
@@ -125,7 +127,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
         if (avg < 8) {
           $2(this).attr("href", "{dede:field.typeurl/}")
           $2(this).text("{dede:field.typename/}")
-          $2(this).parent().html("{dede:channelartlist typeid='3' row='" + len + 1 + "'}" + $2(this).parent().html() + "{/dede:channelartlist}")
+          $2(this).parent().html("{dede:channelartlist typeid='3' row='" + (len + 1) + "'}" + $2(this).parent().html() + "{/dede:channelartlist}")
 
         } else {
           $2(this).attr("href", "[field:arcurl/]")
@@ -133,7 +135,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
             $2(this).attr("title", "[field:title/]")
           }
           $2(this).text("[field:title/]")
-          $2(this).parent().html("{dede:arclist  typeid='' row=" + len + 1 + " }" + $2(this).parent().html() + "{/dede:arclist}")
+          $2(this).parent().html("{dede:arclist  typeid='' row=" + (len + 1) + " }" + $2(this).parent().html() + "{/dede:arclist}")
 
         }
         count = 0
@@ -181,7 +183,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
     that.siblings().each(function () {
 
       $2(this).siblings('li').remove()
-      $2(this).parent().html("{dede:arclist  typeid='' row=" + len + 1 + " }" + $2(this).parent().html() + "{/dede:arclist}")
+      $2(this).parent().html("{dede:arclist  typeid='' row=" + (len + 1) + " }" + $2(this).parent().html() + "{/dede:arclist}")
     })
   })
 
@@ -189,7 +191,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
   let output = $2.html().replace(/>[^<]+\.\.\.\s*</ig, '>' + dede.desc + '<')
   output = output.replace("|", '')
   // console.log(output)
-  fs.writeFile(base_path + "index.htm", output, 'utf-8', function (errr) {
+  fs.writeFile(base_path2 + "index.htm", output, 'utf-8', function (errr) {
     if (errr) {
       console.log(err)
       return
