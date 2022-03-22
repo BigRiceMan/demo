@@ -1,7 +1,12 @@
 const fs = require('fs')
 const cheerio = require('cheerio')
+<<<<<<< HEAD
 const base_path = `D://Users/zsbigdata01/Desktop/集团官网/www.77cn.com.cn/`
 const base_path2 = `H://桌面/1首页/www.chagougou.com/`
+=======
+const base_path2 = `D://Users/zsbigdata01/Desktop/集团官网/www.feimiao.cn/`
+const base_path = `H://桌面/1首页/www.chagougou.com/`
+>>>>>>> 258612597b14ba40014c8c035e1751358ee661e8
 
 let css_str = ""
 let tmp = ""
@@ -55,7 +60,11 @@ if (css_data) {
           console.log($(ele).attr("class"))
 
         })
+<<<<<<< HEAD
         let reg = new RegExp("\\.(" + cn + ")+((\\s)|(\\,))", "g")
+=======
+        let reg = new RegExp("\\.(" + cn + ")+((\\s)|(\\,)|{)", "g")
+>>>>>>> 258612597b14ba40014c8c035e1751358ee661e8
         css_data = css_data.replace(reg, "." + "$1_" + tmp + "$2")
 
       }
