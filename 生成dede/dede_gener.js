@@ -1,6 +1,6 @@
 const fs = require('fs')
 const cheerio = require('cheerio')
-const base_path = `D://Users/zsbigdata01/Desktop/集团官网/www.77cn.com.cn/`
+const base_path = `D://Users/zsbigdata01/Desktop/集团官网/www.feimiao.cn/`
 
 
 console.log(base_path)
@@ -80,7 +80,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
               $2(this).attr("href", "{dede:field.typeurl/}")
               $2(this).text("{dede:field.typename/}")
             })
-            target_arr[i].parent().html("{dede:channelartlist typeid='3' row='" + len + 1 + "'}" + target_arr[i].parent().html() + "{/dede:channelartlist}")
+            target_arr[i].parent().html("{dede:channelartlist typeid='3' row='" + (len + 1) + "'}" + target_arr[i].parent().html() + "{/dede:channelartlist}")
 
           } else {
             target_arr[i].find("a").each(function () {
@@ -90,7 +90,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
               }
               $2(this).text("[field:title/]")
             })
-            target_arr[i].parent().html("{dede:arclist  typeid='' row=" + len + 1 + " }" + target_arr[i].parent().html() + "{/dede:arclist}")
+            target_arr[i].parent().html("{dede:arclist  typeid='' row=" + (len + 1) + " }" + target_arr[i].parent().html() + "{/dede:arclist}")
 
           }
           count = 0
@@ -125,7 +125,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
         if (avg < 8) {
           $2(this).attr("href", "{dede:field.typeurl/}")
           $2(this).text("{dede:field.typename/}")
-          $2(this).parent().html("{dede:channelartlist typeid='3' row='" + len + 1 + "'}" + $2(this).parent().html() + "{/dede:channelartlist}")
+          $2(this).parent().html("{dede:channelartlist typeid='3' row='" + (len + 1) + "'}" + $2(this).parent().html() + "{/dede:channelartlist}")
 
         } else {
           $2(this).attr("href", "[field:arcurl/]")
@@ -133,7 +133,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
             $2(this).attr("title", "[field:title/]")
           }
           $2(this).text("[field:title/]")
-          $2(this).parent().html("{dede:arclist  typeid='' row=" + len + 1 + " }" + $2(this).parent().html() + "{/dede:arclist}")
+          $2(this).parent().html("{dede:arclist  typeid='' row=" + (len + 1) + " }" + $2(this).parent().html() + "{/dede:arclist}")
 
         }
         count = 0
@@ -181,7 +181,7 @@ fs.readFile(base_path + 'index.html', 'utf-8', function (err, data) {
     that.siblings().each(function () {
 
       $2(this).siblings('li').remove()
-      $2(this).parent().html("{dede:arclist  typeid='' row=" + len + 1 + " }" + $2(this).parent().html() + "{/dede:arclist}")
+      $2(this).parent().html("{dede:arclist  typeid='' row=" + (len + 1) + " }" + $2(this).parent().html() + "{/dede:arclist}")
     })
   })
 
