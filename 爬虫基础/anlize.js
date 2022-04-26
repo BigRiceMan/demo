@@ -29,7 +29,7 @@ jQuery.noConflict();
   // 当前编码模式
   obj.cjx.charSet = document.characterSet
 
-  //判定为首页 
+  //判定为首页
   obj.index = {}
   obj.index.tmp = $(obj.root_el).find('img[src],div[class]').filter((idx, el) => {
     if (el.nodeName === 'DIV') {
@@ -56,11 +56,11 @@ jQuery.noConflict();
   // 有标题
   // 有链接
   // 有列表才有分页
-  // obj.nav.tmp = $('body a[href]:contains(首页)').filter((idx, el) => { 
+  // obj.nav.tmp = $('body a[href]:contains(首页)').filter((idx, el) => {
   //   return $(el).offset().top<301
   // }).each((idx,el)=>{
 
-  // }) 
+  // })
   obj.nav = {}
   obj.nav["2nd"] = {}
   obj.nav["2nd"]['len'] = 0
@@ -104,23 +104,23 @@ jQuery.noConflict();
           cur_url_arr.splice(key, 1)
         }
       }
-      // console.log(cur_url_arr.length) 
+      // console.log(cur_url_arr.length)
       if (cur_url_arr.length == 3) {
         obj.nav["2nd"].name = el.innerText.replace(" ", "")
         obj.nav["2nd"].name.href = cur_url_arr
-        nav["2nd"].len = nav["2nd"].len + 1
-        obj.nav["2nd"].name.id = nav["2nd"].len
+        obj.nav["2nd"].len = obj.nav["2nd"].len + 1
+        obj.nav["2nd"].name.id = obj.nav["2nd"].len
       } else if (cur_url_arr.length == 4) {
         obj.nav["3rd"].name = el.innerText.replace(" ", "")
-        nav["3rd"].len = nav["3rd"].len + 1
+        obj.nav["3rd"].len = obj.nav["3rd"].len + 1
         obj.nav["3rd"].name.href = cur_url_arr
-        obj.nav["3rd"].name.id = nav["3rd"].len
+        obj.nav["3rd"].name.id = obj.nav["3rd"].len
       } else {
         if (cur_url_arr.length > 4) {
           obj.nav["more"].name = el.innerText.replace(" ", "")
           obj.nav["more"].name.href = cur_url_arr
-          nav["more"].len = nav["more"].len + 1
-          obj.nav["more"].name.id = nav["more"].len
+          obj.nav["more"].len = obj.nav["more"].len + 1
+          obj.nav["more"].name.id = obj.nav["more"].len
         }
       }
     }
@@ -128,7 +128,6 @@ jQuery.noConflict();
 
   })
   if (obj.nav['2nd'].len > 0) {
-    obj.nav.2nd>0
   }
 
   obj.list = {}
@@ -291,7 +290,6 @@ jQuery.noConflict();
       if (idx > -1) {
         obj.cjx.listUrl = obj.list.pagelist_link[1].replace(diff, '[' + diff + '-' + '300' + ']')
         let arcUrl_tmp = $(obj.list.elWrap).find(a[href])[0].href
-        obj.cjx.arcUrl = .
       }
     }
 
