@@ -266,8 +266,7 @@ dede.head_pre = `
 <meta name="format-detection" content="telephone=no">
 <meta http-equiv="Cache-Control" content="no-transform">
 <meta http-equiv="Cache-Control" content="no-siteapp">
-<meta
-let dede_head=dede.pre+dede.head name="renderer" content="webkit">`
+<meta name="renderer" content="webkit">`
 dede.head_index = `
 <title>{dede:global.cfg_webname/}</title>
 <meta name="keywords" content="{dede:global.cfg_keywords/}"/>
