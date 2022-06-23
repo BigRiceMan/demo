@@ -17,6 +17,7 @@ def article_add(url,host, o):
         'title': o['title'],
         'body': o['body'],
         'tags': o['tags'],
+        'ishtml':'1',
         'picname': '',
         'source': '',
         'writer': '',

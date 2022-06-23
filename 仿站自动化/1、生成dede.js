@@ -1,9 +1,8 @@
 const fs = require('fs')
 const cheerio = require('cheerio')
-const web_name = 'm.zyys365.com'
 
-const base_path = `D://Users/zsbigdata01/Desktop/首页1/` + web_name + '/'
-
+const { web_name, base_path, css_path } = require('./peizhi.js')
+console.log(base_path)
 const type_arr = ['index', 'list', 'article']
 console.log(base_path)
 for (let type_item of type_arr) {
@@ -13,7 +12,8 @@ for (let type_item of type_arr) {
     const $2 = cheerio.load(data)
     let scripts = $("script")
     let links = $("link")
-    $2("head").html(dede.head_index)
+    let dede_head = dede["head_" + type_item] + dede.head_pre
+    $2("head").html(dede_head)
     $2("script").remove()
     $2("link").remove()
     $2("head").append(links)
@@ -189,8 +189,22 @@ for (let type_item of type_arr) {
     })
 
     $2("body").append(scripts)
+    // 替换描述
     let output = $2.html().replace(/>[^<]+\.\.\.\s*</ig, '>' + dede.desc + '<')
     output = output.replace("|", '')
+    // 替换相对路径
+    output = output.replace(/(=["']{0,1})static\//ig, '$1/static/')
+    // 如果是首页
+    if (type_item == 'index') {
+
+    }
+    // 如果是列表页
+    if (type_item == 'list') {
+    }
+    // 如果是文章页
+    if (type_item == 'article') {
+
+    }
     // console.log(output)
     let typename = 'index'
     if (type_item != 'index') {
@@ -207,11 +221,31 @@ for (let type_item of type_arr) {
 
 }
 
+// let o = {}
+// o.page = {}
+// o.idx = {}
+// o.len = {}
+// for (let type_item of type_arr) {
+//   let typename = type_item
+//   if (type_item != 'index') {
+//     typename = type_item + '_' + 'article'
+//   }
+//   o.page[type_item] = fs.readFileSync(base_path + typename + '.htm', 'utf-8')
+//   // 总字数
+//   o.len[type_item] = o.page[type_item].length
+//   console.log(type_item + "的总字数" + o.len[type_item])
+//   // 查找下标
+//   o.idx[type_item] = 0
 
+//   // 初始下标
 
-
-
-
+//   o.idx[type_item] = o.page[type_item].indexOf("<body")
+//   console.log(type_item + "的body下标为" + o.idx[type_item])
+//   if (o.idx[type_item] > 0) {
+//     o.idx[type_item] = o.page[type_item].indexOf(">", o.idx[type_item]) + 1
+//     console.log(type_item + "的初始下标为" + o.idx[type_item])
+//   }
+// }
 
 
 
@@ -223,10 +257,56 @@ for (let type_item of type_arr) {
 
 
 var dede = {}
-dede.head_index = `	<title>{dede:global.cfg_webname/}</title>
+dede.head_pre = `
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="MobileOptimized" content="width">
+<meta name="HandheldFriendly" content="true">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta
+let dede_head=dede.pre+dede.head name="renderer" content="webkit">`
+dede.head_index = `
+<title>{dede:global.cfg_webname/}</title>
 <meta name="keywords" content="{dede:global.cfg_keywords/}"/>
 <meta name="description" content="{dede:global.cfg_description/}"/>`
+dede.head_list = `
+<title>{dede:field.seotitle/}</title>
+<meta name="keywords" content="{dede:field name='keywords'/}" />
+<meta name="description" content="{dede:field name='description'  function='html2text(@me)'/}" />`
+dede.head_article = `
+<title>{dede:field.title/}</title>
+<meta name="keywords" content="{dede:field.keywords/}" />
+<meta name="description" content="{dede:field.description  function='html2text(@me)'/}" />`
+
 dede.desc = `[field:description function="cn_substr(@me,250)"/]...`
+dede.time = ``
+
+dede.toMobile = `<script>
+let mobile_url="http://chrctc.cn/"
+if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))) {
+
+  if (window.location.href.indexOf("?mobile") < 0) {
+
+    try {
+
+      if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+
+        window.location.href =mobile_url
+
+      } else if (/iPad/i.test(navigator.userAgent)) {
+
+      } else {
+
+        window.location.href = mobile_url
+
+      }
+
+    } catch (e) {}
+
+  }
+
+}
+</script>`

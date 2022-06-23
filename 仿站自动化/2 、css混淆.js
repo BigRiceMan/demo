@@ -1,8 +1,6 @@
 const fs = require('fs')
 const cheerio = require('cheerio')
-const web_name = 'm.zyys365.com'
-const base_path = `D://Users/zsbigdata01/Desktop/首页1/` + web_name + '/'
-
+const { web_name, base_path, css_path } = require('./peizhi.js')
 const type_arr = ['index', 'list_article', 'article_article']
 for (let type_item of type_arr) {
   let css_str = ""
@@ -21,10 +19,10 @@ for (let type_item of type_arr) {
       }
     })
     // console.log(output)
-    fs.writeFileSync(base_path + "css/" + type_item + "_output.css", css_str, 'utf-8')
-    $("head").append('<link type="text/css" rel="stylesheet" href="css/' + type_item + '_output.css">')
+    fs.writeFileSync(base_path + css_path + type_item + "_output.css", css_str, 'utf-8')
+    $("head").append('<link type="text/css" rel="stylesheet" href="' + css_path + type_item + '_output.css">')
 
-    let css_data = fs.readFileSync(base_path + "css/" + type_item + "_output.css", 'utf-8')
+    let css_data = fs.readFileSync(base_path + css_path + type_item + "_output.css", 'utf-8')
 
     if (css_data) {
       let cn_arr = new Set()
@@ -95,7 +93,7 @@ for (let type_item of type_arr) {
 
         el["el"].attr('id', el["tmp"])
       })
-      fs.writeFileSync(base_path + "css/" + type_item + "_output.css", css_data, 'utf-8')
+      fs.writeFileSync(base_path + css_path + type_item + "_output.css", css_data, 'utf-8')
       fs.writeFile(base_path + type_item + '.htm', $.html(), 'utf-8', function (err) {
         if (err) return console.log(err)
         console.log("写入成功")

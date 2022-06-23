@@ -1,5 +1,5 @@
 #!/usr/bin/python3
- 
+
 from pickle import TRUE
 import pymysql
 import os
@@ -86,7 +86,7 @@ if is_classify == True:
 #         if key == row[1]:
 is_publish = True
 limitcount = 5
-if is_publish==True:
+if is_publish == True:
     dirs_list = listdirs(base_path)
     print(dirs_list)
     for item in dirs_list:
@@ -94,26 +94,26 @@ if is_publish==True:
             if item in row[1]:
                 print('该栏目存在,ID为:', row[0])
                 file_name_list = os.listdir(base_path+"/"+item)
-                count=limitcount
+                count = limitcount
                 for fullname in file_name_list:
-                    count=count-1
-                    if count <=0:
+                    count = count-1
+                    if count <= 0:
                         break
                     tmp1 = os.path.splitext(fullname)
                     file_name = tmp1[0]
                     file_body = ''
                     if tmp1[-1] == filter_ext:
-                        is_add=False
+                        is_add = False
                         with open(base_path+"/"+item+"/"+fullname, 'r', encoding='UTF-8') as fd:
                             file_body = fd.read()
                             if len(file_body) > 200:
                                 articel_obj = {
-                                    'cookies': 'menuitems=1_1%2C2_1%2C3_1; Hm_lvt_90d669285bf1f0c655c711354ebff9c8=1651916576; Hm_lpvt_90d669285bf1f0c655c711354ebff9c8=1651916579; _ga_2JV760YETC=GS1.1.1651916585.1.0.1651916585.0; _ga=GA1.1.904164433.1651916586; PHPSESSID=r4ot78pe44pi3p6i98fckbuqf6; _csrf_name_6c7e31f0=ded208593509e007c8771b4bf6b25eb7; _csrf_name_6c7e31f0__ckMd5=89471b3f1e71a159; DedeUserID=1; DedeUserID__ckMd5=426df176ffb26fd2; DedeLoginTime=1651916645; DedeLoginTime__ckMd5=aed3466be9eb343f',
+                                    'cookies': 'menuitems=1_1%2C2_1%2C3_1; Hm_lvt_90d669285bf1f0c655c711354ebff9c8=1651916576; _ga=GA1.1.904164433.1651916586; _ga_2JV760YETC=GS1.1.1651916585.1.0.1651916585.0; DedeUserID=1; DedeUserID__ckMd5=426df176ffb26fd2; PHPSESSID=ob894di5n9s0jums48u969ojl1; _csrf_name_6c7e31f0=83c21fcd716fed402a4cd480ea418398; _csrf_name_6c7e31f0__ckMd5=bcd38a3c3b540431; DedeLoginTime=1652059999; DedeLoginTime__ckMd5=f1e3172b978fad01',
                                     'typeid': row[0],
                                     'title': file_name,
                                     'body': file_body,
                                     'tags': ''
                                 }
-                                is_add = article_add(url,host,articel_obj)
-                        if is_add==True:
+                                is_add = article_add(url, host, articel_obj)
+                        if is_add == True:
                             os.remove(base_path+"/"+item+"/"+fullname)
