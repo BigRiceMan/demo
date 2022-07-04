@@ -1,7 +1,7 @@
 const fs = require('fs')
 const cheerio = require('cheerio')
 
-const { web_name, base_path, css_path } = require('./peizhi.js')
+const { output_path, base_path, css_path } = require('./peizhi.js')
 console.log(base_path)
 const type_arr = ['index', 'list', 'article']
 console.log(base_path)
@@ -83,7 +83,7 @@ for (let type_item of type_arr) {
                 $2(this).attr("href", "{dede:field.typeurl/}")
                 $2(this).text("{dede:field.typename/}")
               })
-              target_arr[i].parent().html("{dede:channelartlist typeid='3' row='" + (len + 1) + "'}" + target_arr[i].parent().html() + "{/dede:channelartlist}")
+              target_arr[i].parent().html("{dede:channelartlist typeid='1,2,3,4,5,6,7,8' row='" + (len + 1) + "'}" + target_arr[i].parent().html() + "{/dede:channelartlist}")
 
             } else {
               target_arr[i].find("a").each(function () {
@@ -93,7 +93,7 @@ for (let type_item of type_arr) {
                 }
                 $2(this).text("[field:title/]")
               })
-              target_arr[i].parent().html("{dede:arclist  typeid='' row=" + (len + 1) + " }" + target_arr[i].parent().html() + "{/dede:arclist}")
+              target_arr[i].parent().html("{dede:arclist  orderby='rand' typeid='1,2,3,4,5,6,7,8' row=" + (len + 1) + " }" + target_arr[i].parent().html() + "{/dede:arclist}")
 
             }
             count = 0
@@ -128,7 +128,7 @@ for (let type_item of type_arr) {
           if (avg < 8) {
             $2(this).attr("href", "{dede:field.typeurl/}")
             $2(this).text("{dede:field.typename/}")
-            $2(this).parent().html("{dede:channelartlist typeid='3' row='" + (len + 1) + "'}" + $2(this).parent().html() + "{/dede:channelartlist}")
+            $2(this).parent().html("{dede:channelartlist typeid='1,2,3,4,5,6,7,8' row='" + (len + 1) + "'}" + $2(this).parent().html() + "{/dede:channelartlist}")
 
           } else {
             $2(this).attr("href", "[field:arcurl/]")
@@ -136,7 +136,7 @@ for (let type_item of type_arr) {
               $2(this).attr("title", "[field:title/]")
             }
             $2(this).text("[field:title/]")
-            $2(this).parent().html("{dede:arclist  typeid='' row=" + (len + 1) + " }" + $2(this).parent().html() + "{/dede:arclist}")
+            $2(this).parent().html("{dede:arclist  orderby='rand' typeid='1,2,3,4,5,6,7,8' row=" + (len + 1) + " }" + $2(this).parent().html() + "{/dede:arclist}")
 
           }
           count = 0
@@ -184,7 +184,7 @@ for (let type_item of type_arr) {
       that.siblings().each(function () {
 
         $2(this).siblings('li').remove()
-        $2(this).parent().html("{dede:arclist  typeid='' row=" + (len + 1) + " }" + $2(this).parent().html() + "{/dede:arclist}")
+        $2(this).parent().html("{dede:arclist  orderby='rand' typeid='1,2,3,4,5,6,7,8' row=" + (len + 1) + " }" + $2(this).parent().html() + "{/dede:arclist}")
       })
     })
 
@@ -194,6 +194,16 @@ for (let type_item of type_arr) {
     output = output.replace("|", '')
     // 替换相对路径
     output = output.replace(/(=["']{0,1})static\//ig, '$1/static/')
+    //  替换外部链接
+    output = output.replace(/<link [^>]*?href=['"]*?http[^>]+>/ig, '')
+    output = output.replace(/<script [^>]*?src=['"]*?http[^>]+><\/script>/ig, '')
+    output = output.replace(/<script [^>]*?type=['"]*?application\/ld\+json[^>]+>[^<]+<\/script>/ig, '')
+    output = output.replace(/<script[^>]*?>[^<]+hm.js[^<]+<\/script>/ig, '')
+    output = output.replace(/<script[^>]*?>[^<]+push.js[^<]+<\/script>/ig, '')
+    output = output.replace(/<script[^>]*?>[^<]+ _hmt [^<]+<\/script>/ig, '')
+
+
+
     // 如果是首页
     if (type_item == 'index') {
 
@@ -210,9 +220,19 @@ for (let type_item of type_arr) {
     if (type_item != 'index') {
       typename = type_item + '_' + 'article'
     }
-    fs.writeFile(base_path + typename + ".htm", output, 'utf-8', function (errr) {
+    // 如果文件不存在
+    if (!fs.existsSync(base_path + output_path)) {
+      fs.mkdir(base_path + output_path, (mkdir_err) => {
+        if (mkdir_err) {
+          console.log(mkdir_err)
+          return
+        }
+        console.log("创建文件成功")
+      })
+    }
+    fs.writeFile(base_path + output_path + typename + ".htm", output, 'utf-8', function (errr) {
       if (errr) {
-        console.log(err)
+        console.log(errr)
         return
       }
       console.log("写入成功")
@@ -236,7 +256,7 @@ for (let type_item of type_arr) {
 //   console.log(type_item + "的总字数" + o.len[type_item])
 //   // 查找下标
 //   o.idx[type_item] = 0
-
+11
 //   // 初始下标
 
 //   o.idx[type_item] = o.page[type_item].indexOf("<body")
