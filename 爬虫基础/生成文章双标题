@@ -1,0 +1,33 @@
+const fs = require('fs')
+const path = require('path')
+// 注意这里默认配置是 读取2层文件夹下的文件
+const pathName = "D:/Users/zsbigdata01/Desktop/1"
+let new_tits = []
+let new_ctns = []
+let new_parentDirs = []
+const dirr = fs.readdirSync(pathName)
+for (let item of dirr) {
+  let item_path = pathName + '/' + item
+  let files = fs.readdirSync(item_path)
+  let tmp_tit = ''
+  let tmp_ctn = ''
+  for (let key in files) {
+    if (key % 2 == 0) {
+      tmp_tit += '新-' + path.basename(files[key], '.txt')
+      tmp_ctn += fs.readFileSync(item_path + '/' + files[key], 'utf-8')
+    } else {
+      tmp_tit += '_' + path.basename(files[key], '.txt')
+      tmp_ctn += '<p></p>' + fs.readFileSync(item_path + '/' + files[key], 'utf-8')
+      new_tits.push(tmp_tit)
+      new_ctns.push(tmp_ctn)
+      new_parentDirs.push(item_path)
+      tmp_tit = ''
+      tmp_ctn = ''
+    }
+  }
+}
+for (let key in new_parentDirs) {
+  fs.writeFileSync(new_parentDirs[key] + '/' + new_tits[key] + '.txt', new_ctns[key], 'utf-8')
+}
+
+console.log(dirr)
