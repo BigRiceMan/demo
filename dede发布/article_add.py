@@ -1,8 +1,9 @@
-import requests
+from enum import Flag
 import os
+import requests
 
 
-def article_add(url,host, o):
+def article_add(url, host, o):
     url = url
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36"
 
@@ -17,11 +18,11 @@ def article_add(url,host, o):
         'title': o['title'],
         'body': o['body'],
         'tags': o['tags'],
-        'ishtml':'1',
+        'ishtml': '1',
         'picname': '',
         'source': '',
         'writer': '',
-        'pubdate': '',
+        'pubdate': o['pubdate'],
         'dopost': 'save',
         'shorttitle': '',
         'redirecturl': '',
@@ -36,7 +37,7 @@ def article_add(url,host, o):
         'imageField.y': '11',
         'ddisremote': '1',
     }
-    res = requests.post(url, headers=headers, data=dede_data)
+    res = requests.post(url, headers=headers, data=dede_data, verify=False)
     if res.text.find('已发布文章') <= -1:
         print('发布文章出错,请检查')
         return False

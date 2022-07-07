@@ -89,9 +89,9 @@ for (let type_item of type_arr) {
               target_arr[i].find("a").each(function () {
                 $2(this).attr("href", "[field:arcurl/]")
                 if ($2(this).attr("title")) {
-                  $2(this).attr("title", "[field:title/]")
+                  $2(this).attr("title", "[field:fulltitle/]")
                 }
-                $2(this).text("[field:title/]")
+                $2(this).text("[field:fulltitle/]")
               })
               target_arr[i].parent().html("{dede:arclist  orderby='rand' typeid='1,2,3,4,5,6,7,8' row=" + (len + 1) + " }" + target_arr[i].parent().html() + "{/dede:arclist}")
 
@@ -133,9 +133,9 @@ for (let type_item of type_arr) {
           } else {
             $2(this).attr("href", "[field:arcurl/]")
             if ($2(this).attr("title")) {
-              $2(this).attr("title", "[field:title/]")
+              $2(this).attr("title", "[field:fulltitle/]")
             }
-            $2(this).text("[field:title/]")
+            $2(this).text("[field:fulltitle/]")
             $2(this).parent().html("{dede:arclist  orderby='rand' typeid='1,2,3,4,5,6,7,8' row=" + (len + 1) + " }" + $2(this).parent().html() + "{/dede:arclist}")
 
           }
@@ -146,18 +146,18 @@ for (let type_item of type_arr) {
     $2("a[title]:parent").each(function () {
       if ($2(this).attr('href') !== "[field:arcurl/]" && $2(this).attr('href') !== "/" && $2(this).attr('href').indexOf('#') !== 0) {
         $2(this).attr('href', "[field:arcurl/]")
-        $2(this).attr('title', "[field:title/]")
+        $2(this).attr('title', "[field:fulltitle/]")
         $2(this).attr('href', "[field:arcurl/]")
-        $2(this).text("[field:title/]")
+        $2(this).text("[field:fulltitle/]")
       }
     })
     $2("a[href]:parent").each(function () {
       if ($2(this).attr('href') !== "/" && $2(this).attr('href').indexOf('#') !== 0) {
         if ($2(this).text().length > 8) {
           $2(this).attr('href', "[field:arcurl/]")
-          $2(this).attr('title', "[field:title/]")
+          $2(this).attr('title', "[field:fulltitle/]")
           $2(this).attr('href', "[field:arcurl/]")
-          $2(this).text("[field:title/]")
+          $2(this).text("[field:fulltitle/]")
         }
         if ($2(this).text().length > 2 && $2(this).text().length < 8) {
           $2(this).attr('href', "{dede:field.typeurl/}")
@@ -169,11 +169,11 @@ for (let type_item of type_arr) {
     })
     $2("img[alt]").each(function () {
       if ($2(this).parent().get(0).name == 'a') {
-        $2(this).attr('alt', "[field:title/]")
+        $2(this).attr('alt', "[field:fulltitle/]")
         $2(this).parent().attr('href', "[field:arcurl/]")
-        $2(this).parent().attr('title', "[field:title/]")
+        $2(this).parent().attr('title', "[field:fulltitle/]")
         $2(this).parent().attr('href', "[field:arcurl/]")
-        $2(this).parent().text("[field:title/]")
+        $2(this).parent().text("[field:fulltitle/]")
       }
     })
 
@@ -256,7 +256,6 @@ for (let type_item of type_arr) {
 //   console.log(type_item + "的总字数" + o.len[type_item])
 //   // 查找下标
 //   o.idx[type_item] = 0
-11
 //   // 初始下标
 
 //   o.idx[type_item] = o.page[type_item].indexOf("<body")
